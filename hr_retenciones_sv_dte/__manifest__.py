@@ -11,7 +11,7 @@
     "license": "LGPL-3",
     "category": "Human Resources - Deducciones",
     "depends": [
-        "hr", "hr_payroll", "hr_contract", 'hr_attendance'
+        "hr", "hr_payroll", 'hr_attendance'
     ],
     "data": [
         "views/hr_attendance_inherit.xml",

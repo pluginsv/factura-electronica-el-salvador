@@ -10,7 +10,7 @@
     'price': 15,
     'currency': 'USD',
     'license': 'LGPL-3',
-    'depends': ['hr_contract', 'hr_retenciones_sv_dte', 'hr_payroll'],
+    'depends': ['hr_retenciones_sv_dte', 'hr_payroll'],
     'assets': {
         'web.assets_pdf': [
             'rrhh_base_sv_dte/static/src/css/inter_font.css',
