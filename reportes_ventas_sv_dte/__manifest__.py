@@ -15,7 +15,7 @@ Provee 5 reportes basados en SQL views (account.move + account.payment):
     """,
     'author': "ContaPro",
     'website': "https://contaspro.net",
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'category': 'Sales/Reporting',
     'version': '19.0.1.0.0',
     'depends': [

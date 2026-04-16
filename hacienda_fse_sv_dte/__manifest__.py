@@ -14,7 +14,7 @@
                'static/description/thumbnail.png'],
     "price": 20,
     "currency": "USD",
-    "license": "LGPL-3",
+    "license": "OPL-1",
     'category': 'Accounting',
     "version": "19.0.1.0.0",
     'depends': ['base',

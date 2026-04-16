@@ -9,7 +9,7 @@
                'static/description/thumbnail.png'],
     'price': 15,
     'currency': 'USD',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'depends': ['hr_retenciones_sv_dte', 'hr_payroll'],
     'assets': {
         'web.assets_pdf': [

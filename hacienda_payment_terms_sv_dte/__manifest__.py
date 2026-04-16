@@ -10,7 +10,7 @@
                'static/description/thumbnail.png'],
     "price": 10,
     "currency": "USD",
-    "license": "LGPL-3",
+    "license": "OPL-1",
     "category": "Point of Sale",
     "depends": [
         "haciendaws_fe_sv_dte",
