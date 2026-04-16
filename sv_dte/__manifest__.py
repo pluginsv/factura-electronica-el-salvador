@@ -17,7 +17,7 @@
         - Credito Fiscal.
         - Exportaciones.
 
-    Tambien permite generar los documentos que retifican:
+    Tambien permite generar los documentos que rectifican:
         - Anulaciones.
         - Nota de Credito.
         - Anulaciones de Exportacion.
@@ -27,7 +27,7 @@
     "images": ['static/description/banner.png',
                'static/description/icon.png',
                'static/description/thumbnail.png'],
-    'price': 50,
+    'price': 25,
     'currency': 'USD',
     'license': 'LGPL-3',
     'category': 'Localization',

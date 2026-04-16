@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "sv_dte Factura de Exportacion",
+    'name': "Factura de Exportacion DTE El Salvador",
     'summary': """
         Factura de Exportacion
         """,
@@ -12,7 +12,7 @@
     "images": ['static/description/banner.png',
                'static/description/icon.png',
                'static/description/thumbnail.png'],
-    "price": 35,
+    "price": 20,
     "currency": "USD",
     "license": "LGPL-3",
     'category': 'Accounting',

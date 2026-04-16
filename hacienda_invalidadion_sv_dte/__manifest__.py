@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "hacienda_invalidadion_sv_dte",
+    'name': "Invalidacion de DTE El Salvador",
 
     'summary': """
-        Proceso de invalidadion
+        Proceso de invalidacion
         m""",
 
     'description': """
-        Proceso de invalidadion
+        Proceso de invalidacion
     """,
 
     "author": "Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores",
@@ -15,7 +15,7 @@
     "images": ['static/description/banner.png',
                'static/description/icon.png',
                'static/description/thumbnail.png'],
-    "price": 30,
+    "price": 15,
     "currency": "USD",
     "license": "LGPL-3",
 

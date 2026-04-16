@@ -10,7 +10,7 @@
     "images": ['static/description/banner.png',
                'static/description/icon.png',
                'static/description/thumbnail.png'],
-    'price': 15.00,
+    'price': 25,
     'currency': 'USD',
     'license': 'LGPL-3',
     'category': 'Tools',

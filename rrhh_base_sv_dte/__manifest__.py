@@ -7,7 +7,7 @@
     "images": ['static/description/banner.png',
                'static/description/icon.png',
                'static/description/thumbnail.png'],
-    'price': 35,
+    'price': 15,
     'currency': 'USD',
     'license': 'LGPL-3',
     'depends': ['hr_contract', 'hr_retenciones_sv_dte', 'hr_payroll'],

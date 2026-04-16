@@ -8,7 +8,7 @@
     "images": ['static/description/banner.png',
                'static/description/icon.png',
                'static/description/thumbnail.png'],
-    "price": 60,
+    "price": 30,
     "currency": "USD",
     "license": "LGPL-3",
     "summary": "",

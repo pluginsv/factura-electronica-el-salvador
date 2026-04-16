@@ -7,7 +7,7 @@
     "images": ['static/description/banner.png',
                'static/description/icon.png',
                'static/description/thumbnail.png'],
-    'price': 25,
+    'price': 15,
     'currency': 'USD',
     'license': 'LGPL-3',
     'category': 'Accounting',
