@@ -1,32 +1,50 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Localizacion de El Salvador",
-    'summary': """Localizacion contable, fiscal y tributaria de El Salvador para Odoo""",
+    'summary': """Plan contable, catalogos del MH, impuestos y campos DTE para El Salvador""",
     'description': """
-    Localizacion de El Salvador para Odoo:
+    Localizacion contable y fiscal de El Salvador para Odoo.
 
     Plan contable y configuracion fiscal:
         - Plan de cuentas oficial requerido en El Salvador
-        - Categorias e impuestos (IVA, retenciones, percepciones)
-        - Posiciones fiscales para compras y ventas
+        - Impuestos de compra y venta (IVA, retenciones, percepciones)
+        - Posiciones fiscales configuradas
 
-    Catalogos tributarios del Ministerio de Hacienda:
-        - Actividades economicas, formas de pago, plazos
-        - Tipos de documento, tipos de operacion, tributos
-        - Unidades de medida, recintos fiscales, INCOTERMS
-        - Tipos de establecimiento, regimenes, contingencias
+    25 catalogos oficiales del Ministerio de Hacienda:
+        - CAT02 Tipos de documento
+        - CAT03 Modelos de facturacion
+        - CAT05 Tipos de contingencia
+        - CAT09 Tipos de establecimiento
+        - CAT11 Tipos de item
+        - CAT14 Unidades de medida
+        - CAT15 Tributos
+        - CAT17 Formas de pago
+        - CAT18 Plazos
+        - CAT19 Actividades economicas
+        - CAT27 Recintos fiscales
+        - CAT28 Regimenes de exportacion
+        - CAT31 INCOTERMS
+        - Y mas (CAT21, CAT23, CAT24, CAT25, CAT26, CAT29, CAT30, CAT32)
 
-    Tipos de identificacion fiscal:
-        - NIT (Numero de Identificacion Tributaria)
-        - NRC (Numero de Registro de Contribuyente)
-        - DUI (Documento Unico de Identidad)
+    Campos DTE en facturas:
+        - Forma de pago, condicion de pago, plazo
+        - Tipo de transmision (normal/contingencia)
+        - QR de Hacienda, JSON de respuesta, estado DTE
+        - Calculo automatico de retenciones IVA para grandes contribuyentes
 
-    Soporte para documentos fiscales:
-        - Consumidor Final (FCF)
-        - Credito Fiscal (CCF)
-        - Exportaciones
-        - Notas de Credito y Debito
-        - Anulaciones
+    Campos DTE en diarios contables:
+        - Tipo de documento, tipo de establecimiento
+        - Codigo de establecimiento y punto de venta
+        - Modelo de facturacion y tipo de operacion
+
+    Campos DTE en productos:
+        - Unidad de medida Hacienda, tipo de item
+        - Tributos por producto, tipo de venta (gravado/exento/no sujeto)
+
+    Campos extendidos en contactos y empresa:
+        - NRC, giro, nombre comercial, domicilio fiscal
+        - UUID de empresa para DTE
+        - Secuencias por diario
     """,
     'author': "Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores",
     'website': "https://contaspro.net",
