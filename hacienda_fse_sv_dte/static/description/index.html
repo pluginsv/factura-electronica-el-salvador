@@ -12,10 +12,10 @@
   <div class="oe_row oe_spaced" style="background:#0A1628;padding:32px 40px;border-radius:0 0 8px 8px;margin-top:0;">
     <div class="oe_span12 oe_centeralign">
       <h2 style="color:#F5C842;font-size:26px;font-weight:700;margin-bottom:8px;letter-spacing:1px;">
-        Factura Sujeto Excluido — DTE FSE
+        Factura Sujeto Excluido DTE — El Salvador
       </h2>
       <p style="color:#90CAF9;font-size:15px;max-width:680px;margin:0 auto;line-height:1.7;">
-        Módulo para la emisión de <strong style="color:#fff;">Facturas de Sujeto Excluido</strong> como Documento Tributario Electrónico. Permite facturar compras a proveedores que no son contribuyentes del IVA según la legislación salvadoreña.
+        Genera y transmite <strong style="color:#fff;">Facturas de Sujeto Excluido electrónicas</strong> al Ministerio de Hacienda para compras a proveedores no inscritos como contribuyentes de IVA.
       </p>
       <div style="margin-top:18px;">
         <span style="background:#1565C0;color:#fff;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700;margin:0 4px;">v17</span>
@@ -36,7 +36,7 @@
       ¿Qué incluye este módulo?
     </h3>
     <p class="oe_slogan" style="color:#546E7A;margin-top:-12px;font-size:14px;">
-      Emisión electrónica de comprobantes a sujetos excluidos del IVA.
+      Factura electrónica para sujetos excluidos del IVA.
     </p>
   </div>
 
@@ -45,10 +45,10 @@
     <!-- Card 1 -->
     <div class="oe_span4">
       <div style="background:#fff;border-radius:10px;padding:28px 24px;border-left:5px solid #1565C0;box-shadow:0 2px 12px rgba(0,0,0,0.08);height:100%;">
-        <div style="font-size:34px;margin-bottom:12px;">📝</div>
-        <h4 style="color:#0A1628;font-size:16px;font-weight:700;margin-bottom:8px;">DTE Sujeto Excluido</h4>
+        <div style="font-size:34px;margin-bottom:12px;">🧾</div>
+        <h4 style="color:#0A1628;font-size:16px;font-weight:700;margin-bottom:8px;">Sujeto Excluido DTE</h4>
         <p style="color:#546E7A;font-size:13.5px;line-height:1.6;">
-          Generación automática del <strong>DTE de Sujeto Excluido</strong> con los campos y estructura requeridos por el Ministerio de Hacienda.
+          Generación de <strong>facturas electrónicas de sujeto excluido</strong> con los campos y validaciones específicos del MH.
         </p>
       </div>
     </div>
@@ -56,10 +56,10 @@
     <!-- Card 2 -->
     <div class="oe_span4">
       <div style="background:#fff;border-radius:10px;padding:28px 24px;border-left:5px solid #F5C842;box-shadow:0 2px 12px rgba(0,0,0,0.08);height:100%;">
-        <div style="font-size:34px;margin-bottom:12px;">👤</div>
-        <h4 style="color:#0A1628;font-size:16px;font-weight:700;margin-bottom:8px;">Identificación de Sujetos</h4>
+        <div style="font-size:34px;margin-bottom:12px;">📨</div>
+        <h4 style="color:#0A1628;font-size:16px;font-weight:700;margin-bottom:8px;">Transmisión Automática</h4>
         <p style="color:#546E7A;font-size:13.5px;line-height:1.6;">
-          Validación y gestión de datos de <strong>proveedores no contribuyentes</strong>, incluyendo tipo de documento de identidad y actividad económica.
+          Envío automático al <strong>Web Service de Hacienda</strong> con firma digital y confirmación de recepción.
         </p>
       </div>
     </div>
@@ -67,10 +67,10 @@
     <!-- Card 3 -->
     <div class="oe_span4">
       <div style="background:#fff;border-radius:10px;padding:28px 24px;border-left:5px solid #2E7D32;box-shadow:0 2px 12px rgba(0,0,0,0.08);height:100%;">
-        <div style="font-size:34px;margin-bottom:12px;">💰</div>
-        <h4 style="color:#0A1628;font-size:16px;font-weight:700;margin-bottom:8px;">Retenciones Automáticas</h4>
+        <div style="font-size:34px;margin-bottom:12px;">💼</div>
+        <h4 style="color:#0A1628;font-size:16px;font-weight:700;margin-bottom:8px;">Retención Automática</h4>
         <p style="color:#546E7A;font-size:13.5px;line-height:1.6;">
-          Cálculo automático de las <strong>retenciones de renta</strong> aplicables a pagos realizados a sujetos excluidos según la normativa vigente.
+          Cálculo y aplicación automática de la <strong>retención de IVA e ISR</strong> según la normativa vigente para sujetos excluidos.
         </p>
       </div>
     </div>
@@ -153,9 +153,9 @@
           <tr><td style="color:#78909C;padding:5px 0;">País objetivo</td>
               <td style="color:#0A1628;font-weight:600;">🇸🇻 El Salvador</td></tr>
           <tr><td style="color:#78909C;padding:5px 0;">Categoría</td>
-              <td style="color:#0A1628;font-weight:600;">Accounting</td></tr>
+              <td style="color:#0A1628;font-weight:600;">Localización / Facturación Electrónica</td></tr>
           <tr><td style="color:#78909C;padding:5px 0;">Dependencias</td>
-              <td style="color:#0A1628;font-weight:600;">base, hacienda_sv_dte, base_sv_dte, haciendaws_fe_sv_dte</td></tr>
+              <td style="color:#0A1628;font-weight:600;">hacienda_sv_dte, base_sv_dte, haciendaws_fe_sv_dte</td></tr>
           <tr><td style="color:#78909C;padding:5px 0;">Instalación</td>
               <td style="color:#0A1628;font-weight:600;">Sin configuración previa</td></tr>
         </table>

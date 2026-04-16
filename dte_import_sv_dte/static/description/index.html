@@ -4,7 +4,7 @@
   <!-- HERO BANNER -->
   <div class="oe_row oe_spaced" style="margin-bottom:0;">
     <div class="oe_span12">
-      <img src="banner.png" alt="Importación de DTEs" style="width:100%;border-radius:8px 8px 0 0;display:block;"/>
+      <img src="banner.png" alt="Importación DTE JSON" style="width:100%;border-radius:8px 8px 0 0;display:block;"/>
     </div>
   </div>
 
@@ -12,10 +12,10 @@
   <div class="oe_row oe_spaced" style="background:#0A1628;padding:32px 40px;border-radius:0 0 8px 8px;margin-top:0;">
     <div class="oe_span12 oe_centeralign">
       <h2 style="color:#F5C842;font-size:26px;font-weight:700;margin-bottom:8px;letter-spacing:1px;">
-        Importación de DTE — JSON a Facturas
+        Importación de DTE (JSON) — El Salvador
       </h2>
       <p style="color:#90CAF9;font-size:15px;max-width:680px;margin:0 auto;line-height:1.7;">
-        Permite la <strong style="color:#fff;">importación masiva de Documentos Tributarios Electrónicos</strong> (DTE) desde archivos JSON directamente a facturas de proveedor en Odoo, automatizando la captura de compras recibidas electrónicamente.
+        Importa <strong style="color:#fff;">Documentos Tributarios Electrónicos en formato JSON</strong> y los convierte automáticamente en facturas de proveedor dentro de Odoo.
       </p>
       <div style="margin-top:18px;">
         <span style="background:#1565C0;color:#fff;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700;margin:0 4px;">v17</span>
@@ -36,7 +36,7 @@
       ¿Qué incluye este módulo?
     </h3>
     <p class="oe_slogan" style="color:#546E7A;margin-top:-12px;font-size:14px;">
-      Automatización de la captura de documentos tributarios electrónicos recibidos.
+      Convierte archivos JSON de DTE en facturas de proveedor.
     </p>
   </div>
 
@@ -45,10 +45,10 @@
     <!-- Card 1 -->
     <div class="oe_span4">
       <div style="background:#fff;border-radius:10px;padding:28px 24px;border-left:5px solid #1565C0;box-shadow:0 2px 12px rgba(0,0,0,0.08);height:100%;">
-        <div style="font-size:34px;margin-bottom:12px;">📄</div>
-        <h4 style="color:#0A1628;font-size:16px;font-weight:700;margin-bottom:8px;">Importación desde JSON</h4>
+        <div style="font-size:34px;margin-bottom:12px;">📥</div>
+        <h4 style="color:#0A1628;font-size:16px;font-weight:700;margin-bottom:8px;">Importación JSON</h4>
         <p style="color:#546E7A;font-size:13.5px;line-height:1.6;">
-          Carga archivos <strong>JSON de DTE</strong> emitidos por proveedores y los convierte automáticamente en facturas de proveedor dentro de Odoo.
+          Carga de <strong>archivos JSON de DTE</strong> recibidos de proveedores para su registro automático como facturas en Odoo.
         </p>
       </div>
     </div>
@@ -57,9 +57,9 @@
     <div class="oe_span4">
       <div style="background:#fff;border-radius:10px;padding:28px 24px;border-left:5px solid #F5C842;box-shadow:0 2px 12px rgba(0,0,0,0.08);height:100%;">
         <div style="font-size:34px;margin-bottom:12px;">🔄</div>
-        <h4 style="color:#0A1628;font-size:16px;font-weight:700;margin-bottom:8px;">Mapeo Automático de Productos</h4>
+        <h4 style="color:#0A1628;font-size:16px;font-weight:700;margin-bottom:8px;">Conversión Automática</h4>
         <p style="color:#546E7A;font-size:13.5px;line-height:1.6;">
-          Asocia automáticamente los <strong>productos y unidades de medida</strong> del DTE con los registros existentes en el sistema.
+          Mapeo automático de <strong>productos, impuestos y datos fiscales</strong> del JSON a los campos correspondientes de la factura.
         </p>
       </div>
     </div>
@@ -68,9 +68,9 @@
     <div class="oe_span4">
       <div style="background:#fff;border-radius:10px;padding:28px 24px;border-left:5px solid #2E7D32;box-shadow:0 2px 12px rgba(0,0,0,0.08);height:100%;">
         <div style="font-size:34px;margin-bottom:12px;">✅</div>
-        <h4 style="color:#0A1628;font-size:16px;font-weight:700;margin-bottom:8px;">Validación de Datos Fiscales</h4>
+        <h4 style="color:#0A1628;font-size:16px;font-weight:700;margin-bottom:8px;">Validación de Datos</h4>
         <p style="color:#546E7A;font-size:13.5px;line-height:1.6;">
-          Verifica la <strong>integridad de los datos fiscales</strong> del documento importado, incluyendo NIT, NRC y totales antes de crear la factura.
+          Verificación de la <strong>integridad y formato del JSON</strong> antes de crear la factura, asegurando datos consistentes.
         </p>
       </div>
     </div>
@@ -89,7 +89,7 @@
   </div>
   <div class="oe_row oe_spaced">
     <div class="oe_span12 oe_centeralign">
-      <img src="thumbnail.png" alt="Thumbnail Importación de DTEs"
+      <img src="thumbnail.png" alt="Thumbnail Importación DTE JSON"
            style="max-width:620px;width:100%;border-radius:10px;box-shadow:0 6px 28px rgba(0,0,0,0.14);"/>
     </div>
   </div>
@@ -153,9 +153,9 @@
           <tr><td style="color:#78909C;padding:5px 0;">País objetivo</td>
               <td style="color:#0A1628;font-weight:600;">🇸🇻 El Salvador</td></tr>
           <tr><td style="color:#78909C;padding:5px 0;">Categoría</td>
-              <td style="color:#0A1628;font-weight:600;">Accounting/Localizations</td></tr>
+              <td style="color:#0A1628;font-weight:600;">Contabilidad / Importación</td></tr>
           <tr><td style="color:#78909C;padding:5px 0;">Dependencias</td>
-              <td style="color:#0A1628;font-weight:600;">accountant, product, contacts, uom</td></tr>
+              <td style="color:#0A1628;font-weight:600;">account, product, contacts, uom</td></tr>
           <tr><td style="color:#78909C;padding:5px 0;">Instalación</td>
               <td style="color:#0A1628;font-weight:600;">Sin configuración previa</td></tr>
         </table>
