@@ -13,8 +13,15 @@ Provee 5 reportes basados en SQL views (account.move + account.payment):
 * Resumen por Vendedor
 * Productos más vendidos
     """,
-    'author': "ContaPro",
+    'author': "Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores",
     'website': "https://contaspro.net",
+    'images': [
+        'static/description/banner.png',
+        'static/description/icon.png',
+        'static/description/thumbnail.png',
+    ],
+    'price': 15,
+    'currency': 'USD',
     'license': 'OPL-1',
     'category': 'Sales/Reporting',
     'version': '18.0.1.0.0',
