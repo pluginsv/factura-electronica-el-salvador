@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_shopify_customer_tree" model="ir.ui.view">
+        <field name="name">shopify.customer.tree</field>
+        <field name="model">shopify.customer</field>
+        <field name="arch" type="xml">
+            <tree string="Clientes Shopify">
+                <field name="shopify_name"/>
+                <field name="shopify_email"/>
+                <field name="shopify_phone"/>
+                <field name="partner_id"/>
+                <field name="instance_id"/>
+                <field name="synced" widget="boolean"/>
+                <field name="last_sync"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_customer_form" model="ir.ui.view">
+        <field name="name">shopify.customer.form</field>
+        <field name="model">shopify.customer</field>
+        <field name="arch" type="xml">
+            <form string="Cliente Shopify">
+                <sheet>
+                    <group>
+                        <group string="Shopify">
+                            <field name="shopify_name"/>
+                            <field name="shopify_id"/>
+                            <field name="shopify_email"/>
+                            <field name="shopify_phone"/>
+                        </group>
+                        <group string="Odoo">
+                            <field name="instance_id"/>
+                            <field name="partner_id"/>
+                            <field name="synced"/>
+                            <field name="last_sync"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_shopify_customer" model="ir.actions.act_window">
+        <field name="name">Clientes Shopify</field>
+        <field name="res_model">shopify.customer</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

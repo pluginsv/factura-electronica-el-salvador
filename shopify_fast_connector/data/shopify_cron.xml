@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Cron: Sincronizar pedidos cada 15 minutos -->
+    <record id="cron_shopify_sync_orders" model="ir.cron">
+        <field name="name">Shopify: Sincronizar Pedidos</field>
+        <field name="model_id" ref="model_shopify_instance"/>
+        <field name="state">code</field>
+        <field name="code">
+for instance in env['shopify.instance'].search([('state', '=', 'connected')]):
+    try:
+        instance.action_sync_orders()
+    except Exception as e:
+        instance._create_log('error', 'cron_orders', str(e))
+        </field>
+        <field name="interval_number">15</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Cron: Sincronizar productos cada 6 horas -->
+    <record id="cron_shopify_sync_products" model="ir.cron">
+        <field name="name">Shopify: Sincronizar Productos</field>
+        <field name="model_id" ref="model_shopify_instance"/>
+        <field name="state">code</field>
+        <field name="code">
+for instance in env['shopify.instance'].search([('state', '=', 'connected'), ('sync_products', '=', True)]):
+    try:
+        instance.action_sync_products()
+    except Exception as e:
+        instance._create_log('error', 'cron_products', str(e))
+        </field>
+        <field name="interval_number">6</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Cron: Sincronizar clientes cada 12 horas -->
+    <record id="cron_shopify_sync_customers" model="ir.cron">
+        <field name="name">Shopify: Sincronizar Clientes</field>
+        <field name="model_id" ref="model_shopify_instance"/>
+        <field name="state">code</field>
+        <field name="code">
+for instance in env['shopify.instance'].search([('state', '=', 'connected'), ('sync_customers', '=', True)]):
+    try:
+        instance.action_sync_customers()
+    except Exception as e:
+        instance._create_log('error', 'cron_customers', str(e))
+        </field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Cron: Enviar KPI por email -->
+    <record id="cron_shopify_kpi_email" model="ir.cron">
+        <field name="name">Shopify: Enviar Resumen KPI</field>
+        <field name="model_id" ref="model_shopify_instance"/>
+        <field name="state">code</field>
+        <field name="code">
+for instance in env['shopify.instance'].search([('state', '=', 'connected'), ('kpi_email_enabled', '=', True)]):
+    try:
+        instance._send_kpi_email()
+    except Exception as e:
+        instance._create_log('error', 'cron_kpi', str(e))
+        </field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Producto de envio por defecto -->
+    <record id="product_shopify_shipping" model="product.product">
+        <field name="name">Costo de Envio Shopify</field>
+        <field name="default_code">SHOPIFY-SHIPPING</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+        <field name="invoice_policy">order</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+    </record>
+</odoo>

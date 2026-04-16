@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mail_template_shopify_kpi" model="mail.template">
+        <field name="name">Shopify: Resumen KPI</field>
+        <field name="model_id" ref="model_shopify_instance"/>
+        <field name="email_from">{{ (object.company_id.email or user.email) }}</field>
+        <field name="email_to">{{ object.kpi_email_to }}</field>
+        <field name="subject">Shopify KPI - {{ object.name }} - {{ context.get('date_range', 'Hoy') }}</field>
+        <field name="body_html" type="html">
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+    <div style="background: #0A1628; padding: 24px; border-radius: 8px 8px 0 0; text-align: center;">
+        <h2 style="color: #F5C842; margin: 0;">Resumen KPI - Shopify</h2>
+        <p style="color: #90CAF9; margin: 8px 0 0;">{{ object.name }}</p>
+    </div>
+    <div style="background: #fff; padding: 24px; border: 1px solid #E0E0E0;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #E0E0E0;">
+                    <strong>Pedidos sincronizados</strong>
+                </td>
+                <td style="padding: 12px; border-bottom: 1px solid #E0E0E0; text-align: right; font-size: 20px; font-weight: bold; color: #1565C0;">
+                    {{ ctx.get('total_orders', 0) }}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #E0E0E0;">
+                    <strong>Monto total</strong>
+                </td>
+                <td style="padding: 12px; border-bottom: 1px solid #E0E0E0; text-align: right; font-size: 20px; font-weight: bold; color: #2E7D32;">
+                    $ {{ '%.2f' % ctx.get('total_amount', 0) }}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #E0E0E0;">
+                    <strong>Pedidos con error</strong>
+                </td>
+                <td style="padding: 12px; border-bottom: 1px solid #E0E0E0; text-align: right; font-size: 20px; font-weight: bold; color: #C62828;">
+                    {{ ctx.get('error_orders', 0) }}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #E0E0E0;">
+                    <strong>Nuevos clientes</strong>
+                </td>
+                <td style="padding: 12px; border-bottom: 1px solid #E0E0E0; text-align: right; font-size: 20px; font-weight: bold;">
+                    {{ ctx.get('new_customers', 0) }}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 12px;">
+                    <strong>Productos sincronizados</strong>
+                </td>
+                <td style="padding: 12px; text-align: right; font-size: 20px; font-weight: bold;">
+                    {{ ctx.get('total_products', 0) }}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="background: #F8F9FA; padding: 16px; border-radius: 0 0 8px 8px; text-align: center; border: 1px solid #E0E0E0; border-top: 0;">
+        <p style="color: #546E7A; font-size: 12px; margin: 0;">
+            Generado automaticamente por Shopify Fast Connector &middot; contaspro.net
+        </p>
+    </div>
+</div>
+        </field>
+    </record>
+</odoo>
