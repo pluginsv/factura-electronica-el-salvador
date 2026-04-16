@@ -11,7 +11,7 @@
     "images": ['static/description/banner.png',
                'static/description/icon.png',
                'static/description/thumbnail.png'],
-    'price': 15,
+    'price': 0,
     'currency': 'USD',
     'license': 'OPL-1',
     'category': 'Localization',
