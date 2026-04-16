@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_shopify_instance_form" model="ir.ui.view">
+        <field name="name">shopify.instance.form</field>
+        <field name="model">shopify.instance</field>
+        <field name="arch" type="xml">
+            <form string="Tienda Shopify">
+                <header>
+                    <button name="action_test_connection" string="Probar Conexion"
+                            type="object" class="btn-primary"
+                            invisible="state == 'connected'"/>
+                    <button name="action_full_sync" string="Sincronizar Todo"
+                            type="object" class="btn-primary"
+                            invisible="state != 'connected'"/>
+                    <button name="action_sync_orders" string="Sincronizar Pedidos"
+                            type="object"
+                            invisible="state != 'connected'"/>
+                    <button name="action_sync_products" string="Sincronizar Productos"
+                            type="object"
+                            invisible="state != 'connected'"/>
+                    <button name="action_sync_customers" string="Sincronizar Clientes"
+                            type="object"
+                            invisible="state != 'connected'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,step1,step2,step3,connected"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_orders" type="object"
+                                class="oe_stat_button" icon="fa-shopping-cart">
+                            <field name="order_count" widget="statinfo" string="Pedidos"/>
+                        </button>
+                        <button name="action_view_products" type="object"
+                                class="oe_stat_button" icon="fa-cubes">
+                            <field name="product_count" widget="statinfo" string="Productos"/>
+                        </button>
+                        <button name="action_view_customers" type="object"
+                                class="oe_stat_button" icon="fa-users">
+                            <field name="customer_count" widget="statinfo" string="Clientes"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Nombre de la tienda"/></h1>
+                    </div>
+                    <group>
+                        <group string="Conexion Shopify">
+                            <field name="shopify_url" placeholder="mi-tienda.myshopify.com"/>
+                            <field name="api_key"/>
+                            <field name="api_secret" password="True"/>
+                            <field name="access_token" password="True"/>
+                            <field name="webhook_secret" password="True"/>
+                        </group>
+                        <group string="Configuracion General">
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="warehouse_id"/>
+                            <field name="pricelist_id"/>
+                            <field name="payment_journal_id"/>
+                            <field name="sales_team_id"/>
+                            <field name="fiscal_position_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Automatizacion" name="automation">
+                            <group>
+                                <group string="Flujo de Ordenes">
+                                    <field name="auto_confirm_order"/>
+                                    <field name="auto_create_invoice"/>
+                                    <field name="auto_register_payment"/>
+                                    <field name="auto_process_inventory"/>
+                                    <field name="notify_shopify_fulfillment"/>
+                                </group>
+                                <group string="Sincronizacion">
+                                    <field name="sync_products"/>
+                                    <field name="sync_customers"/>
+                                    <field name="last_order_sync"/>
+                                    <field name="last_product_sync"/>
+                                    <field name="last_customer_sync"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="KPI Email" name="kpi">
+                            <group>
+                                <group>
+                                    <field name="kpi_email_enabled"/>
+                                    <field name="kpi_email_to"
+                                           invisible="not kpi_email_enabled"/>
+                                    <field name="kpi_email_frequency"
+                                           invisible="not kpi_email_enabled"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopify_instance_tree" model="ir.ui.view">
+        <field name="name">shopify.instance.tree</field>
+        <field name="model">shopify.instance</field>
+        <field name="arch" type="xml">
+            <tree string="Tiendas Shopify">
+                <field name="name"/>
+                <field name="shopify_url"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'connected'"
+                       decoration-info="state not in ('connected', 'draft')"
+                       decoration-muted="state == 'draft'"/>
+                <field name="order_count" string="Pedidos"/>
+                <field name="last_order_sync"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_shopify_instance" model="ir.actions.act_window">
+        <field name="name">Tiendas Shopify</field>
+        <field name="res_model">shopify.instance</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

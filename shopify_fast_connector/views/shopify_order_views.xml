@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_shopify_order_form" model="ir.ui.view">
+        <field name="name">shopify.order.form</field>
+        <field name="model">shopify.order</field>
+        <field name="arch" type="xml">
+            <form string="Pedido Shopify" create="false">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,order_created,order_confirmed,invoiced,paid,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="shopify_order_name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Shopify">
+                            <field name="instance_id"/>
+                            <field name="shopify_id"/>
+                            <field name="shopify_financial_status" widget="badge"/>
+                            <field name="shopify_fulfillment_status" widget="badge"/>
+                            <field name="shopify_created_at"/>
+                        </group>
+                        <group string="Odoo">
+                            <field name="sale_order_id"/>
+                            <field name="invoice_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Montos">
+                            <field name="shopify_subtotal"/>
+                            <field name="shopify_tax"/>
+                            <field name="shopify_shipping"/>
+                            <field name="shopify_discount"/>
+                            <field name="shopify_total"/>
+                            <field name="shopify_currency"/>
+                        </group>
+                    </group>
+                    <group invisible="state != 'error'" string="Error">
+                        <field name="error_message" nolabel="1" colspan="2"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopify_order_tree" model="ir.ui.view">
+        <field name="name">shopify.order.tree</field>
+        <field name="model">shopify.order</field>
+        <field name="arch" type="xml">
+            <tree string="Pedidos Shopify" decoration-danger="state == 'error'"
+                  decoration-success="state == 'done'">
+                <field name="shopify_order_name"/>
+                <field name="instance_id"/>
+                <field name="shopify_total"/>
+                <field name="shopify_financial_status" widget="badge"/>
+                <field name="shopify_fulfillment_status" widget="badge"/>
+                <field name="sale_order_id"/>
+                <field name="invoice_id"/>
+                <field name="state" widget="badge"/>
+                <field name="shopify_created_at"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_shopify_order" model="ir.actions.act_window">
+        <field name="name">Pedidos Shopify</field>
+        <field name="res_model">shopify.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

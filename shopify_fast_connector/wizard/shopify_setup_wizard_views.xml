@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_shopify_setup_wizard_form" model="ir.ui.view">
+        <field name="name">shopify.setup.wizard.form</field>
+        <field name="model">shopify.setup.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Configuracion Shopify">
+                <div class="oe_title" style="margin-bottom: 16px;">
+                    <h2>
+                        <span invisible="step != '1'">Paso 1: Conectar tu Tienda</span>
+                        <span invisible="step != '2'">Paso 2: Sincronizar Productos</span>
+                        <span invisible="step != '3'">Paso 3: Sincronizar Clientes</span>
+                        <span invisible="step != '4'">Paso 4: Configuracion Final</span>
+                    </h2>
+                </div>
+
+                <group invisible="step != '1'">
+                    <group string="Datos de Conexion">
+                        <field name="shopify_url" placeholder="mi-tienda.myshopify.com"/>
+                        <field name="access_token" password="True"/>
+                        <field name="api_key"/>
+                    </group>
+                </group>
+
+                <group invisible="step != '2'">
+                    <div class="alert alert-info" role="alert">
+                        <strong>Conexion exitosa.</strong> Ahora sincronizaremos tus productos de Shopify con Odoo.
+                        Haz clic en <b>Siguiente</b> para iniciar la sincronizacion.
+                    </div>
+                </group>
+
+                <group invisible="step != '3'">
+                    <div class="alert alert-info" role="alert">
+                        <strong>Productos sincronizados.</strong> Ahora sincronizaremos tus clientes.
+                        Haz clic en <b>Siguiente</b> para continuar.
+                    </div>
+                </group>
+
+                <group invisible="step != '4'">
+                    <group string="Configuracion de Automatizacion">
+                        <field name="warehouse_id"/>
+                        <field name="payment_journal_id"/>
+                        <field name="auto_confirm"/>
+                        <field name="auto_invoice"/>
+                        <field name="auto_payment"/>
+                    </group>
+                </group>
+
+                <field name="step" invisible="1"/>
+                <field name="instance_id" invisible="1"/>
+
+                <footer>
+                    <button name="action_next" string="Siguiente" type="object" class="btn-primary"
+                            invisible="step == '4'"/>
+                    <button name="action_next" string="Finalizar" type="object" class="btn-primary"
+                            invisible="step != '4'"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_shopify_setup_wizard" model="ir.actions.act_window">
+        <field name="name">Configurar Shopify</field>
+        <field name="res_model">shopify.setup.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
