@@ -1,0 +1,75 @@
+# -*- coding: utf-8 -*-
+{
+    'name': "Facturacion de El Salvador",
+    'summary': """Facturacion de El Salvador""",
+    'description': """
+       Facturacion de El Salvador.
+       Permite Imprimir los tres tipos de facturas utilizados en El Salvador
+        - Consumidor Final
+        - Credito Fiscal
+        - Exportaciones
+      Tambien permite imprimir los documentos que retifican:
+        - Anulaciones.
+        - Nota de Credito
+        - Anulaciones de Exportacion
+      Valida que todos los documentos lleven los registros requeridos por ley
+        """,
+    'author': "Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores",
+    'website': "https://contaspro.net",
+    "images": ['static/description/banner.png',
+               'static/description/icon.png',
+               'static/description/thumbnail.png'],
+    'price': 50,
+    'currency': 'USD',
+    'license': 'LGPL-3',
+    'category': 'Contabilidad',
+    'version': '18.0.1.0.0',
+    'depends': ['base', 'sv_dte', 'account', 'product', 'mail'],
+    'assets': {
+        'web.assets_pdf': [
+            'invoice_sv_dte/static/src/css/bootstrap.min.css',
+        ],
+    },
+    'data': [
+        'views/account_journal.xml',
+        'views/posicion_arancel_view.xml',
+        'views/product_template_view.xml',
+        'views/account_move_view.xml',
+        'views/account_tax.xml',
+        'views/retencion_recibida1_view.xml',
+        'views/menu_retencion_recibida_1.xml',
+        'views/res_partner_configuracion_pagos_default.xml',
+
+        'data/journal_data.xml',
+        'data/mail_template_data.xml',
+        'report/report_invoice_anu.xml',
+        'report/report_invoice_ccf.xml',
+        'report/report_invoice_fcf.xml',
+        'report/report_invoice_exp.xml',
+        'report/report_invoice_ndc.xml',
+        'report/report_invoice_cse.xml',
+        'report/report_invoice_ndd.xml',
+        'report/report_invoice_digital.xml',
+        'report/report_invoice_ticket.xml',
+        'report/invoice_report.xml',
+        'report/report_invoice_main.xml',
+        'security/ir.model.access.csv',
+        'wizard/account_move_reversal.xml',
+        'views/account_lines.xml',
+        'views/sale_order.xml',
+        'data/account_retention_accounts.xml',
+        'data/account_discount.xml',
+        'views/res_partner_contribuyente.xml',
+        'views/account_move_fechas_view.xml',
+        'views/report_invoice_switch.xml',
+        'views/account_move_print_pdf.xml',
+        'views/account_sale_order_retencion.xml',
+        'views/retencion_iva_move_order.xml',
+        'views/action_confirm_accounting.xml',
+    ],
+    'demo': [],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+    # 'post_init_hook': 'set_data',
+}

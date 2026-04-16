@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- <record id="sv_dte.fcf_journal" model="account.journal">
+            <field name="type_report">fcf</field>
+        </record>
+        <record id="sv_dte.ccf_journal" model="account.journal">
+            <field name="type_report">ccf</field>
+        </record>
+        <record id="sv_dte.ndc_journal" model="account.journal">
+            <field name="type_report">ndc</field>
+        </record>
+        <record id="sv_dte.exp_journal" model="account.journal">
+            <field name="type_report">exp</field>
+        </record>
+        <record id="sv_dte.axp_journal" model="account.journal">
+            <field name="type_report">axp</field>
+        </record>
+        <record id="sv_dte.anu_journal" model="account.journal">
+            <field name="type_report">anu</field>
+        </record>
+        <record id="sv_dte.cccf_journal" model="account.journal">
+            <field name="type_report">compras</field>
+        </record>
+        <record id="sv_dte.crec_journal" model="account.journal">
+            <field name="type_report">na</field>
+        </record>
+        <record id="sv_dte.cfcf_journal" model="account.journal">
+            <field name="type_report">na</field>
+        </record>
+        <record id="sv_dte.cexc_journal" model="account.journal">
+            <field name="type_report">cse</field>
+        </record>
+        <record id="sv_dte.import_journal" model="account.journal">
+            <field name="type_report">imp</field>
+        </record> -->
+    </data>
+</odoo>

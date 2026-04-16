@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+hacienda_contingencia_sv_dte.access_account_contingencia1,access.account.contingencia1,hacienda_contingencia_sv_dte.model_account_contingencia1,base.group_user,1,1,1,1
+hacienda_contingencia_sv_dte.access_account_lote_user,access.account.lote.user,hacienda_contingencia_sv_dte.model_account_lote,base.group_user,1,1,1,1
+hacienda_contingencia_sv_dte.access_account_contingencia_bloque,access.account.contingencia.bloque,hacienda_contingencia_sv_dte.model_account_contingencia_bloque,base.group_user,1,1,1,1
