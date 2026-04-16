@@ -11,7 +11,7 @@
     'license': 'LGPL-3',
     'summary': 'Permite gestionar horas extra, comisiones y otros ingresos por empleado',
     'category': 'Human Resources',
-    'depends': ['web', 'base', 'hr', 'hr_payroll', 'hr_retenciones_sv_dte', 'hr_work_entry_contract', 'resource'],
+    'depends': ['web', 'base', 'hr', 'hr_payroll', 'hr_retenciones_sv_dte', 'resource'],
     'data': [
         'data/hr_overtime_data.xml',
         'data/hr_salary_assignment_data.xml',
