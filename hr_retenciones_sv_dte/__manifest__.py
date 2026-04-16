@@ -8,7 +8,7 @@
                'static/description/thumbnail.png'],
     "price": 20,
     "currency": "USD",
-    "license": "LGPL-3",
+    "license": "OPL-1",
     "category": "Human Resources - Deducciones",
     "depends": [
         "hr", "hr_payroll", "hr_contract", 'hr_attendance'

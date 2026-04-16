@@ -8,7 +8,7 @@
                'static/description/thumbnail.png'],
     'price': 20,
     'currency': 'USD',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'summary': 'Permite gestionar horas extra, comisiones y otros ingresos por empleado',
     'category': 'Human Resources',
     'depends': ['web', 'base', 'hr', 'hr_payroll', 'hr_retenciones_sv_dte', 'hr_work_entry_contract', 'resource'],

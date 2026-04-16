@@ -12,7 +12,7 @@
         'views/account_move_line_views.xml',
 
     ],
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'installable': True,
     'application': False,
 }

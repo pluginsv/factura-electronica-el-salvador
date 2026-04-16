@@ -9,7 +9,7 @@
                'static/description/thumbnail.png'],
     "price": 15,
     "currency": "USD",
-    "license": "LGPL-3",
+    "license": "OPL-1",
     "depends": ["account", "product", "contacts", "uom"],
     "data": [
         "security/ir.model.access.csv",

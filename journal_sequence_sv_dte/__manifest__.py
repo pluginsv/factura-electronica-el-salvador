@@ -14,7 +14,7 @@
                'static/description/thumbnail.png'],
     'price': 10,
     'currency': 'USD',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'support': 'developersodoo@gmail.com',
     'depends': ['account'],
     'demo': [],
