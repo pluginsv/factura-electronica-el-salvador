@@ -12,7 +12,7 @@
     "images": ['static/description/banner.png',
                'static/description/icon.png',
                'static/description/thumbnail.png'],
-    'price': 10,
+    'price': 0,
     'currency': 'USD',
     'license': 'OPL-1',
     'support': 'developersodoo@gmail.com',
