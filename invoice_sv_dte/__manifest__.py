@@ -23,7 +23,7 @@
     'currency': 'USD',
     'license': 'LGPL-3',
     'category': 'Contabilidad',
-    'version': '18.0.1.0.0',
+    'version': '19.0.1.0.0',
     'depends': ['base', 'sv_dte', 'account', 'product', 'mail'],
     'assets': {
         'web.assets_pdf': [

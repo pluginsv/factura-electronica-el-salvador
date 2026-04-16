@@ -1,6 +1,6 @@
 {
     'name': 'Reporte Partidas Contables SV',
-    'version': '18.0.1.0.0',
+    'version': '19.0.1.0.0',
     'summary': 'Reporte PDF de partidas contables agrupadas por cuenta padre',
     'author': 'Custom',
     'depends': ['account'],

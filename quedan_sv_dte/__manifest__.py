@@ -1,6 +1,6 @@
 {
     'name': 'Gestión de Quedanes (El Salvador)',
-    'version': '18.0.1.0.0',
+    'version': '19.0.1.0.0',
     'summary': 'Permite registrar y controlar quedanes de proveedores',
     'author': 'Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores',
     'website': 'https://contaspro.net',

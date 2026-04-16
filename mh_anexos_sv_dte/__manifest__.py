@@ -11,7 +11,7 @@
     'currency': 'USD',
     'license': 'LGPL-3',
     'category': 'Localization',
-    'version': '18.0.1.0.0',
+    'version': '19.0.1.0.0',
     'depends': ['base',
                 # "hacienda_sv_dte",  # webservice de Hacienda
                 # "base_sv_dte",
