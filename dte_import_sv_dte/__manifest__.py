@@ -10,7 +10,7 @@
     "price": 15,
     "currency": "USD",
     "license": "LGPL-3",
-    "depends": ["accountant", "product", "contacts", "uom"],
+    "depends": ["account", "product", "contacts", "uom"],
     "data": [
         "security/ir.model.access.csv",
         "data/dte_import_sequence.xml",
