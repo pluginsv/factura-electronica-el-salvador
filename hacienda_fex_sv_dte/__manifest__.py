@@ -16,7 +16,7 @@
     "currency": "USD",
     "license": "LGPL-3",
     'category': 'Accounting',
-    "version": "18.0.1.0.0",
+    "version": "17.0.1.0.0",
     'depends': ['base',
         "hacienda_sv_dte",   # webservice de Hacienda
         "base_sv_dte",

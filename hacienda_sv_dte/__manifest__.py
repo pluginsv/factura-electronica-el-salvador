@@ -1,6 +1,6 @@
 {
     "name": "Modulo Base para los Web Services de Hacienda",
-    "version": "18.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Localization/ElSalvador",
     "sequence": 14,
     "author": "Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores",

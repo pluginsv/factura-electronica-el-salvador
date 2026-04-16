@@ -1,6 +1,6 @@
 {
     "name": "SV DTE Import (JSON a facturas)",
-    "version": "18.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Accounting/Localizations",
     "author": "Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores",
     "website": "https://contaspro.net",

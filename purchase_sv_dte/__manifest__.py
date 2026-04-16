@@ -2,7 +2,7 @@
 
 {
     "name": "Compras DTE El Salvador",
-    "version": "18.0.1.0.0",
+    "version": "17.0.1.0.0",
     "author": "Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores",
     "website": "https://contaspro.net",
     "images": ['static/description/banner.png',

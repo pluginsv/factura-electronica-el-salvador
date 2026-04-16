@@ -14,7 +14,7 @@
     'currency': 'USD',
     'license': 'LGPL-3',
     'category': 'General',
-    'version': '18.0.1.0.0',
+    'version': '17.0.1.0.0',
     'depends': [],
     # 'depends': ['base',
     #             'base_sv_dte'],
