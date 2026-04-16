@@ -1,27 +1,33 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Localizacion de El Salvador",
-    'summary': """Localizacion de El Salvador""",
+    'summary': """Localizacion contable, fiscal y tributaria de El Salvador para Odoo""",
     'description': """
-    Localizacion de El Salvador :
-        - Numero de registro comercial
-        - Numero de identificacion tributario
-        - Documento de Identificacion Unico
+    Localizacion de El Salvador para Odoo:
 
-    Agrega un plan contable basico requerido en El Salvador.
-    Agrega categorias de impuestos utilizados en El Salvador.
-    Agrega todos los impuestos utilizados en compras y ventas.
+    Plan contable y configuracion fiscal:
+        - Plan de cuentas oficial requerido en El Salvador
+        - Categorias e impuestos (IVA, retenciones, percepciones)
+        - Posiciones fiscales para compras y ventas
 
-    Permite generar los tres tipos de facturas utilizados en El Salvador
-        - Consumidor Final.
-        - Credito Fiscal.
-        - Exportaciones.
+    Catalogos tributarios del Ministerio de Hacienda:
+        - Actividades economicas, formas de pago, plazos
+        - Tipos de documento, tipos de operacion, tributos
+        - Unidades de medida, recintos fiscales, INCOTERMS
+        - Tipos de establecimiento, regimenes, contingencias
 
-    Tambien permite generar los documentos que rectifican:
-        - Anulaciones.
-        - Nota de Credito.
-        - Anulaciones de Exportacion.
-        """,
+    Tipos de identificacion fiscal:
+        - NIT (Numero de Identificacion Tributaria)
+        - NRC (Numero de Registro de Contribuyente)
+        - DUI (Documento Unico de Identidad)
+
+    Soporte para documentos fiscales:
+        - Consumidor Final (FCF)
+        - Credito Fiscal (CCF)
+        - Exportaciones
+        - Notas de Credito y Debito
+        - Anulaciones
+    """,
     'author': "Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores",
     'website': "https://contaspro.net",
     "images": ['static/description/banner.png',
