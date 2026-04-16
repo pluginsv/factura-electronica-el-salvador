@@ -1,0 +1,264 @@
+id,code,name,dpto_id/id
+Cat_013_001,00,"Otro País",dpto_sv_dte.00
+Cat_013_002,01,"AHUACHAPÁN",dpto_sv_dte.01
+Cat_013_003,02,"APANECA",dpto_sv_dte.01
+Cat_013_004,03,"ATIQUIZAYA",dpto_sv_dte.01
+Cat_013_005,04,"CONCEPCIÓN DE ATACO",dpto_sv_dte.01
+Cat_013_006,05,"EL REFUGIO",dpto_sv_dte.01
+Cat_013_007,06,"GUAYMANGO",dpto_sv_dte.01
+Cat_013_008,07,"JUJUTLA",dpto_sv_dte.01
+Cat_013_009,08,"SAN FRANCISCO MENÉNDEZ",dpto_sv_dte.01
+Cat_013_010,09,"SAN LORENZO",dpto_sv_dte.01
+Cat_013_011,10,"SAN PEDRO PUXTLA",dpto_sv_dte.01
+Cat_013_012,11,"TACUBA",dpto_sv_dte.01
+Cat_013_013,12,"TURÍN",dpto_sv_dte.01
+Cat_013_014,01,"CANDELARIA DE LA FRONTERA",dpto_sv_dte.02
+Cat_013_015,02,"COATEPEQUE",dpto_sv_dte.02
+Cat_013_016,03,"CHALCHUAPA",dpto_sv_dte.02
+Cat_013_017,04,"EL CONGO",dpto_sv_dte.02
+Cat_013_018,05,"EL PORVENIR",dpto_sv_dte.02
+Cat_013_019,06,"MASAHUAT",dpto_sv_dte.02
+Cat_013_020,07,"METAPÁN",dpto_sv_dte.02
+Cat_013_021,08,"SAN ANTONIO PAJONAL",dpto_sv_dte.02
+Cat_013_022,09,"SAN SEBASTIÁN SALITRILLO",dpto_sv_dte.02
+Cat_013_023,10,"SANTA ANA",dpto_sv_dte.02
+Cat_013_024,11,"STA ROSA GUACHI",dpto_sv_dte.02
+Cat_013_025,12,"STGO D LA FRONT",dpto_sv_dte.02
+Cat_013_026,13,"TEXISTEPEQUE",dpto_sv_dte.02
+Cat_013_027,01,"ACAJUTLA",dpto_sv_dte.03
+Cat_013_028,02,"ARMENIA",dpto_sv_dte.03
+Cat_013_029,03,"CALUCO",dpto_sv_dte.03
+Cat_013_030,04,"CUISNAHUAT",dpto_sv_dte.03
+Cat_013_031,05,"STA I ISHUATAN",dpto_sv_dte.03
+Cat_013_032,06,"IZALCO",dpto_sv_dte.03
+Cat_013_033,07,"JUAYÚA",dpto_sv_dte.03
+Cat_013_034,08,"NAHUIZALCO",dpto_sv_dte.03
+Cat_013_035,09,"NAHULINGO",dpto_sv_dte.03
+Cat_013_036,10,"SALCOATITÁN",dpto_sv_dte.03
+Cat_013_037,11,"SAN ANTONIO DEL MONTE",dpto_sv_dte.03
+Cat_013_038,12,"SAN JULIÁN",dpto_sv_dte.03
+Cat_013_039,13,"STA C MASAHUAT",dpto_sv_dte.03
+Cat_013_040,14,"SANTO DOMINGO GUZMÁN",dpto_sv_dte.03
+Cat_013_041,15,"SONSONATE",dpto_sv_dte.03
+Cat_013_042,16,"SONZACATE",dpto_sv_dte.03
+Cat_013_043,01,"AGUA CALIENTE",dpto_sv_dte.04
+Cat_013_044,02,"ARCATAO",dpto_sv_dte.04
+Cat_013_045,03,"AZACUALPA",dpto_sv_dte.04
+Cat_013_046,04,"CITALÁ",dpto_sv_dte.04
+Cat_013_047,05,"COMALAPA",dpto_sv_dte.04
+Cat_013_048,06,"CONCEPCIÓN QUEZALTEPEQUE",dpto_sv_dte.04
+Cat_013_049,07,"CHALATENANGO",dpto_sv_dte.04
+Cat_013_050,08,"DULCE NOM MARÍA",dpto_sv_dte.04
+Cat_013_051,09,"EL CARRIZAL",dpto_sv_dte.04
+Cat_013_052,10,"EL PARAÍSO",dpto_sv_dte.04
+Cat_013_053,11,"LA LAGUNA",dpto_sv_dte.04
+Cat_013_054,12,"LA PALMA",dpto_sv_dte.04
+Cat_013_055,13,"LA REINA",dpto_sv_dte.04
+Cat_013_056,14,"LAS VUELTAS",dpto_sv_dte.04
+Cat_013_057,15,"NOMBRE DE JESUS",dpto_sv_dte.04
+Cat_013_058,16,"NVA CONCEPCIÓN",dpto_sv_dte.04
+Cat_013_059,17,"NUEVA TRINIDAD",dpto_sv_dte.04
+Cat_013_060,18,"OJOS DE AGUA",dpto_sv_dte.04
+Cat_013_061,19,"POTONICO",dpto_sv_dte.04
+Cat_013_062,20,"SAN ANT LA CRUZ",dpto_sv_dte.04
+Cat_013_063,21,"SAN ANT RANCHOS",dpto_sv_dte.04
+Cat_013_064,22,"SAN FERNANDO",dpto_sv_dte.04
+Cat_013_065,23,"SAN FRANCISCO LEMPA",dpto_sv_dte.04
+Cat_013_066,24,"SAN FRANCISCO MORAZÁN",dpto_sv_dte.04
+Cat_013_067,25,"SAN IGNACIO",dpto_sv_dte.04
+Cat_013_068,26,"SAN I LABRADOR",dpto_sv_dte.04
+Cat_013_069,27,"SAN J CANCASQUE",dpto_sv_dte.04
+Cat_013_070,28,"SAN JOSE FLORES",dpto_sv_dte.04
+Cat_013_071,29,"SAN LUIS CARMEN",dpto_sv_dte.04
+Cat_013_072,30,"SN MIG MERCEDES",dpto_sv_dte.04
+Cat_013_073,31,"SAN RAFAEL",dpto_sv_dte.04
+Cat_013_074,32,"SANTA RITA",dpto_sv_dte.04
+Cat_013_075,33,"TEJUTLA",dpto_sv_dte.04
+Cat_013_076,01,"ANTGO CUSCATLÁN",dpto_sv_dte.05
+Cat_013_077,02,"CIUDAD ARCE",dpto_sv_dte.05
+Cat_013_078,03,"COLON",dpto_sv_dte.05
+Cat_013_079,04,"COMASAGUA",dpto_sv_dte.05
+Cat_013_080,05,"CHILTIUPAN",dpto_sv_dte.05
+Cat_013_081,06,"HUIZÚCAR",dpto_sv_dte.05
+Cat_013_082,07,"JAYAQUE",dpto_sv_dte.05
+Cat_013_083,08,"JICALAPA",dpto_sv_dte.05
+Cat_013_084,09,"LA LIBERTAD",dpto_sv_dte.05
+Cat_013_085,10,"NUEVO CUSCATLÁN",dpto_sv_dte.05
+Cat_013_086,11,"SANTA TECLA",dpto_sv_dte.05
+Cat_013_087,12,"QUEZALTEPEQUE",dpto_sv_dte.05
+Cat_013_088,13,"SACACOYO",dpto_sv_dte.05
+Cat_013_089,14,"SN J VILLANUEVA",dpto_sv_dte.05
+Cat_013_090,15,"SAN JUAN OPICO",dpto_sv_dte.05
+Cat_013_091,16,"SAN MATÍAS",dpto_sv_dte.05
+Cat_013_092,17,"SAN P TACACHICO",dpto_sv_dte.05
+Cat_013_093,18,"TAMANIQUE",dpto_sv_dte.05
+Cat_013_094,19,"TALNIQUE",dpto_sv_dte.05
+Cat_013_095,20,"TEOTEPEQUE",dpto_sv_dte.05
+Cat_013_096,21,"TEPECOYO",dpto_sv_dte.05
+Cat_013_097,22,"ZARAGOZA",dpto_sv_dte.05
+Cat_013_098,01,"AGUILARES",dpto_sv_dte.06
+Cat_013_099,02,"APOPA",dpto_sv_dte.06
+Cat_013_100,03,"AYUTUXTEPEQUE",dpto_sv_dte.06
+Cat_013_101,04,"CUSCATANCINGO",dpto_sv_dte.06
+Cat_013_102,05,"EL PAISNAL",dpto_sv_dte.06
+Cat_013_103,06,"GUAZAPA",dpto_sv_dte.06
+Cat_013_104,07,"ILOPANGO",dpto_sv_dte.06
+Cat_013_105,08,"MEJICANOS",dpto_sv_dte.06
+Cat_013_106,09,"NEJAPA",dpto_sv_dte.06
+Cat_013_107,10,"PANCHIMALCO",dpto_sv_dte.06
+Cat_013_108,11,"ROSARIO DE MORA",dpto_sv_dte.06
+Cat_013_109,12,"SAN MARCOS",dpto_sv_dte.06
+Cat_013_110,13,"SAN MARTIN",dpto_sv_dte.06
+Cat_013_111,14,"SAN SALVADOR",dpto_sv_dte.06
+Cat_013_112,15,"STG TEXACUANGOS",dpto_sv_dte.06
+Cat_013_113,16,"SANTO TOMAS",dpto_sv_dte.06
+Cat_013_114,17,"SOYAPANGO",dpto_sv_dte.06
+Cat_013_115,18,"TONACATEPEQUE",dpto_sv_dte.06
+Cat_013_116,19,"CIUDAD DELGADO",dpto_sv_dte.06
+Cat_013_117,01,"CANDELARIA",dpto_sv_dte.07
+Cat_013_118,02,"COJUTEPEQUE",dpto_sv_dte.07
+Cat_013_119,03,"EL CARMEN",dpto_sv_dte.07
+Cat_013_120,04,"EL ROSARIO",dpto_sv_dte.07
+Cat_013_121,05,"MONTE SAN JUAN",dpto_sv_dte.07
+Cat_013_122,06,"ORAT CONCEPCIÓN",dpto_sv_dte.07
+Cat_013_123,07,"SAN B PERULAPIA",dpto_sv_dte.07
+Cat_013_124,08,"SAN CRISTÓBAL",dpto_sv_dte.07
+Cat_013_125,09,"SAN J GUAYABAL",dpto_sv_dte.07
+Cat_013_126,10,"SAN P PERULAPÁN",dpto_sv_dte.07
+Cat_013_127,11,"SAN RAF CEDROS",dpto_sv_dte.07
+Cat_013_128,12,"SAN RAMON",dpto_sv_dte.07
+Cat_013_129,13,"STA C ANALQUITO",dpto_sv_dte.07
+Cat_013_130,14,"STA C MICHAPA",dpto_sv_dte.07
+Cat_013_131,15,"SUCHITOTO",dpto_sv_dte.07
+Cat_013_132,16,"TENANCINGO",dpto_sv_dte.07
+Cat_013_133,01,"CUYULTITÁN",dpto_sv_dte.08
+Cat_013_134,02,"EL ROSARIO",dpto_sv_dte.08
+Cat_013_135,03,"JERUSALÉN",dpto_sv_dte.08
+Cat_013_136,04,"MERCED LA CEIBA",dpto_sv_dte.08
+Cat_013_137,05,"OLOCUILTA",dpto_sv_dte.08
+Cat_013_138,06,"PARAÍSO OSORIO",dpto_sv_dte.08
+Cat_013_139,07,"SN ANT MASAHUAT",dpto_sv_dte.08
+Cat_013_140,08,"SAN EMIGDIO",dpto_sv_dte.08
+Cat_013_141,09,"SN FCO CHINAMEC",dpto_sv_dte.08
+Cat_013_142,10,"SAN J NONUALCO",dpto_sv_dte.08
+Cat_013_143,11,"SAN JUAN TALPA",dpto_sv_dte.08
+Cat_013_144,12,"SAN JUAN TEPEZONTES",dpto_sv_dte.08
+Cat_013_145,13,"SAN LUIS TALPA",dpto_sv_dte.08
+Cat_013_146,14,"SAN MIGUEL TEPEZONTES",dpto_sv_dte.08
+Cat_013_147,15,"SAN PEDRO MASAHUAT",dpto_sv_dte.08
+Cat_013_148,16,"SAN PEDRO NONUALCO",dpto_sv_dte.08
+Cat_013_149,17,"SAN R OBRAJUELO",dpto_sv_dte.08
+Cat_013_150,18,"STA MA OSTUMA",dpto_sv_dte.08
+Cat_013_151,19,"STGO NONUALCO",dpto_sv_dte.08
+Cat_013_152,20,"TAPALHUACA",dpto_sv_dte.08
+Cat_013_153,21,"ZACATECOLUCA",dpto_sv_dte.08
+Cat_013_154,22,"SN LUIS LA HERR",dpto_sv_dte.08
+Cat_013_155,01,"CINQUERA",dpto_sv_dte.09
+Cat_013_156,02,"GUACOTECTI",dpto_sv_dte.09
+Cat_013_157,03,"ILOBASCO",dpto_sv_dte.09
+Cat_013_158,04,"JUTIAPA",dpto_sv_dte.09
+Cat_013_159,05,"SAN ISIDRO",dpto_sv_dte.09
+Cat_013_160,06,"SENSUNTEPEQUE",dpto_sv_dte.09
+Cat_013_161,07,"TEJUTEPEQUE",dpto_sv_dte.09
+Cat_013_162,08,"VICTORIA",dpto_sv_dte.09
+Cat_013_163,09,"DOLORES",dpto_sv_dte.09
+Cat_013_164,01,"APASTEPEQUE",dpto_sv_dte.10
+Cat_013_165,02,"GUADALUPE",dpto_sv_dte.10
+Cat_013_166,03,"SAN CAY ISTEPEQ",dpto_sv_dte.10
+Cat_013_167,04,"SANTA CLARA",dpto_sv_dte.10
+Cat_013_168,05,"SANTO DOMINGO",dpto_sv_dte.10
+Cat_013_169,06,"SN EST CATARINA",dpto_sv_dte.10
+Cat_013_170,07,"SAN ILDEFONSO",dpto_sv_dte.10
+Cat_013_171,08,"SAN LORENZO",dpto_sv_dte.10
+Cat_013_172,09,"SAN SEBASTIÁN",dpto_sv_dte.10
+Cat_013_173,10,"SAN VICENTE",dpto_sv_dte.10
+Cat_013_174,11,"TECOLUCA",dpto_sv_dte.10
+Cat_013_175,12,"TEPETITÁN",dpto_sv_dte.10
+Cat_013_176,13,"VERAPAZ",dpto_sv_dte.10
+Cat_013_177,01,"ALEGRÍA",dpto_sv_dte.11
+Cat_013_178,02,"BERLÍN",dpto_sv_dte.11
+Cat_013_179,03,"CALIFORNIA",dpto_sv_dte.11
+Cat_013_180,04,"CONCEP BATRES",dpto_sv_dte.11
+Cat_013_181,05,"EL TRIUNFO",dpto_sv_dte.11
+Cat_013_182,06,"EREGUAYQUÍN",dpto_sv_dte.11
+Cat_013_183,07,"ESTANZUELAS",dpto_sv_dte.11
+Cat_013_184,08,"JIQUILISCO",dpto_sv_dte.11
+Cat_013_185,09,"JUCUAPA",dpto_sv_dte.11
+Cat_013_186,10,"JUCUARÁN",dpto_sv_dte.11
+Cat_013_187,11,"MERCEDES UMAÑA",dpto_sv_dte.11
+Cat_013_188,12,"NUEVA GRANADA",dpto_sv_dte.11
+Cat_013_189,13,"OZATLÁN",dpto_sv_dte.11
+Cat_013_190,14,"PTO EL TRIUNFO",dpto_sv_dte.11
+Cat_013_191,15,"SAN AGUSTÍN",dpto_sv_dte.11
+Cat_013_192,16,"SN BUENAVENTURA",dpto_sv_dte.11
+Cat_013_193,17,"SAN DIONISIO",dpto_sv_dte.11
+Cat_013_194,18,"SANTA ELENA",dpto_sv_dte.11
+Cat_013_195,19,"SAN FCO JAVIER",dpto_sv_dte.11
+Cat_013_196,20,"SANTA MARÍA",dpto_sv_dte.11
+Cat_013_197,21,"STGO DE MARÍA",dpto_sv_dte.11
+Cat_013_198,22,"TECAPÁN",dpto_sv_dte.11
+Cat_013_199,23,"USULUTÁN",dpto_sv_dte.11
+Cat_013_200,01,"CAROLINA",dpto_sv_dte.12
+Cat_013_201,02,"CIUDAD BARRIOS",dpto_sv_dte.12
+Cat_013_202,03,"COMACARÁN",dpto_sv_dte.12
+Cat_013_203,04,"CHAPELTIQUE",dpto_sv_dte.12
+Cat_013_204,05,"CHINAMECA",dpto_sv_dte.12
+Cat_013_205,06,"CHIRILAGUA",dpto_sv_dte.12
+Cat_013_206,07,"EL TRANSITO",dpto_sv_dte.12
+Cat_013_207,08,"LOLOTIQUE",dpto_sv_dte.12
+Cat_013_208,09,"MONCAGUA",dpto_sv_dte.12
+Cat_013_209,10,"NUEVA GUADALUPE",dpto_sv_dte.12
+Cat_013_210,11,"NVO EDÉN S JUAN",dpto_sv_dte.12
+Cat_013_211,12,QUELEPA",dpto_sv_dte.12
+Cat_013_212,13,"SAN ANT D MOSCO",dpto_sv_dte.12
+Cat_013_213,14,"SAN GERARDO",dpto_sv_dte.12
+Cat_013_214,15,"SAN JORGE",dpto_sv_dte.12
+Cat_013_215,16,"SAN LUIS REINA",dpto_sv_dte.12
+Cat_013_216,17,"SAN MIGUEL",dpto_sv_dte.12
+Cat_013_217,18,"SAN RAF ORIENTE",dpto_sv_dte.12
+Cat_013_218,19,"SESORI",dpto_sv_dte.12
+Cat_013_219,20,"ULUAZAPA",dpto_sv_dte.12
+Cat_013_220,01,"ARAMBALA",dpto_sv_dte.13
+Cat_013_221,02,"CACAOPERA",dpto_sv_dte.13
+Cat_013_222,03,"CORINTO",dpto_sv_dte.13
+Cat_013_223,04,"CHILANGA",dpto_sv_dte.13
+Cat_013_224,05,"DELIC DE CONCEP",dpto_sv_dte.13
+Cat_013_225,06,"EL DIVISADERO",dpto_sv_dte.13
+Cat_013_226,07,"EL ROSARIO",dpto_sv_dte.13
+Cat_013_227,08,"GUALOCOCTI",dpto_sv_dte.13
+Cat_013_228,09,"GUATAJIAGUA",dpto_sv_dte.13
+Cat_013_229,10,"JOATECA",dpto_sv_dte.13
+Cat_013_230,11,"JOCOAITIQUE",dpto_sv_dte.13
+Cat_013_231,12,"JOCORO",dpto_sv_dte.13
+Cat_013_232,13,"LOLOTIQUILLO",dpto_sv_dte.13
+Cat_013_233,14,"MEANGUERA",dpto_sv_dte.13
+Cat_013_234,15,"OSICALA",dpto_sv_dte.13
+Cat_013_235,16,"PERQUÍN",dpto_sv_dte.13
+Cat_013_236,17,"SAN CARLOS",dpto_sv_dte.13
+Cat_013_237,18,"SAN FERNANDO",dpto_sv_dte.13
+Cat_013_238,19,"SAN FCO GOTERA",dpto_sv_dte.13
+Cat_013_239,20,"SAN ISIDRO",dpto_sv_dte.13
+Cat_013_240,21,"SAN SIMÓN",dpto_sv_dte.13
+Cat_013_241,22,"SENSEMBRA",dpto_sv_dte.13
+Cat_013_242,23,"SOCIEDAD",dpto_sv_dte.13
+Cat_013_243,24,"TOROLA",dpto_sv_dte.13
+Cat_013_244,25,"YAMABAL",dpto_sv_dte.13
+Cat_013_245,26,"YOLOAIQUÍN",dpto_sv_dte.13
+Cat_013_246,01,"ANAMOROS",dpto_sv_dte.14
+Cat_013_247,02,"BOLÍVAR",dpto_sv_dte.14
+Cat_013_248,03,"CONCEP DE OTE",dpto_sv_dte.14
+Cat_013_249,04,"CONCHAGUA",dpto_sv_dte.14
+Cat_013_250,05,"EL CARMEN",dpto_sv_dte.14
+Cat_013_251,06,"EL SAUCE",dpto_sv_dte.14
+Cat_013_252,07,"INTIPUCÁ",dpto_sv_dte.14
+Cat_013_253,08,"LA UNIÓN",dpto_sv_dte.14
+Cat_013_254,09,"LISLIQUE",dpto_sv_dte.14
+Cat_013_255,10,"MEANG DEL GOLFO",dpto_sv_dte.14
+Cat_013_256,11,"NUEVA ESPARTA",dpto_sv_dte.14
+Cat_013_257,12,"PASAQUINA",dpto_sv_dte.14
+Cat_013_258,13,"POLORÓS",dpto_sv_dte.14
+Cat_013_259,14,"SAN ALEJO",dpto_sv_dte.14
+Cat_013_260,15,"SAN JOSE",dpto_sv_dte.14
+Cat_013_261,16,"SANTA ROSA LIMA",dpto_sv_dte.14
+Cat_013_262,17,"YAYANTIQUE",dpto_sv_dte.14
+Cat_013_263,18,"YUCUAIQUÍN",dpto_sv_dte.14

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_consumidor_final" model="ir.actions.report">
+            <field name="name">Consumidor Final</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">invoice_sv_dte.report_invoice_main_fcf</field>
+            <field name="print_report_name">object.partner_id.display_name + ' - ' + object.name + ' - ' + object.journal_id.name</field>
+            <field name="paperformat_id" ref="paperformat_invoice_fcf"/>
+            <field name="attachment">object.partner_id.display_name + ' - ' + object.name + ' - ' + object.journal_id.name</field>
+            <field name="attachment_use" eval="False"/>
+        </record>
+
+        <record id="paperformat_invoice_fcf" model="report.paperformat">
+            <field name="name">Factura Consumidor Final</field>
+            <field name="default" eval="True"/>
+            <field name="format">Letter</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">8</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_credito_fiscal" model="ir.actions.report">
+            <field name="name">Credito Fiscal</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">invoice_sv_dte.report_invoice_main_ccf</field>
+            <field name="print_report_name">object.partner_id.display_name + ' - ' + object.name + ' - ' + object.journal_id.name</field>
+            <field name="paperformat_id" ref="paperformat_invoice_ccf"/>
+            <field name="attachment">object.partner_id.display_name + ' - ' + object.name + ' - ' + object.journal_id.name</field>
+            <field name="attachment_use" eval="False"/>
+        </record>
+
+        <record id="paperformat_invoice_ccf" model="report.paperformat">
+            <field name="name">Comprobante de Credito Fiscal</field>
+            <field name="default" eval="True"/>
+            <field name="format">Letter</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">8</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_exportacion" model="ir.actions.report">
+            <field name="name">Factura Exportación (Exp)</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">invoice_sv_dte.report_invoice_main_exp</field>
+            <field name="print_report_name">(object.partner_id.display_name or '') + ' - ' + (object.name or '') + ' - ' + (object.journal_id.name or '')</field>
+            <field name="paperformat_id" ref="paperformat_invoice_exportacion"/>
+            <field name="attachment">object.partner_id.display_name + ' - ' + object.name + ' - ' + object.journal_id.name</field>
+            <field name="attachment_use" eval="False"/>
+        </record>
+
+        <record id="paperformat_invoice_exportacion" model="report.paperformat">
+            <field name="name">Factura de Exportacion</field>
+            <field name="default" eval="True"/>
+            <field name="format">Letter</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">8</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_ndc" model="ir.actions.report">
+            <field name="name">Nota de Credito</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">invoice_sv_dte.report_invoice_main_ndc</field>
+            <field name="print_report_name">object.partner_id.display_name + ' - ' + object.name + ' - ' + object.journal_id.name</field>
+            <field name="paperformat_id" ref="paperformat_invoice_ndc"/>
+            <field name="attachment">object.partner_id.display_name + ' - ' + object.name + ' - ' + object.journal_id.name</field>
+            <field name="attachment_use" eval="False"/>
+        </record>
+
+        <record id="paperformat_invoice_ndc" model="report.paperformat">
+            <field name="name">Nota de Credito</field>
+            <field name="default" eval="True"/>
+            <field name="format">Letter</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">8</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_invoice_digital" model="ir.actions.report">
+            <field name="name">Factura Digital</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">invoice_sv_dte.report_invoice_main_digital</field>
+            <field name="print_report_name">object.partner_id.display_name + ' - ' + object.name + ' - ' + object.journal_id.name</field>
+            <field name="paperformat_id" ref="paperformat_invoice_fcf"/>
+            <field name="attachment">object.partner_id.display_name + ' - ' + object.name + ' - ' + object.journal_id.name</field>
+            <field name="attachment_use" eval="False"/>
+        </record>
+
+        <record id="paperformat_invoice_digital" model="report.paperformat">
+            <field name="name">Factura Digital</field>
+            <field name="default" eval="True"/>
+            <field name="format">Letter</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">60</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">30</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_ticket" model="ir.actions.report">
+            <field name="name">Ticket</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">invoice_sv_dte.report_invoice_main_ticket</field>
+        </record>
+
+        <record id="action_report_ndd" model="ir.actions.report">
+            <field name="name">Nota de Debito</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">invoice_sv_dte.report_invoice_main_ndd</field>
+            <field name="print_report_name">(object.partner_id.display_name or '') + ' - ' + (object.name or '') + ' - ' + (object.journal_id.name or '')</field>
+            <field name="paperformat_id" ref="paperformat_invoice_ndd"/>
+            <field name="attachment">(object.partner_id.display_name or '') + ' - ' + (object.name or '') + ' - ' + (object.journal_id.name or '')</field>
+            <field name="attachment_use" eval="False"/>
+        </record>
+
+        <record id="paperformat_invoice_ndd" model="report.paperformat">
+            <field name="name">Nota de Debito</field>
+            <field name="default" eval="True"/>
+            <field name="format">Letter</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">8</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_cse" model="ir.actions.report">
+            <field name="name">Compra Sujeto Excluido</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">invoice_sv_dte.report_invoice_compra_sujeto_excluido</field>
+            <field name="print_report_name">object.partner_id.display_name + ' - ' + object.name + ' - ' + object.journal_id.name</field>
+            <field name="paperformat_id" ref="paperformat_invoice_cse"/>
+            <field name="attachment">object.partner_id.display_name + ' - ' + object.name + ' - ' + object.journal_id.name</field>
+            <field name="attachment_use" eval="False"/>
+        </record>
+
+        <record id="paperformat_invoice_cse" model="report.paperformat">
+            <field name="name">Compra Sujeto Excluido</field>
+            <field name="default" eval="True"/>
+            <field name="format">Letter</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">8</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="paperformat_invoice_sv_compacto" model="report.paperformat">
+            <field name="name">Nota de Debito</field>
+            <field name="default" eval="True"/>
+            <field name="format">Letter</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">8</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <!-- Asignar el paperformat a los reportes -->
+        <record id="account.account_invoices" model="ir.actions.report">
+            <field name="paperformat_id" ref="invoice_sv_dte.paperformat_invoice_sv_compacto"/>
+        </record>
+
+        <record id="account.account_invoices_without_payment" model="ir.actions.report">
+            <field name="paperformat_id" ref="invoice_sv_dte.paperformat_invoice_sv_compacto"/>
+        </record>
+    </data>
+</odoo>

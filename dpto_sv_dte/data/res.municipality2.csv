@@ -1,0 +1,263 @@
+id,code,name,dpto_id/id
+dpto_01,dpto_sv_dte.01_1,Ahuachapan,dpto_sv_dte.01
+dpto_02,dpto_sv_dte.01_2,Apaneca,dpto_sv_dte.01
+dpto_03,dpto_sv_dte.01_3,Atiquizaya,dpto_sv_dte.01
+dpto_04,dpto_sv_dte.01_4,Concepcion De Ataco,dpto_sv_dte.01
+dpto_05,dpto_sv_dte.01_5,El Refugio,dpto_sv_dte.01
+dpto_06,dpto_sv_dte.01_6,Guaymango,dpto_sv_dte.01
+dpto_07,dpto_sv_dte.01_7,Jujutla,dpto_sv_dte.01
+dpto_08,dpto_sv_dte.01_8,San Francisco Menendez,dpto_sv_dte.01
+dpto_09,dpto_sv_dte.01_9,San Lorenzo,dpto_sv_dte.01
+o,dpto_sv_dte.01_10,San Pedro Puxtla,dpto_sv_dte.01
+dpto_11,dpto_sv_dte.01_11,Tacuba,dpto_sv_dte.01
+dpto_12,dpto_sv_dte.01_12,Turin,dpto_sv_dte.01
+dpto_13,dpto_sv_dte.02_1,Candelaria De La Frontera,dpto_sv_dte.02
+dpto_14,dpto_sv_dte.02_2,Coatepeque,dpto_sv_dte.02
+dpto_15,dpto_sv_dte.02_3,Chalchuapa,dpto_sv_dte.02
+dpto_16,dpto_sv_dte.02_4,El Congo,dpto_sv_dte.02
+dpto_17,dpto_sv_dte.02_5,El Porvenir,dpto_sv_dte.02
+dpto_18,dpto_sv_dte.02_6,Masahuat,dpto_sv_dte.02
+dpto_19,dpto_sv_dte.02_7,Metapan,dpto_sv_dte.02
+dpto_20,dpto_sv_dte.02_8,San Antonio Pajonal,dpto_sv_dte.02
+dpto_21,dpto_sv_dte.02_9,San Sebastian Salitrillo,dpto_sv_dte.02
+dpto_22,dpto_sv_dte.02_10,Santa Ana,dpto_sv_dte.02
+dpto_23,dpto_sv_dte.02_11,Santa Rosa Guachipilin,dpto_sv_dte.02
+dpto_24,dpto_sv_dte.02_12,Santiago De La Frontera,dpto_sv_dte.02
+dpto_25,dpto_sv_dte.02_13,Texistepeque,dpto_sv_dte.02
+dpto_26,dpto_sv_dte.03_1,Acajutla,dpto_sv_dte.03
+dpto_27,dpto_sv_dte.03_2,Armenia,dpto_sv_dte.03
+dpto_28,dpto_sv_dte.03_3,Caluco,dpto_sv_dte.03
+dpto_29,dpto_sv_dte.03_4,Cuisnahuat,dpto_sv_dte.03
+dpto_30,dpto_sv_dte.03_5,Santa Isabel Ishuatan,dpto_sv_dte.03
+dpto_31,dpto_sv_dte.03_6,Izalco,dpto_sv_dte.03
+dpto_32,dpto_sv_dte.03_7,Juayua,dpto_sv_dte.03
+dpto_33,dpto_sv_dte.03_8,Nahuizalco,dpto_sv_dte.03
+dpto_34,dpto_sv_dte.03_9,Nahulingo,dpto_sv_dte.03
+dpto_35,dpto_sv_dte.03_10,Salcoatitan,dpto_sv_dte.03
+dpto_36,dpto_sv_dte.03_11,San Antonio Del Monte,dpto_sv_dte.03
+dpto_37,dpto_sv_dte.03_12,San Julian,dpto_sv_dte.03
+dpto_38,dpto_sv_dte.03_13,Santa Catarina Masahuat,dpto_sv_dte.03
+dpto_39,dpto_sv_dte.03_14,Santo Domingo Guzman,dpto_sv_dte.03
+dpto_40,dpto_sv_dte.03_15,Sonsonate,dpto_sv_dte.03
+dpto_41,dpto_sv_dte.03_16,Sonzacate,dpto_sv_dte.03
+dpto_42,dpto_sv_dte.04_1,Agua Caliente,dpto_sv_dte.04
+dpto_43,dpto_sv_dte.04_2,Arcatao,dpto_sv_dte.04
+dpto_44,dpto_sv_dte.04_3,Azacualpa,dpto_sv_dte.04
+dpto_45,dpto_sv_dte.04_4,Citala,dpto_sv_dte.04
+dpto_46,dpto_sv_dte.04_5,Comalapa,dpto_sv_dte.04
+dpto_47,dpto_sv_dte.04_6,Concepcion Quezaltepeque,dpto_sv_dte.04
+dpto_48,dpto_sv_dte.04_7,Chalatenango,dpto_sv_dte.04
+dpto_49,dpto_sv_dte.04_8,Dulce Nombre de  Maria,dpto_sv_dte.04
+dpto_50,dpto_sv_dte.04_9,El Carrizal,dpto_sv_dte.04
+dpto_51,dpto_sv_dte.04_10,El Paraiso,dpto_sv_dte.04
+dpto_52,dpto_sv_dte.04_11,La Laguna,dpto_sv_dte.04
+dpto_53,dpto_sv_dte.04_12,La Palma,dpto_sv_dte.04
+dpto_54,dpto_sv_dte.04_13,La Reina,dpto_sv_dte.04
+dpto_55,dpto_sv_dte.04_14,Las Vueltas,dpto_sv_dte.04
+dpto_56,dpto_sv_dte.04_15,Nombre De Jesus,dpto_sv_dte.04
+dpto_57,dpto_sv_dte.04_16,Nueva Concepcion,dpto_sv_dte.04
+dpto_58,dpto_sv_dte.04_17,Nueva Trinidad,dpto_sv_dte.04
+dpto_59,dpto_sv_dte.04_18,Ojos De Agua,dpto_sv_dte.04
+dpto_60,dpto_sv_dte.04_19,Potonico,dpto_sv_dte.04
+dpto_61,dpto_sv_dte.04_20,San Antonio de  La Cruz,dpto_sv_dte.04
+dpto_62,dpto_sv_dte.04_21,San Antonio Los Ranchos,dpto_sv_dte.04
+dpto_63,dpto_sv_dte.04_22,San Fernando,dpto_sv_dte.04
+dpto_64,dpto_sv_dte.04_23,San Francisco Lempa,dpto_sv_dte.04
+dpto_65,dpto_sv_dte.04_24,San Francisco Morazan,dpto_sv_dte.04
+dpto_66,dpto_sv_dte.04_25,San Ignacio,dpto_sv_dte.04
+dpto_67,dpto_sv_dte.04_26,San Isidro Labrador,dpto_sv_dte.04
+dpto_68,dpto_sv_dte.04_27,San Jose Cancasque,dpto_sv_dte.04
+dpto_69,dpto_sv_dte.04_28,San Jose Flores,dpto_sv_dte.04
+dpto_70,dpto_sv_dte.04_29,San Luis Carmen,dpto_sv_dte.04
+dpto_71,dpto_sv_dte.04_30,San Miguel de  Mercedes,dpto_sv_dte.04
+dpto_72,dpto_sv_dte.04_31,San Rafael,dpto_sv_dte.04
+dpto_73,dpto_sv_dte.04_32,Santa Rita,dpto_sv_dte.04
+dpto_74,dpto_sv_dte.04_33,Tejutla,dpto_sv_dte.04
+dpto_75,dpto_sv_dte.05_1,Antiguo Cuscatlan,dpto_sv_dte.05
+dpto_76,dpto_sv_dte.05_2,Ciudad Arce,dpto_sv_dte.05
+dpto_77,dpto_sv_dte.05_3,Colon,dpto_sv_dte.05
+dpto_78,dpto_sv_dte.05_4,Comasagua,dpto_sv_dte.05
+dpto_79,dpto_sv_dte.05_5,Chiltiupan,dpto_sv_dte.05
+dpto_80,dpto_sv_dte.05_6,Huizucar,dpto_sv_dte.05
+dpto_81,dpto_sv_dte.05_7,Jayaque,dpto_sv_dte.05
+dpto_82,dpto_sv_dte.05_8,Jicalapa,dpto_sv_dte.05
+dpto_83,dpto_sv_dte.05_9,La Libertad,dpto_sv_dte.05
+dpto_84,dpto_sv_dte.05_10,Nuevo Cuscatlan,dpto_sv_dte.05
+dpto_85,dpto_sv_dte.05_11,Santa Tecla,dpto_sv_dte.05
+dpto_86,dpto_sv_dte.05_12,Quezaltepeque,dpto_sv_dte.05
+dpto_87,dpto_sv_dte.05_13,Sacacoyo,dpto_sv_dte.05
+dpto_88,dpto_sv_dte.05_14,San Jose Villanueva,dpto_sv_dte.05
+dpto_89,dpto_sv_dte.05_15,San Juan Opico,dpto_sv_dte.05
+dpto_90,dpto_sv_dte.05_16,San Matias,dpto_sv_dte.05
+dpto_91,dpto_sv_dte.05_17,San Pablo Tacachico,dpto_sv_dte.05
+dpto_92,dpto_sv_dte.05_18,Tamanique,dpto_sv_dte.05
+dpto_93,dpto_sv_dte.05_19,Talnique,dpto_sv_dte.05
+dpto_94,dpto_sv_dte.05_20,Teotepeque,dpto_sv_dte.05
+dpto_95,dpto_sv_dte.05_21,Tepecoyo,dpto_sv_dte.05
+dpto_96,dpto_sv_dte.05_22,Zaragoza,dpto_sv_dte.05
+dpto_97,dpto_sv_dte.06_1,Aguilares,dpto_sv_dte.06
+dpto_98,dpto_sv_dte.06_2,Apopa,dpto_sv_dte.06
+dpto_99,dpto_sv_dte.06_3,Ayutuxtepeque,dpto_sv_dte.06
+dpto_100,dpto_sv_dte.06_4,Cuscatancingo,dpto_sv_dte.06
+dpto_101,dpto_sv_dte.06_5,El Paisnal,dpto_sv_dte.06
+dpto_102,dpto_sv_dte.06_6,Guazapa,dpto_sv_dte.06
+dpto_103,dpto_sv_dte.06_7,Ilopango,dpto_sv_dte.06
+dpto_104,dpto_sv_dte.06_8,Mejicanos,dpto_sv_dte.06
+dpto_105,dpto_sv_dte.06_9,Nejapa,dpto_sv_dte.06
+dpto_106,dpto_sv_dte.06_10,Panchimalco,dpto_sv_dte.06
+dpto_107,dpto_sv_dte.06_11,Rosario De Mora,dpto_sv_dte.06
+dpto_108,dpto_sv_dte.06_12,San Marcos,dpto_sv_dte.06
+dpto_109,dpto_sv_dte.06_13,San Martin,dpto_sv_dte.06
+dpto_110,dpto_sv_dte.06_14,San Salvador,dpto_sv_dte.06
+dpto_111,dpto_sv_dte.06_15,Santiago Texacuangos,dpto_sv_dte.06
+dpto_112,dpto_sv_dte.06_16,Santo Tomas,dpto_sv_dte.06
+dpto_113,dpto_sv_dte.06_17,Soyapango,dpto_sv_dte.06
+dpto_114,dpto_sv_dte.06_18,Tonacatepeque,dpto_sv_dte.06
+dpto_115,dpto_sv_dte.06_19,Ciudad Delgado,dpto_sv_dte.06
+dpto_116,dpto_sv_dte.07_1,Candelaria,dpto_sv_dte.07
+dpto_117,dpto_sv_dte.07_2,Cojutepeque,dpto_sv_dte.07
+dpto_118,dpto_sv_dte.07_3,El Carmen,dpto_sv_dte.07
+dpto_119,dpto_sv_dte.07_4,El Rosario,dpto_sv_dte.07
+dpto_120,dpto_sv_dte.07_5,Monte San Juan,dpto_sv_dte.07
+dpto_121,dpto_sv_dte.07_6,Oratorio de Concepcion,dpto_sv_dte.07
+dpto_122,dpto_sv_dte.07_7,San Bartolo Perulapia,dpto_sv_dte.07
+dpto_123,dpto_sv_dte.07_8,San Cristobal,dpto_sv_dte.07
+dpto_124,dpto_sv_dte.07_9,San Juan Guayabal,dpto_sv_dte.07
+dpto_125,dpto_sv_dte.07_10,San Pedro Perulapan,dpto_sv_dte.07
+dpto_126,dpto_sv_dte.07_11,San Rafael Cedros,dpto_sv_dte.07
+dpto_127,dpto_sv_dte.07_12,San Ramon,dpto_sv_dte.07
+dpto_128,dpto_sv_dte.07_13,Santa Cruz Analquito,dpto_sv_dte.07
+dpto_129,dpto_sv_dte.07_14,Santa Cruz Michapa,dpto_sv_dte.07
+dpto_130,dpto_sv_dte.07_15,Suchitoto,dpto_sv_dte.07
+dpto_131,dpto_sv_dte.07_16,Tenancingo,dpto_sv_dte.07
+dpto_132,dpto_sv_dte.08_1,Cuyultitan,dpto_sv_dte.08
+dpto_133,dpto_sv_dte.08_2,El Rosario,dpto_sv_dte.08
+dpto_134,dpto_sv_dte.08_3,Jerusalen,dpto_sv_dte.08
+dpto_135,dpto_sv_dte.08_4,Mercedes La Ceiba,dpto_sv_dte.08
+dpto_136,dpto_sv_dte.08_5,Olocuilta,dpto_sv_dte.08
+dpto_137,dpto_sv_dte.08_6,Paraiso Osorio,dpto_sv_dte.08
+dpto_138,dpto_sv_dte.08_7,San Antonio Masahuat,dpto_sv_dte.08
+dpto_139,dpto_sv_dte.08_8,San Emigdio,dpto_sv_dte.08
+dpto_140,dpto_sv_dte.08_9,San Francisco Chinameca,dpto_sv_dte.08
+dpto_141,dpto_sv_dte.08_10,San Juan Nonualco,dpto_sv_dte.08
+dpto_142,dpto_sv_dte.08_11,San Juan Talpa,dpto_sv_dte.08
+dpto_143,dpto_sv_dte.08_12,San Juan Tepezontes,dpto_sv_dte.08
+dpto_144,dpto_sv_dte.08_13,San Luis Talpa,dpto_sv_dte.08
+dpto_145,dpto_sv_dte.08_14,San Miguel Tepezontes,dpto_sv_dte.08
+dpto_146,dpto_sv_dte.08_15,San Pedro Masahuat,dpto_sv_dte.08
+dpto_147,dpto_sv_dte.08_16,San Pedro Nonualco,dpto_sv_dte.08
+dpto_148,dpto_sv_dte.08_17,San Rafael Obrajuelo,dpto_sv_dte.08
+dpto_149,dpto_sv_dte.08_18,Santa Maria Ostuma,dpto_sv_dte.08
+dpto_150,dpto_sv_dte.08_19,Santiago Nonualco,dpto_sv_dte.08
+dpto_151,dpto_sv_dte.08_20,Tapalhuaca,dpto_sv_dte.08
+dpto_152,dpto_sv_dte.08_21,Zacatecoluca,dpto_sv_dte.08
+dpto_153,dpto_sv_dte.08_22,San Luis La Herradura,dpto_sv_dte.08
+dpto_154,dpto_sv_dte.09_1,Cinquera,dpto_sv_dte.09
+dpto_155,dpto_sv_dte.09_2,Guacotecti,dpto_sv_dte.09
+dpto_156,dpto_sv_dte.09_3,Ilobasco,dpto_sv_dte.09
+dpto_157,dpto_sv_dte.09_4,Jutiapa,dpto_sv_dte.09
+dpto_158,dpto_sv_dte.09_5,San Isidro,dpto_sv_dte.09
+dpto_159,dpto_sv_dte.09_6,Sensuntepeque,dpto_sv_dte.09
+dpto_160,dpto_sv_dte.09_7,Tejutepeque,dpto_sv_dte.09
+dpto_161,dpto_sv_dte.09_8,Victoria,dpto_sv_dte.09
+dpto_162,dpto_sv_dte.09_9,Dolores,dpto_sv_dte.09
+dpto_163,dpto_sv_dte.10_1,Apastepeque,dpto_sv_dte.10
+dpto_164,dpto_sv_dte.10_2,Guadalupe,dpto_sv_dte.10
+dpto_165,dpto_sv_dte.10_3,San Cayetano Istepeque,dpto_sv_dte.10
+dpto_166,dpto_sv_dte.10_4,Santa Clara,dpto_sv_dte.10
+dpto_167,dpto_sv_dte.10_5,Santo Domingo,dpto_sv_dte.10
+dpto_168,dpto_sv_dte.10_6,San Estaban Catarina,dpto_sv_dte.10
+dpto_169,dpto_sv_dte.10_7,San Ildefonso,dpto_sv_dte.10
+dpto_170,dpto_sv_dte.10_8,San Lorenzo,dpto_sv_dte.10
+dpto_171,dpto_sv_dte.10_9,San Sebastian,dpto_sv_dte.10
+dpto_172,dpto_sv_dte.10_10,San Vicente,dpto_sv_dte.10
+dpto_173,dpto_sv_dte.10_11,Tecoluca,dpto_sv_dte.10
+dpto_174,dpto_sv_dte.10_12,Tepetitan,dpto_sv_dte.10
+dpto_175,dpto_sv_dte.10_13,Verapaz,dpto_sv_dte.10
+dpto_176,dpto_sv_dte.11_1,Alegria,dpto_sv_dte.11
+dpto_177,dpto_sv_dte.11_2,Berlin,dpto_sv_dte.11
+dpto_178,dpto_sv_dte.11_3,California,dpto_sv_dte.11
+dpto_179,dpto_sv_dte.11_4,Concepcion Batres,dpto_sv_dte.11
+dpto_180,dpto_sv_dte.11_5,El Triunfo,dpto_sv_dte.11
+dpto_181,dpto_sv_dte.11_6,Ereguayquin,dpto_sv_dte.11
+dpto_182,dpto_sv_dte.11_7,Estanzuelas,dpto_sv_dte.11
+dpto_183,dpto_sv_dte.11_8,Jiquilisco,dpto_sv_dte.11
+dpto_184,dpto_sv_dte.11_9,Jucuapa,dpto_sv_dte.11
+dpto_185,dpto_sv_dte.11_10,Jucuaran,dpto_sv_dte.11
+dpto_186,dpto_sv_dte.11_11,Mercedes Umaña,dpto_sv_dte.11
+dpto_187,dpto_sv_dte.11_12,Nueva Granada,dpto_sv_dte.11
+dpto_188,dpto_sv_dte.11_13,Ozatlan,dpto_sv_dte.11
+dpto_189,dpto_sv_dte.11_14,Puerto El Triunfo,dpto_sv_dte.11
+dpto_190,dpto_sv_dte.11_15,San Agustin,dpto_sv_dte.11
+dpto_191,dpto_sv_dte.11_16,San Buenaventura,dpto_sv_dte.11
+dpto_192,dpto_sv_dte.11_17,San Dionisio,dpto_sv_dte.11
+dpto_193,dpto_sv_dte.11_18,Santa Elena,dpto_sv_dte.11
+dpto_194,dpto_sv_dte.11_19,San Francisco Javier,dpto_sv_dte.11
+dpto_195,dpto_sv_dte.11_20,Santa Maria,dpto_sv_dte.11
+dpto_196,dpto_sv_dte.11_21,Santiago De Maria,dpto_sv_dte.11
+dpto_197,dpto_sv_dte.11_22,Tecapan,dpto_sv_dte.11
+dpto_198,dpto_sv_dte.11_23,Usulutan,dpto_sv_dte.11
+dpto_199,dpto_sv_dte.12_1,Carolina,dpto_sv_dte.12
+dpto_200,dpto_sv_dte.12_2,Ciudad Barrios,dpto_sv_dte.12
+dpto_201,dpto_sv_dte.12_3,Comacaran,dpto_sv_dte.12
+dpto_202,dpto_sv_dte.12_4,Chapeltique,dpto_sv_dte.12
+dpto_203,dpto_sv_dte.12_5,Chinameca,dpto_sv_dte.12
+dpto_204,dpto_sv_dte.12_6,Chirilagua,dpto_sv_dte.12
+dpto_205,dpto_sv_dte.12_7,El Transito,dpto_sv_dte.12
+dpto_206,dpto_sv_dte.12_8,Lolotique,dpto_sv_dte.12
+dpto_207,dpto_sv_dte.12_9,Moncagua,dpto_sv_dte.12
+dpto_208,dpto_sv_dte.12_10,Nueva Guadalupe,dpto_sv_dte.12
+dpto_209,dpto_sv_dte.12_11,Nuevo Eden de San Juan,dpto_sv_dte.12
+dpto_210,dpto_sv_dte.12_12,Quelepa,dpto_sv_dte.12
+dpto_211,dpto_sv_dte.12_13,San Antonio Del Mosco,dpto_sv_dte.12
+dpto_212,dpto_sv_dte.12_14,San Gerardo,dpto_sv_dte.12
+dpto_213,dpto_sv_dte.12_15,San Jorge,dpto_sv_dte.12
+dpto_214,dpto_sv_dte.12_16,San Luis de la Reina,dpto_sv_dte.12
+dpto_215,dpto_sv_dte.12_17,San Miguel,dpto_sv_dte.12
+dpto_216,dpto_sv_dte.12_18,San Rafael Oriente,dpto_sv_dte.12
+dpto_217,dpto_sv_dte.12_19,Sesori,dpto_sv_dte.12
+dpto_218,dpto_sv_dte.12_20,Uluazapa,dpto_sv_dte.12
+dpto_219,dpto_sv_dte.13_1,Arambala,dpto_sv_dte.13
+dpto_220,dpto_sv_dte.13_2,Cacaopera,dpto_sv_dte.13
+dpto_221,dpto_sv_dte.13_3,Corinto,dpto_sv_dte.13
+dpto_222,dpto_sv_dte.13_4,Chilanga,dpto_sv_dte.13
+dpto_223,dpto_sv_dte.13_5,Delicias De Concepcion,dpto_sv_dte.13
+dpto_224,dpto_sv_dte.13_6,El Divisadero,dpto_sv_dte.13
+dpto_225,dpto_sv_dte.13_7,El Rosario,dpto_sv_dte.13
+dpto_226,dpto_sv_dte.13_8,Gualococti,dpto_sv_dte.13
+dpto_227,dpto_sv_dte.13_9,Guatajiagua,dpto_sv_dte.13
+dpto_228,dpto_sv_dte.13_10,Joateca,dpto_sv_dte.13
+dpto_229,dpto_sv_dte.13_11,Jocoaitique,dpto_sv_dte.13
+dpto_230,dpto_sv_dte.13_12,Jocoro,dpto_sv_dte.13
+dpto_231,dpto_sv_dte.13_13,Lolotiquillo,dpto_sv_dte.13
+dpto_232,dpto_sv_dte.13_14,Meanguera,dpto_sv_dte.13
+dpto_233,dpto_sv_dte.13_15,Osicala,dpto_sv_dte.13
+dpto_234,dpto_sv_dte.13_16,Perquin,dpto_sv_dte.13
+dpto_235,dpto_sv_dte.13_17,San Carlos,dpto_sv_dte.13
+dpto_236,dpto_sv_dte.13_18,San Fernando,dpto_sv_dte.13
+dpto_237,dpto_sv_dte.13_19,San Francisco Gotera,dpto_sv_dte.13
+dpto_238,dpto_sv_dte.13_20,San Isidro,dpto_sv_dte.13
+dpto_239,dpto_sv_dte.13_21,San Simon,dpto_sv_dte.13
+dpto_240,dpto_sv_dte.13_22,Sensembra,dpto_sv_dte.13
+dpto_241,dpto_sv_dte.13_23,Sociedad,dpto_sv_dte.13
+dpto_242,dpto_sv_dte.13_24,Torola,dpto_sv_dte.13
+dpto_243,dpto_sv_dte.13_25,Yamabal,dpto_sv_dte.13
+dpto_244,dpto_sv_dte.13_26,Yoloaiquin,dpto_sv_dte.13
+dpto_245,dpto_sv_dte.14_1,Anamoros,dpto_sv_dte.14
+dpto_246,dpto_sv_dte.14_2,Bolivar,dpto_sv_dte.14
+dpto_247,dpto_sv_dte.14_3,Concep De Oriente,dpto_sv_dte.14
+dpto_248,dpto_sv_dte.14_4,Conchagua,dpto_sv_dte.14
+dpto_249,dpto_sv_dte.14_5,El Carmen,dpto_sv_dte.14
+dpto_250,dpto_sv_dte.14_6,El Sauce,dpto_sv_dte.14
+dpto_251,dpto_sv_dte.14_7,Intipuca,dpto_sv_dte.14
+dpto_252,dpto_sv_dte.14_8,La Union,dpto_sv_dte.14
+dpto_253,dpto_sv_dte.14_9,Lislique,dpto_sv_dte.14
+dpto_254,dpto_sv_dte.14_10,Meang Del Golfo,dpto_sv_dte.14
+dpto_255,dpto_sv_dte.14_11,Nueva Esparta,dpto_sv_dte.14
+dpto_256,dpto_sv_dte.14_12,Pasaquina,dpto_sv_dte.14
+dpto_257,dpto_sv_dte.14_13,Poloros,dpto_sv_dte.14
+dpto_258,dpto_sv_dte.14_14,San Alejo,dpto_sv_dte.14
+dpto_259,dpto_sv_dte.14_15,San Jose,dpto_sv_dte.14
+dpto_260,dpto_sv_dte.14_16,Santa Rosa Lima,dpto_sv_dte.14
+dpto_261,dpto_sv_dte.14_17,Yayantique,dpto_sv_dte.14
+dpto_262,dpto_sv_dte.14_18,Yucuaiquin,dpto_sv_dte.14
