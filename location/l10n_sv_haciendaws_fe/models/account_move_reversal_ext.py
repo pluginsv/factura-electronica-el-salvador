@@ -1,0 +1,119 @@
+from odoo import fields, models, api, _
+from odoo.exceptions import UserError
+import logging
+
+_logger = logging.getLogger(__name__)
+
+try:
+    from odoo.addons.common_utils.utils import constants
+    from odoo.addons.common_utils.utils import config_utils
+    _logger.info("SIT Modulo config_utils [Reverse] Nota de credito")
+except ImportError as e:
+    _logger.error(f"Error al importar 'config_utils': {e}")
+    config_utils = None
+    constants = None
+
+class AccountMoveReversal(models.TransientModel):
+    _inherit = "account.move.reversal"
+
+    l10n_latam_document_type_id = fields.Many2one(
+        'l10n_latam.document.type',
+        string='Tipo de Documento',
+        domain=[('code', '=', '05')],
+    )
+
+    inv_refund_id = fields.Many2one('account.move', string='Factura a Reversar')
+    inv_debit_id = fields.Many2one('account.move', string='Factura a Debitar')
+
+    def refund_moves(self):
+        self.ensure_one()
+        _logger.info("SIT refund_moves_custom iniciado con move_ids=%s", self.move_ids)
+
+        # --- GUARD: saltar flujo personalizado si se indica ---
+        if self.env.context.get('skip_custom_refund_flow', False):
+            _logger.info("SIT: skip_custom_refund_flow → usando flujo estándar de Odoo")
+            return super(AccountMoveReversal, self).refund_moves()
+
+        # --- Empresas sin FE → usamos flujo estándar ---
+        if (not (self.company_id and self.company_id.sit_facturacion) or
+                (self.company_id and self.company_id.sit_facturacion and self.company_id.sit_entorno_test)):
+            _logger.info("Empresa %s no usa FE → flujo estándar", self.company_id.name)
+            return super(AccountMoveReversal, self).refund_moves()
+
+        # --- Flujo de ventas con FE ---
+        if self.move_type in (constants.OUT_INVOICE, constants.OUT_REFUND):
+            _logger.info("Movimiento de VENTA (%s) → lógica personalizada FE", self.move_type)
+
+            if not self.journal_id:
+                raise UserError(_("Debe seleccionar un diario antes de continuar."))
+
+            if self.journal_id.type == constants.TYPE_VENTA and not self.l10n_latam_document_type_id:
+                doc_type = self.env['l10n_latam.document.type'].search(
+                    [('code', '=', constants.COD_DTE_NC)], limit=1
+                )
+                if not doc_type:
+                    raise UserError(_("No se encontró tipo de documento Nota de Crédito (05)"))
+                self.l10n_latam_document_type_id = doc_type
+
+            created_moves = self.env['account.move']  # recordset vacío
+
+            # --- Contexto seguro para evitar cálculos automáticos ---
+            ctx_safe = dict(self.env.context, skip_compute_percepcion=True)
+
+            for move in self.move_ids:
+                # --- 1. Crear nota de crédito sin líneas (name asignado automáticamente) ---
+                base_vals = self._prepare_default_reversal(move)
+                base_vals.update({
+                    'journal_id': self.journal_id.id,
+                    'move_type': constants.OUT_REFUND,
+                    'partner_id': move.partner_id.id,
+                    'l10n_latam_document_type_id': self.l10n_latam_document_type_id.id,
+                    'inv_refund_id': move.id,
+                    'reversed_entry_id': move.id,
+                    'company_id': move.company_id.id,
+                    # Copiar descuentos desde el crédito fiscal
+                    'descuento_gravado_pct': move.descuento_gravado_pct,
+                    'descuento_exento_pct': move.descuento_exento_pct,
+                    'descuento_no_sujeto_pct': move.descuento_no_sujeto_pct,
+                    'descuento_global_monto': 0.0,
+                })
+
+                # reversal_move = self.env['account.move'].with_context(ctx_move).create(base_vals)
+                reversal_move = self.env['account.move'].create(base_vals)
+
+                # --- 2. Copiar líneas de productos ---
+                lines_vals = []
+                for line in move.invoice_line_ids:
+                    line_vals = line.copy_data()[0]
+                    for fld in ['move_id', 'payment_id', 'reconcile_id', 'matched_debit_ids', 'matched_credit_ids']:
+                        line_vals.pop(fld, None)
+                    lines_vals.append((0, 0, line_vals))
+
+                if lines_vals:
+                    reversal_move.write({'invoice_line_ids': lines_vals})
+
+                created_moves |= reversal_move
+
+            _logger.info("Reversiones creadas: %s", created_moves.ids)
+
+            if created_moves:
+                return {
+                    'name': _('Nota de Crédito'),
+                    'view_mode': 'form',
+                    'res_model': 'account.move',
+                    'type': 'ir.actions.act_window',
+                    'res_id': created_moves[0].id,
+                    'context': self.env.context,
+                }
+
+            return created_moves  # fallback
+
+        # --- Flujo de compras ---
+        else:
+            _logger.info("Movimiento de COMPRA (%s) → usando flujo estándar Odoo", self.move_type)
+            ctx = dict(self.env.context, skip_custom_refund_flow=True)
+
+            if self.move_type != constants.IN_INVOICE:
+                self.move_type = constants.IN_REFUND
+
+            return super(AccountMoveReversal, self.with_context(ctx)).refund_moves()

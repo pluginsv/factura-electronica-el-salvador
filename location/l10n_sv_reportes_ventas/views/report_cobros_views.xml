@@ -1,0 +1,89 @@
+<odoo>
+
+    <record id="view_report_cobros_list" model="ir.ui.view">
+        <field name="name">report.cobros.list</field>
+        <field name="model">report.cobros</field>
+        <field name="arch" type="xml">
+            <list string="Cobros recibidos" create="false" edit="false" delete="false">
+                <field name="payment_date"/>
+                <field name="payment_name"/>
+                <field name="move_name"/>
+                <field name="partner_id"/>
+                <field name="invoice_user_id"/>
+                <field name="journal_id"/>
+                <field name="amount_paid" sum="Cobrado"/>
+                <field name="amount_invoice" sum="Total factura"/>
+                <field name="amount_residual" sum="Pendiente"/>
+                <field name="days_to_pay"/>
+                <field name="payment_state" widget="badge"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_report_cobros_pivot" model="ir.ui.view">
+        <field name="name">report.cobros.pivot</field>
+        <field name="model">report.cobros</field>
+        <field name="arch" type="xml">
+            <pivot string="Cobros recibidos">
+                <field name="payment_date" type="row" interval="month"/>
+                <field name="journal_id" type="col"/>
+                <field name="amount_paid" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_report_cobros_graph" model="ir.ui.view">
+        <field name="name">report.cobros.graph</field>
+        <field name="model">report.cobros</field>
+        <field name="arch" type="xml">
+            <graph string="Cobros recibidos" type="line">
+                <field name="payment_date" interval="month"/>
+                <field name="amount_paid" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_report_cobros_search" model="ir.ui.view">
+        <field name="name">report.cobros.search</field>
+        <field name="model">report.cobros</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Cobros">
+                <field name="partner_id" string="Cliente"/>
+                <field name="invoice_user_id" string="Vendedor"/>
+                <field name="move_name" string="Factura"/>
+                <field name="payment_name" string="Pago"/>
+                <field name="journal_id" string="Método de pago"/>
+
+                <separator/>
+                <filter name="filter_current_period" string="Periodo en curso"
+                        domain="[('payment_date','&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                 ('payment_date','&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_month" string="Mes pasado"
+                        domain="[('payment_date','&gt;=', (context_today() - relativedelta(months=1, day=1)).strftime('%Y-%m-%d')),
+                                 ('payment_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_previous_period" string="Periodo anterior"
+                        domain="[('payment_date','&gt;=', (context_today() - relativedelta(months=2, day=1)).strftime('%Y-%m-%d')),
+                                 ('payment_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_15_days" string="Últimos 15 días"
+                        domain="[('payment_date','&gt;=', (context_today() - relativedelta(days=15)).strftime('%Y-%m-%d'))]"/>
+
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_year" string="Año" context="{'group_by': 'payment_year'}"/>
+                    <filter name="group_by_month" string="Mes" context="{'group_by': 'payment_month'}"/>
+                    <filter name="group_by_partner" string="Cliente" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_by_salesperson" string="Vendedor" context="{'group_by': 'invoice_user_id'}"/>
+                    <filter name="group_by_journal" string="Método de pago" context="{'group_by': 'journal_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_report_cobros" model="ir.actions.act_window">
+        <field name="name">Cobros recibidos</field>
+        <field name="res_model">report.cobros</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="search_view_id" ref="view_report_cobros_search"/>
+    </record>
+
+</odoo>

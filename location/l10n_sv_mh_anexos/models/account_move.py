@@ -1,0 +1,1474 @@
+# -*- coding: utf-8 -*-
+from odoo import fields, models, api
+import logging
+import base64
+from datetime import date
+import re
+from . import report_account_move_daily
+
+_logger = logging.getLogger(__name__)
+
+try:
+    from odoo.addons.common_utils.utils import config_utils
+    from odoo.addons.common_utils.utils import constants
+
+except ImportError as e:
+    _logger.error(f"Error al importar 'config_utils': {e}")
+    config_utils = None
+
+VAT_INCLUDE = ('iva',)
+VAT_EXCLUDE = ('retenc', 'percep', 'percepción', 'renta', 'fuente')
+MONTHS = [(f'{m:02d}', f'{m:02d}') for m in range(1, 13)]
+
+
+class account_move(models.Model):
+    _inherit = 'account.move'
+
+    @staticmethod
+    def _only_digits(val):
+        """Devuelve solo los dígitos del valor (sin guiones/plecas/espacios)."""
+        return re.sub(r'\D', '', val or '')
+
+    # ******************************** valores necesario para anexos ******************************** #
+    sit_evento_invalidacion = fields.Many2one(
+        'account.move.invalidation',
+        string='Evento de invalidación',
+        ondelete='set null',
+        index=True,
+    )
+
+    codigo_tipo_documento = fields.Char(
+        string="Código tipo documento",
+        readonly=True
+    )
+
+    tipo_ingreso_id = fields.Many2one(
+        comodel_name="account.tipo.ingreso",
+        string="Tipo de Ingreso"
+    )
+    tipo_costo_gasto_id = fields.Many2one(
+        comodel_name="account.tipo.costo.gasto",
+        string="Tipo de Costo/Gasto"
+    )
+
+    tipo_operacion = fields.Many2one(
+        comodel_name="account.tipo.operacion",
+        string="Tipo Operacion"
+    )
+
+    clasificacion_facturacion = fields.Many2one(
+        comodel_name="account.clasificacion.facturacion",
+        string="Clasificacion"
+    )
+
+    sector = fields.Many2one(
+        comodel_name="account.sector",
+        string="Sector"
+    )
+
+    clase_documento_id = fields.Many2one(
+        string="Clase de documento",
+        comodel_name="account.clase.documento"
+    )
+
+    clasificacion_domain = fields.Char(
+        compute='_compute_clasificacion_domain',
+        readonly=True
+    )
+
+    sector_domain = fields.Char(
+        compute='_compute_sector_domain',
+        readonly=True
+    )
+
+    tipo_costo_gasto_domain = fields.Char(
+        compute='_compute_costo_gasto_domain',
+        readonly=True
+    )
+
+    invoice_date = fields.Date(
+        string="Fecha",
+        readonly=True,
+    )
+
+    hacienda_selloRecibido = fields.Char(
+        string="Sello Recibido",
+        readonly=True,
+    )
+
+    hacienda_codigoGeneracion_identificacion = fields.Char(
+        string="codigo generacion",
+        readonly=True,
+    )
+
+
+    total_exento = fields.Monetary(
+        string="Ventas extentas",
+        readonly=True,
+    )
+
+    total_no_sujeto = fields.Monetary(
+        string="Ventas no sujetas",
+        readonly=True,
+    )
+
+    total_operacion = fields.Monetary(
+        string="Total de ventas",
+        readonly=True,
+    )
+
+    amount_untaxed = fields.Monetary(
+        string="Monto de operación",
+        readonly=True,
+    )
+
+    retencion_iva_amount = fields.Monetary(
+        string="Retencion IVA 13%",
+        readonly=True,
+    )
+
+    amount_tax = fields.Monetary(
+        string="Percepción IVA 1%",
+        readonly=True,
+    )
+
+    # si es preimpreso
+    sit_facturacion = fields.Boolean(
+        related='company_id.sit_facturacion',
+        readonly=True,
+        store=True,
+    )
+
+    razon_social = fields.Char(
+        string="Cliente/Proveedor",
+        related='partner_id.name',
+        readonly=True,
+        store=False,
+    )
+
+    # ----------- Campos computados ----------- #
+    codigo_tipo_documento_compra = fields.Char(
+        string="Código tipo documento",
+        compute="_compute_codigo_tipo_documento_compra",
+        readonly=True
+    )
+
+    codigo_tipo_documento_compra_display = fields.Char(
+        string="Código tipo documento",
+        compute="_compute_codigo_tipo_documento_compra_display",
+        readonly=True
+    )
+
+    clase_documento = fields.Char(
+        string="Clase de documento",
+        compute='_compute_get_clase_documento',
+        readonly=True,
+        store=False,
+    )
+
+    clase_documento_display = fields.Char(
+        string="Clase de documento",
+        compute='_compute_get_clase_documento_display',
+        readonly=True,
+        store=False,
+    )
+
+    sit_tipo_documento = fields.Char(
+        string="Tipo de documento",
+        compute="_compute_sit_tipo_documento",
+        readonly=True,
+        store=False,
+    )
+
+    has_sello_anulacion = fields.Boolean(
+        string="Tiene Sello Anulación",
+        compute="_compute_has_sello_anulacion",
+        search="_search_has_sello_anulacion",
+        store=False,
+        readonly=True,
+        index=True,
+    )
+
+    tipo_ingreso_codigo = fields.Char(
+        string="Tipo ingreso codigo",
+        compute='_compute_get_tipo_ingreso_codigo',
+        readonly=True,
+        store=False,
+    )
+
+    tipo_costo_gasto_codigo = fields.Char(
+        string="Tipo costo gasto",
+        compute='_compute_get_tipo_costo_gasto_codigo',
+        readonly=True,
+        store=False,
+    )
+
+    tipo_operacion_codigo = fields.Char(
+        string="Tipo operacion codigo",
+        compute='_compute_get_tipo_operacion_codigo',
+        readonly=True,
+        store=False,
+    )
+
+    clasificacion_facturacion_codigo = fields.Char(
+        string="Clasificacion facturacion codigo",
+        compute='_compute_get_clasificacion_facturacion_codigo',
+        readonly=True,
+        store=False,
+    )
+
+    sector_codigo = fields.Char(
+        string="Sector codigo",
+        compute='_compute_get_sector_codigo',
+        readonly=True,
+        store=False,
+    )
+
+    codigo_tipo_documento_display = fields.Char(
+        string="Tipo de documento",
+        compute='_compute_codigo_tipo_documento_display',
+        store=False
+    )
+
+    numero_documento = fields.Char(
+        string="Numero de control interno",
+        readonly=True,
+        store=False,
+        compute='_compute_get_numero_documento',
+    )
+
+    numero_control_interno = fields.Char(
+        string="Numero de control interno",
+        readonly=True,
+        store=False,
+        compute='_compute_get_numero_control_interno',
+    )
+
+    numero_control_interno_del = fields.Char(
+        string="Numero de control interno DEL",
+        readonly=True,
+        store=False,
+        compute='_compute_get_numero_control_documento_interno_del',
+    )
+
+    numero_control_interno_al = fields.Char(
+        string="Numero de control interno AL",
+        readonly=True,
+        store=False,
+        compute='_compute_get_numero_control_documento_interno_al',
+    )
+
+    numero_maquina_registradora = fields.Char(
+        string="Numero de maquina registradora",
+        compute='_compute_get_numero_maquina_registradora',
+        readonly=True,
+        store=False,
+    )
+
+    total_gravado_local = fields.Monetary(
+        string="Ventas gravadas locales",
+        compute='_compute_get_total_gravado',
+        readonly=True,
+        store=False,
+    )
+
+    ventas_exentas_no_sujetas = fields.Monetary(
+        string="Ventas internas exentas no sujetas a proporcionalidad",
+        compute='_compute_get_ventas_exentas_no_sujetas',
+        readonly=True,
+        store=False,
+    )
+
+    exportaciones_dentro_centroamerica = fields.Monetary(
+        string="Exportaciones dentro del area de centroamerica",
+        compute='_compute_get_exportaciones_dentro_centroamerica',
+        readonly=True,
+        store=False,
+    )
+
+    exportaciones_fuera_centroamerica = fields.Monetary(
+        string="Exportaciones fuera del area de centroamerica",
+        compute='_compute_get_exportaciones_fuera_centroamerica',
+        readonly=True,
+        store=False,
+    )
+
+    exportaciones_de_servicio = fields.Char(
+        string="Exportaciones de servicio",
+        compute='_compute_get_exportaciones_de_servicio',
+        readonly=True,
+        store=False,
+    )
+
+    ventas_tasa_cero = fields.Char(
+        string="Ventas a zonas francas y DPA (tasa cero)",
+        compute='_compute_get_ventas_tasa_cero',
+        readonly=True,
+        store=False,
+    )
+
+    ventas_cuenta_terceros = fields.Char(
+        string="ventas a cuenta de terceros no domiciliados",
+        compute='_compute_get_ventas_cuenta_terceros',
+        readonly=True,
+        store=False,
+    )
+
+    tipo_ingreso_renta = fields.Monetary(
+        string="Tipo de ingreso (renta)",
+        compute='_compute_get_tipo_ingreso_renta',
+        readonly=True,
+        store=False,
+    )
+
+    numero_anexo = fields.Char(
+        string="Número del anexo",
+        compute='_compute_get_numero_anexo',
+        readonly=True,
+    )
+
+    retencion_iva_amount_1 = fields.Monetary(
+        string="Percepción IVA 1%",
+        compute="_compute_retencion_iva_amount",
+        readonly=True,
+        store=False
+    )
+
+    # === Campos display (codigo + nombre) === #
+    tipo_ingreso_display = fields.Char(
+        string="Tipo de Ingreso",
+        compute="_compute_tipo_ingreso_display",
+        store=False
+    )
+
+    tipo_costo_gasto_display = fields.Char(
+        string="Tipo de Costo/Gasto",
+        compute="_compute_tipo_costo_gasto_display",
+        store=False
+    )
+
+    tipo_operacion_display = fields.Char(
+        string="Tipo de Operación",
+        compute="_compute_tipo_operacion_display",
+        store=False
+    )
+
+    clasificacion_facturacion_display = fields.Char(
+        string="Clasificación Facturación",
+        compute="_compute_clasificacion_facturacion_display",
+        store=False
+    )
+
+    sector_display = fields.Char(
+        string="Sector",
+        compute="_compute_sector_display",
+        store=False
+    )
+
+    numero_resolucion_anexos_anulados = fields.Char(
+        string="Numero resolucion",
+        compute="_compute_resolucion_anexos_anulados",
+        store=False
+    )
+
+    numero_resolucion = fields.Char(
+        string="Numero resolucion",
+        compute="_compute_numero_resolucion",
+        store=False
+    )
+
+    desde_tiquete_preimpreso = fields.Char(
+        string="Numero resolucion",
+        compute="_compute_desde_tiquete_preimpreso",
+        store=False
+    )
+
+    hasta_tiquete_preimpreso = fields.Char(
+        string="Numero resolucion",
+        compute="_compute_hasta_tiquete_preimpreso",
+        store=False
+    )
+
+    tipo_de_detalle = fields.Char(
+        string="Tipo de detalle",
+        compute="_compute_tipo_detalle",
+        store=False
+    )
+
+    tipo_de_detalle_display = fields.Char(
+        string="Tipo de detalle",
+        compute="_compute_tipo_detalle_display",
+        store=False
+    )
+
+    desde = fields.Char(  # Desde para documentos extraviados y anulados
+        string="Desde",
+        compute="_compute_desde",
+        store=False
+    )
+
+    hasta = fields.Char(  # Desde para documentos extraviados y anulados
+        string="hasta",
+        compute="_compute_hasta",
+        store=False
+    )
+
+    tipo_documento_identificacion = fields.Char(
+        string="Tipo documento identificacion",
+        compute='_compute_get_tipo_documento',
+        readonly=True,
+        store=False,
+    )
+
+    numero_documento_identificacion = fields.Char(
+        string="Número de documento de identificacion",
+        compute='_compute_numero_documento_identificacion',
+        readonly=True,
+        store=False,
+    )
+
+    nit_cliente = fields.Char(
+        string="NIT cliente",
+        compute='_compute_get_nit',
+        readonly=True,
+        store=False,
+    )
+
+    nrc_cliente = fields.Char(
+        string="NRC cliente",
+        compute='_compute_get_nrc',
+        readonly=True,
+        store=False,
+    )
+
+    nit_o_nrc_anexo_contribuyentes = fields.Char(
+        string="NRC o NIT contribuyente",
+        compute='_compute_nit_nrc_anexo_contribuyentes',
+        readonly=True,
+        store=False,
+    )
+
+    nit_company = fields.Char(
+        string="NIT o NRC cliente",
+        compute='_compute_get_nit_company',
+        readonly=True,
+        store=False,
+    )
+
+    debito_fiscal_contribuyentes = fields.Char(
+        string="Debito fiscal",
+        compute='_compute_get_debito_fiscal',
+        readonly=True,
+        store=False,
+    )
+
+    debito_fiscal_cuenta_terceros = fields.Char(
+        string="Debito fiscal a cuenta de terceros",
+        compute='_compute_get_debito_fiscal_terceros',
+        readonly=True,
+        store=False,
+    )
+
+    dui_cliente = fields.Char(
+        string="DUI cliente",
+        compute='_compute_get_dui_cliente',
+        readonly=True,
+        store=False,
+    )
+
+    codigo_tipo_documento_cliente = fields.Char(
+        string="codigo tipo documento cliente",
+        compute='_compute_get_codigo_tipo_documento_cliente',
+        readonly=True,
+        store=False,
+    )
+
+    codigo_tipo_documento_cliente_display = fields.Char(
+        string="codigo tipo documento cliente",
+        compute='_compute_get_codigo_tipo_documento_cliente_display',
+        readonly=True,
+        store=False,
+    )
+
+    documento_sujeto_excluido = fields.Char(
+        string="Documento sujeto excluido",
+        compute="_compute_documento_sujeto_excluido",
+        store=False,
+        readonly=True,
+    )
+
+    numero_documento_del = fields.Char(
+        compute='_compute_get_hacienda_codigo_generacion_sin_guion',
+    )
+
+    numero_documento_al = fields.Char(
+        compute='_compute_get_hacienda_codigo_generacion_sin_guion',
+    )
+
+    # ******************************** Metodos computados ******************************** #
+
+    @api.depends('invoice_date')
+    def _compute_codigo_tipo_documento_compra(self):
+        for doc in self:
+            doc.codigo_tipo_documento_compra = doc.sit_tipo_documento_id.codigo
+
+    @api.depends('invoice_date')
+    def _compute_codigo_tipo_documento_compra_display(self):
+        for doc in self:
+            doc.codigo_tipo_documento_compra_display = f"{doc.sit_tipo_documento_id.codigo}. {doc.sit_tipo_documento_id.valores}"
+
+    @api.depends('name')
+    def _compute_sit_tipo_documento(self):
+        for record in self:
+            record.sit_tipo_documento = record.sit_tipo_documento_id.codigo
+
+    @api.depends('sit_evento_invalidacion', 'sit_evento_invalidacion.hacienda_selloRecibido_anulacion')
+    def _compute_has_sello_anulacion(self):
+        for m in self:
+            inv = m.sit_evento_invalidacion
+            m.has_sello_anulacion = bool(inv and inv.hacienda_selloRecibido_anulacion)
+
+    # Search compatible con dominios sobre el booleano
+    def _search_has_sello_anulacion(self, operator, value):
+        # Normalizar consultas sobre el campo M2O
+        is_true = (operator, bool(value)) in [('=', True), ('!=', False)]
+        is_false = (operator, bool(value)) in [('=', False), ('!=', True)]
+
+        if is_true:
+            # registros cuya invalidación tiene sello
+            return [('sit_evento_invalidacion.hacienda_selloRecibido_anulacion', '!=', False)]
+        elif is_false:
+            # sin invalidación o invalidación sin sello
+            return ['|',
+                    ('sit_evento_invalidacion', '=', False),
+                    ('sit_evento_invalidacion.hacienda_selloRecibido_anulacion', '=', False)]
+        # fallback en caso pase otro operador
+        return []
+
+    @api.depends('tipo_ingreso_id', 'invoice_date')
+    def _compute_get_tipo_ingreso_codigo(self):
+        limite = date(2025, 1, 1)
+        for rec in self:
+            val = "0"
+            if rec.invoice_date and rec.invoice_date >= limite and rec.tipo_ingreso_id and rec.tipo_ingreso_id.codigo is not None:
+                val = str(rec.tipo_ingreso_id.codigo)
+            rec.tipo_ingreso_codigo = val
+
+    @api.depends('tipo_costo_gasto_id')
+    def _compute_get_tipo_costo_gasto_codigo(self):
+        for rec in self:
+            rec.tipo_costo_gasto_codigo = (f"{rec.tipo_costo_gasto_id.codigo}")
+
+    @api.depends('tipo_operacion', 'invoice_date')
+    def _compute_get_tipo_operacion_codigo(self):
+        limite = date(2025, 1, 1)
+        for rec in self:
+            val = "0"
+            if rec.invoice_date and rec.invoice_date >= limite and rec.tipo_operacion and rec.tipo_operacion.codigo is not None:
+                val = str(rec.tipo_operacion.codigo)
+            rec.tipo_operacion_codigo = val
+
+    @api.depends('clasificacion_facturacion')
+    def _compute_get_clasificacion_facturacion_codigo(self):
+        for rec in self:
+            rec.clasificacion_facturacion_codigo = (f"{rec.clasificacion_facturacion.codigo}")
+
+    @api.depends('sector')
+    def _compute_get_sector_codigo(self):
+        for rec in self:
+            rec.sector_codigo = (f"{rec.sector.codigo}")
+
+    @api.depends('name')
+    def _compute_get_clase_documento(self):
+        for record in self:
+            if record.name.startswith("DTE"):
+                record.clase_documento = '4'
+            else:
+                record.clase_documento = '1'
+
+    @api.depends('journal_id')
+    def _compute_get_clase_documento_display(self):
+        for record in self:
+            if record.clase_documento == '4':
+                record.clase_documento_display = '4. Documento tributario electronico DTE'
+            else:
+                record.clase_documento_display = '1. Impreso por imprenta o tiquetes'
+
+    @api.depends('journal_id', 'codigo_tipo_documento')
+    def _compute_codigo_tipo_documento_display(self):
+        for record in self:
+            codigo = record.codigo_tipo_documento or ""  # asegura string
+            nombre = record.journal_id.name or ""  # asegura string
+
+            _logger.debug("Tipo documento %s Nombre %s, documento %s", record.sit_tipo_documento_id.codigo, nombre, record.name)
+            if codigo or nombre:
+                record.codigo_tipo_documento_display = f"{codigo} {nombre}".strip()
+            else:
+                record.codigo_tipo_documento_display = ""
+
+    @api.depends('journal_id')
+    def _compute_get_numero_documento(self):
+        limite = date(2022, 11, 1)
+        for record in self:
+            if record.invoice_date and record.invoice_date < limite:
+                record.numero_documento = record.name
+            else:
+                record.numero_documento = record.hacienda_codigoGeneracion_identificacion
+
+    @api.depends('journal_id')
+    def _compute_get_numero_control_interno(self):
+        for record in self:
+            record.numero_control_interno = ""
+
+    @api.depends('journal_id')
+    def _compute_get_numero_control_documento_interno_del(self):
+        for record in self:
+            record.numero_control_interno_del = record.hacienda_codigoGeneracion_identificacion
+
+    @api.depends('journal_id')
+    def _compute_get_numero_control_documento_interno_al(self):
+        for record in self:
+            if record.clase_documento == "4":
+                record.numero_control_interno_al = 0
+            else:
+                record.numero_control_interno_al = 0
+
+    @api.depends('journal_id')
+    def _compute_get_numero_maquina_registradora(self):
+        for record in self:
+            record.numero_maquina_registradora = ''
+
+    @api.depends('journal_id')
+    def _compute_get_total_gravado(self):
+        for record in self:
+            if record.partner_id.country_id.code == self.env.company.country_id.code:
+                record.total_gravado_local = record.total_gravado
+            else:
+                record.total_gravado_local = 0.00
+
+    @api.depends('journal_id')
+    def _compute_get_ventas_exentas_no_sujetas(self):
+        for record in self:
+            record.ventas_exentas_no_sujetas = 0.00
+
+    @api.depends('journal_id')
+    def _compute_get_exportaciones_dentro_centroamerica(self):
+        for record in self:
+            if record.codigo_tipo_documento == '11':
+                if record.partner_id.country_id.code in constants.CA_CODES:
+                    record.exportaciones_dentro_centroamerica = record.total_gravado
+                else:
+                    record.exportaciones_dentro_centroamerica = 0.00
+            else:
+                record.exportaciones_dentro_centroamerica = 0.00
+
+    @api.depends('journal_id', 'partner_id.country_id', 'codigo_tipo_documento', 'total_gravado')
+    def _compute_get_exportaciones_fuera_centroamerica(self):
+        for record in self:
+            if record.codigo_tipo_documento == '11':
+                # Exportaciones fuera de Centroamérica
+                if record.partner_id.country_id.code not in constants.CA_CODES:
+                    record.exportaciones_fuera_centroamerica = record.total_gravado
+                else:
+                    record.exportaciones_fuera_centroamerica = 0.00
+            else:
+                record.exportaciones_fuera_centroamerica = 0.00
+
+    @api.depends('invoice_line_ids', 'invoice_line_ids.product_id', 'invoice_line_ids.price_subtotal',
+                 'codigo_tipo_documento')
+    def _compute_get_exportaciones_de_servicio(self):
+        for record in self:
+            total_servicios = 0.00
+
+            # if record.codigo_tipo_documento == '11':
+            for line in record.invoice_line_ids:
+                # _logger.info("linea %s", line)
+                if record.codigo_tipo_documento == '11' and line.product_id and line.product_id.product_tmpl_id.type == "service":
+                    _logger.debug("linea product id %s", line.product_id.product_tmpl_id.type == "service")
+                    total_servicios += line.price_subtotal
+
+            record.exportaciones_de_servicio = total_servicios
+
+    @api.depends('journal_id')
+    def _compute_get_ventas_tasa_cero(self):
+        for record in self:
+            record.ventas_tasa_cero = 0.00
+
+    @api.depends('journal_id')
+    def _compute_get_ventas_cuenta_terceros(self):
+        for record in self:
+            record.ventas_cuenta_terceros = 0.00
+
+    @api.depends('journal_id')
+    def _compute_get_tipo_ingreso_renta(self):
+        for record in self:
+            record.tipo_ingreso_renta = 0.00
+
+    @api.depends('journal_id')
+    def _compute_get_numero_anexo(self):
+        for record in self:
+            ctx = self.env.context
+            if ctx.get('numero_anexo'):
+                record.numero_anexo = str(ctx['numero_anexo'])
+
+    @api.depends('invoice_line_ids.price_subtotal', 'codigo_tipo_documento')
+    def _compute_retencion_iva_amount(self):
+        for record in self:
+            if record.codigo_tipo_documento == '14':  # sujeto excluido
+                record.retencion_iva_amount_1 = str(round(float(record.amount_untaxed) * 0.01, 2))
+            else:
+                record.retencion_iva_amount_1 = 0.0
+
+    @api.depends('tipo_ingreso_id')
+    def _compute_tipo_ingreso_display(self):
+        limite = date(2025, 1, 1)
+        for rec in self:
+            if rec.invoice_date and rec.invoice_date >= limite:
+                rec.tipo_ingreso_display = (
+                    f"{rec.tipo_ingreso_id.codigo}. {rec.tipo_ingreso_id.valor}"
+                    if rec.tipo_ingreso_id else ""
+                )
+            else:
+                rec.tipo_ingreso_display = ("0")
+
+    @api.depends('tipo_costo_gasto_id')
+    def _compute_tipo_costo_gasto_display(self):
+        for rec in self:
+            rec.tipo_costo_gasto_display = (
+                f"{rec.tipo_costo_gasto_id.codigo}. {rec.tipo_costo_gasto_id.valor}"
+                if rec.tipo_costo_gasto_id else ""
+            )
+
+    @api.depends('tipo_operacion')
+    def _compute_tipo_operacion_display(self):
+        limite = date(2025, 1, 1)
+        for rec in self:
+            if rec.invoice_date and rec.invoice_date >= limite:
+                rec.tipo_operacion_display = (
+                    f"{rec.tipo_operacion.codigo}. {rec.tipo_operacion.valor}"
+                    if rec.tipo_operacion else ""
+                )
+            else:
+                rec.tipo_operacion_display = ("0")
+
+    @api.depends('clasificacion_facturacion')
+    def _compute_clasificacion_facturacion_display(self):
+        for rec in self:
+            rec.clasificacion_facturacion_display = (
+                f"{rec.clasificacion_facturacion.codigo}. {rec.clasificacion_facturacion.valor}"
+                if rec.clasificacion_facturacion else ""
+            )
+
+    @api.depends('sector')
+    def _compute_sector_display(self):
+        for rec in self:
+            rec.sector_display = (
+                f"{rec.sector.codigo}. {rec.sector.valor}"
+                if rec.sector else ""
+            )
+
+    @api.depends('journal_id')
+    def _compute_resolucion_anexos_anulados(self):
+        limite = date(2022, 10, 1)
+        for record in self:
+            if record.invoice_date and record.invoice_date < limite:
+                record.numero_resolucion_anexos_anulados = record.hacienda_codigoGeneracion_identificacion
+            else:
+                record.numero_resolucion_anexos_anulados = record.name
+
+    @api.depends('journal_id')
+    def _compute_numero_resolucion(self):
+        limite = date(2022, 11, 1)
+        for record in self:
+            if record.invoice_date and record.invoice_date < limite:
+                record.numero_resolucion = record.hacienda_codigoGeneracion_identificacion
+            else:
+                record.numero_resolucion = record.name
+
+    @api.depends('journal_id')
+    def _compute_desde_tiquete_preimpreso(self):
+        for record in self:
+            if record.clase_documento == '4':
+                record.desde_tiquete_preimpreso = 0
+            else:
+                record.desde_tiquete_preimpreso = 0
+
+    @api.depends('journal_id')
+    def _compute_hasta_tiquete_preimpreso(self):
+        for record in self:
+            if record.clase_documento == '4':
+                record.hasta_tiquete_preimpreso = 0
+            else:
+                record.hasta_tiquete_preimpreso = 0
+
+    @api.depends('journal_id')
+    def _compute_tipo_detalle(self):
+        for record in self:
+            if record.has_sello_anulacion:
+                if record.clase_documento == '4':
+                    record.tipo_de_detalle = 'D'
+                else:
+                    record.tipo_de_detalle = 'A'
+            else:
+                record.tipo_de_detalle = ''
+
+    @api.depends('tipo_de_detalle')
+    def _compute_tipo_detalle_display(self):
+        for record in self:
+            if record.has_sello_anulacion:
+                if record.tipo_de_detalle == 'D':
+                    record.tipo_de_detalle_display = f"{record.tipo_de_detalle}. Documento DTE Invalidado"
+                elif record.tipo_de_detalle == 'A':
+                    record.tipo_de_detalle_display = f"{record.tipo_de_detalle}. Documento Anulados/Invalidados"
+                else:
+                    record.tipo_de_detalle_display = ''
+            else:
+                record.tipo_de_detalle_display = ''
+
+    @api.depends('journal_id')
+    def _compute_desde(self):
+        for record in self:
+            if record.clase_documento == '4':
+                record.desde = 0
+            else:
+                record.desde = 0
+
+    @api.depends('journal_id')
+    def _compute_hasta(self):
+        for record in self:
+            if record.clase_documento == '4':
+                record.hasta = 0
+            else:
+                record.hasta = 0
+
+    @api.depends('partner_id')
+    def _compute_get_tipo_documento(self):
+        for record in self:
+            if record.partner_id:
+                record.tipo_documento_identificacion = record.partner_id.dui
+            elif record.partner_vat:
+                record.tipo_documento_identificacion = record.partner_id.vat
+            else:
+                record.tipo_documento_identificacion = ''
+
+    @api.depends('partner_id')
+    def _compute_numero_documento_identificacion(self):
+        for record in self:
+            if record.partner_id and record.partner_id.dui:
+                record.numero_documento_identificacion = "01"
+            elif record.partner_id and record.partner_id.vat:
+                record.numero_documento_identificacion = "03"
+            else:
+                record.numero_documento_identificacion = ''
+
+    @api.depends('partner_id')
+    def _compute_get_nit(self):
+        for record in self:
+            if record.partner_id.vat:
+                record.nit_cliente = record.partner_id.vat
+            else:
+                record.nit_cliente = ''
+            _logger.debug("record.nit_cliente %s", record.nit_cliente)
+
+    @api.depends('partner_id')
+    def _compute_get_nrc(self):
+        for record in self:
+            if record.partner_id.nrc:
+                record.nrc_cliente = record.partner_id.nrc
+            else:
+                record.nrc_cliente = ''
+            _logger.debug("record.nrc_cliente %s", record.nrc_cliente)
+
+    @api.depends('partner_id')
+    def _compute_get_nit_company(self):
+        for record in self:
+            if record.partner_id.vat:
+                record.nit_company = record.partner_id.vat
+            else:
+                record.nit_company = ''
+
+    @api.depends('partner_id')
+    def _compute_get_debito_fiscal(self):
+        for record in self:
+            record.debito_fiscal_contribuyentes = record.amount_tax
+
+    @api.depends('partner_id')
+    def _compute_get_debito_fiscal_terceros(self):
+        for record in self:
+            record.debito_fiscal_cuenta_terceros = 0.00
+
+    @api.depends('partner_id.vat', 'partner_id.nrc', 'partner_id.dui', 'invoice_date', 'partner_id.is_company',
+                 'partner_id.company_type')
+    def _compute_get_dui_cliente(self):
+        """
+        Q. DUI del Cliente (campo Q del anexo):
+        - Solo para Personas Naturales y periodos >= 2022-01-01.
+        - Es OPCIONAL; si se llena, H (NIT/NRC) debe quedar VACÍO.
+        - Para periodos < 2022-01-01 el DUI debe ir VACÍO.
+        - Formato: 9 caracteres sin guiones.
+        """
+        limite = date(2022, 1, 1)
+        for rec in self:
+            valor = ""
+            is_person = (rec.partner_id and (rec.partner_id.company_type or (
+                "company" if rec.partner_id.is_company else "person")) == "person")
+            period = rec.invoice_date or limite
+
+            dui = self._only_digits(getattr(rec.partner_id, "dui", ""))
+
+            if is_person and period >= limite and dui:
+                # Solo aceptamos exactamente 9 dígitos (la guía exige 9, sin guiones/pleca)
+                if len(dui) == 9:
+                    valor = dui
+                else:
+                    # Guardamos vacío para exportación, pero dejamos rastro en logs
+                    _logger.warning("DUI inválido (no 9 dígitos) en %s: '%s'", rec.name, dui)
+                    valor = ""
+            else:
+                valor = ""  # Todos los demás casos
+
+            rec.dui_cliente = valor
+
+    def _compute_get_codigo_tipo_documento_cliente(self):
+        for record in self:
+            codigo = ""
+            if record.partner_id.dui:
+                codigo = "2"  # DUI
+            elif record.partner_id.vat:
+                codigo = "1"  # NIT
+            elif record.partner_id.nrc:
+                codigo = "3"  # NRC
+
+            record.codigo_tipo_documento_cliente = codigo
+
+    @api.depends('codigo_tipo_documento_cliente')
+    def _compute_get_codigo_tipo_documento_cliente_display(self):
+        """
+        Busca en el catálogo el código y devuelve 'codigo. nombre'
+        """
+        for record in self:
+            display = ""
+            if record.codigo_tipo_documento_cliente:
+                tipo_doc = self.env['account.tipo.documento.identificacion'].search(
+                    [('codigo', '=', record.codigo_tipo_documento_cliente)],
+                    limit=1
+                )
+                if tipo_doc:
+                    display = f"{tipo_doc.codigo}. {tipo_doc.valor}"
+            record.codigo_tipo_documento_cliente_display = display
+
+    @api.depends("codigo_tipo_documento_cliente", "partner_id.vat", "partner_id.dui")
+    def _compute_documento_sujeto_excluido(self):
+        for record in self:
+            if record.codigo_tipo_documento_cliente == "2":  # DUI
+                record.documento_sujeto_excluido = record.partner_id.dui or ""
+            elif record.codigo_tipo_documento_cliente == "1":  # NIT
+                record.documento_sujeto_excluido = record.partner_id.vat or ""
+            else:
+                record.documento_sujeto_excluido = ""
+
+    @api.depends('journal_id')
+    def _compute_get_hacienda_codigo_generacion_sin_guion(self):
+        for record in self:
+            codigo = record.hacienda_codigoGeneracion_identificacion or ''
+            record.numero_documento_del = codigo
+            record.numero_documento_al = codigo
+
+    @api.depends('journal_id')
+    def _compute_numero_control_interno_del(self):
+        for record in self:
+            numero = False  # valor por defecto
+            if record.journal_id and record.journal_id.name:
+                numero = "DTE-" + record.journal_id.name
+
+            record.numero_control_interno_del = numero
+
+    @api.depends('journal_id')
+    def _compute_get_tipo_operacion_renta(self):
+        for record in self:
+            record.tipo_operacion_renta = 0.00
+
+    @api.depends('partner_id.vat', 'partner_id.nrc', 'partner_id.dui', 'invoice_date')
+    def _compute_nit_nrc_anexo_contribuyentes(self):
+        limite = date(2022, 1, 1)
+        for record in self:
+            valor = ""
+            if record.invoice_date:
+                if record.invoice_date >= limite:
+
+                    # A partir de 2022
+                    if record.partner_id.dui:
+                        valor = ""  # si tiene DUI, se deja vacío
+                    elif record.partner_id.vat:
+                        valor = record.partner_id.vat  # NIT
+                    elif record.partner_id.nrc:
+                        valor = record.partner_id.nrc  # NRC
+                else:
+                    # Antes de 2022, NIT o NRC obligatorio
+                    if record.partner_id.vat:
+                        valor = record.partner_id.vat
+                    elif record.partner_id.nrc:
+                        valor = record.partner_id.nrc
+            record.nit_o_nrc_anexo_contribuyentes = valor
+
+    ###################################################################################################
+    #                                  Funciones para descarga de csv                                 #
+    ###################################################################################################
+
+    def action_download_csv_anexo(self):
+        ctx = self.env.context
+        numero_anexo = str(ctx.get("numero_anexo") or self.numero_anexo or "")
+
+        records_to_export = self or self.env[ctx.get("active_model", "account.move")].browse(
+            ctx.get("active_ids", []))
+        if not records_to_export:
+            domain = ctx.get("active_domain") or ctx.get("domain") or []
+            if domain:
+                records_to_export = self.env["account.move"].search(domain)
+        if not records_to_export:
+            _logger.warning("Sin registros para exportar (selección vacía y sin dominio activo).")
+            return
+
+        view_id = None
+        params = ctx.get("params") or {}
+        action_xmlid = params.get("action")
+        if action_xmlid:
+            try:
+                action = self.env["ir.actions.act_window"]._for_xml_id(action_xmlid)
+                view_id = action.get("view_id") and action["view_id"][0] or None
+            except Exception as e:
+                _logger.warning("No se pudo resolver view_id desde acción %s: %s", action_xmlid, e)
+
+        csv_data = self.env["anexo.csv.utils"].generate_csv(
+            records_to_export, numero_anexo, view_id=view_id, include_header=False
+        )
+
+        attachment = self.env["ir.attachment"].create({
+            "name": f"anexo_{numero_anexo}.csv",
+            "type": "binary",
+            "datas": base64.b64encode(csv_data),
+            "res_model": "account.move",
+            "res_id": False,
+            "public": True,
+        })
+        return {
+            "type": "ir.actions.act_url",
+            "url": f"/web/content/{attachment.id}?download=true",
+            "target": "self",
+        }
+
+    ###################################################################################################
+    #                                   Datos para anexo de compras                                  #
+    ###################################################################################################
+
+    amount_exento = fields.Float("Total exento", readonly=True)
+    total_gravado = fields.Float("Total gravado", readonly=True)
+
+    sit_tipo_documento_id = fields.Many2one(
+        "account.journal.tipo.documento.field",  # <--- Adjust this to the actual model
+        string="Tipo Documento",
+        readonly=True
+    )
+
+    compras_internas_total_excento = fields.Float(
+        "Compras internas exentas y/o no sujetas",
+        compute="_compute_compras_internas_exento"
+    )
+    internaciones_exentas_no_sujetas = fields.Float(
+        "Internaciones exentas y/o no sujetas",
+        compute="_compute_internaciones_exentas_no_sujetas"
+    )
+    importaciones_exentas_no_sujetas = fields.Float(
+        "Importaciones exentas y/o no sujetas",
+        compute="_compute_importaciones_exentas_no_sujetas"
+    )
+
+    @api.depends('amount_exento', 'partner_id.country_id')
+    def _compute_compras_internas_exento(self):
+        for rec in self:
+            code = rec.partner_id.country_id.code or ''
+            rec.compras_internas_total_excento = (rec.amount_exento or 0.0) if code == self.env.company.country_id.code else 0.0
+
+    @api.depends('amount_exento', 'partner_id.country_id')
+    def _compute_internaciones_exentas_no_sujetas(self):
+        for rec in self:
+            code = rec.partner_id.country_id.code or ''
+            rec.internaciones_exentas_no_sujetas = (rec.amount_exento or 0.0) if code in (constants.CA_CODES - {self.env.company.country_id.code}) else 0.0
+
+    @api.depends('amount_exento', 'partner_id.country_id')
+    def _compute_importaciones_exentas_no_sujetas(self):
+        for rec in self:
+            code = rec.partner_id.country_id.code or ''
+            rec.importaciones_exentas_no_sujetas = (rec.amount_exento or 0.0) if (code and code not in constants.CA_CODES) else 0.0
+
+    @api.depends('total_gravado', 'partner_id.country_id', 'sit_tipo_documento_id')
+    def _compute_compras_internas_gravadas(self):
+        for rec in self:
+            code = rec.partner_id.country_id.code
+            doc = rec.sit_tipo_documento_id.codigo
+            val = 0.0
+            if code == self.env.company.country_id.code:
+                val = rec.total_gravado or 0.00
+
+            rec.compras_internas_gravadas = val
+
+    importaciones_gravadas_servicio = fields.Float(
+        "Importaciones gravadas de servicios",
+        compute="_compute_importaciones_gravadas_servicios"
+    )
+
+    # --- HELPERS con LOGS ---
+    def _is_service_line(self, line):
+        tmpl = line.product_id.product_tmpl_id if line.product_id else False
+        is_service = bool(tmpl) and (
+                getattr(tmpl, 'type', None) == 'service'
+                or getattr(tmpl, 'detailed_type', None) == 'service'
+        )
+        _logger.debug("[IMP-SERV] line_id=%s prod=%s is_service=%s",
+                      line.id, getattr(line.product_id, 'display_name', False), is_service)
+        return is_service
+
+    def _has_vat_positive(self, line):
+        """
+        True si la línea tiene un monto de IVA positivo, determinado por el
+        resultado del cálculo de impuestos (compute_all).
+        """
+        if line.iva_unitario < 0:
+            _logger.debug("[IMP-SERV] line_id=%s SIN taxes", line.id)
+            return False
+        return True
+
+    def _monto_iva(self, line):
+        return line.total_iva
+
+    # --- COMPUTE ---
+    @api.depends(
+        'partner_id.country_id',
+        'invoice_line_ids.price_subtotal',
+        'invoice_line_ids.price_total',
+        'invoice_line_ids.tax_ids',
+        'invoice_line_ids.tax_ids.children_tax_ids',
+        'invoice_line_ids.product_id'
+    )
+    def _compute_importaciones_gravadas_servicios(self):
+        for rec in self:
+            total = 0.0
+            try:
+                country = (rec.partner_id.country_id.code or '')
+                if country and country not in constants.CA_CODES:
+                    for line in rec.invoice_line_ids:
+                        if self._is_service_line(line) and self._has_vat_positive(line):
+                            total += line.price_subtotal
+            except Exception:
+                _logger.exception("[IMP-SERV] Error calculando importaciones_gravadas_servicio move %s", rec.id)
+            rec.importaciones_gravadas_servicio = total
+
+    compras_internas_gravadas = fields.Float(
+        "Compras internas gravadas",
+        compute="_compute_compras_internas_gravadas"
+    )
+
+    def _compute_compras_internas_gravadas(self):
+        for rec in self:
+            total = 0.0
+            try:
+                country = (rec.partner_id.country_id.code or '')
+                if country and country == self.env.company.country_id.code:
+                    for line in rec.invoice_line_ids:
+                        if self._has_vat_positive(line):
+                            total += line.price_subtotal
+            except Exception:
+                _logger.exception("[COMPRAS] Error calculando compras_internas_gravadas move %s", rec.id)
+            rec.compras_internas_gravadas = total
+
+    internaciones_gravadas_bienes = fields.Float(
+        "Internaciones gravadas de bienes",
+        compute="_compute_internaciones_gravadas_bienes"
+    )
+
+    def _compute_internaciones_gravadas_bienes(self):
+        for rec in self:
+            total = 0.0
+            try:
+                country = (rec.partner_id.country_id.code or '')
+                if country and country in (constants.CA_CODES - {self.env.company.country_id.code}):
+                    for line in rec.invoice_line_ids:
+                        if self._has_vat_positive(line):
+                            total += line.price_subtotal
+            except Exception:
+                _logger.exception("[INTERN] Error calculando internaciones_gravadas_bienes move %s", rec.id)
+            rec.internaciones_gravadas_bienes = total
+
+    importaciones_gravadas_bienes = fields.Float(
+        "Importaciones gravadas de bienes",
+        compute="_compute_importaciones_gravadas_bienes"
+    )
+
+    def _compute_importaciones_gravadas_bienes(self):
+        for rec in self:
+            total = 0.0
+            try:
+                country = (rec.partner_id.country_id.code or '')
+                if country and country not in constants.CA_CODES:
+                    for line in rec.invoice_line_ids:
+                        if self._has_vat_positive(line):
+                            total += line.price_subtotal
+            except Exception:
+                _logger.exception("[IMPORT] Error calculando importaciones_gravadas_bienes move %s", rec.id)
+            rec.importaciones_gravadas_bienes = total
+
+    total_compra = fields.Float(
+        "Total compras",
+        compute="_compute_total_compra"
+    )
+
+    def _compute_total_compra(self):
+        for rec in self:
+            rec.total_compra = rec.compras_internas_total_excento + rec.internaciones_exentas_no_sujetas + rec.importaciones_exentas_no_sujetas + rec.compras_internas_gravadas + rec.internaciones_gravadas_bienes + rec.importaciones_gravadas_bienes + rec.importaciones_gravadas_servicio
+
+    credito_fiscal = fields.Float(
+        "Credito fiscal",
+        compute="_compute_credito_fiscal"
+    )
+
+    def _compute_credito_fiscal(self):
+        for move in self:
+            # 1) IVA de líneas de producto (internas + RC si lo cargas ahí)
+            iva_lineas = 0.0
+            for line in move.invoice_line_ids:
+                # Asegura no sumar líneas negativas raras; si usas notas de crédito, el signo lo da el move
+                iva_lineas += float(line.total_iva or 0.0)
+
+            # 2) IVA de importación (DUCA) — puede venir en otra moneda
+            iva_duca_company = 0.0
+            if hasattr(move, 'exp_duca_id') and move.exp_duca_id:
+                for duca in move.exp_duca_id:
+                    iva_duca = float(duca.iva_importacion or 0.0)
+                    if not iva_duca:
+                        continue
+                    duca_curr = duca.currency_id or move.company_id.currency_id
+                    company_curr = move.company_id.currency_id
+                    # Fecha de conversión: fecha de la factura (o hoy si no hay)
+                    date = move.invoice_date or fields.Date.context_today(move)
+                    if duca_curr and company_curr and duca_curr != company_curr:
+                        iva_duca_company += duca_curr._convert(iva_duca, company_curr, move.company_id, date)
+                    else:
+                        iva_duca_company += iva_duca
+
+            total = iva_lineas + iva_duca_company
+
+            # Redondeo a 2 decimales
+            move.credito_fiscal = round(total, 2)
+
+    ###################################################################################################
+    #                             Datos para agrupar facturas por semestre                            #
+    ###################################################################################################
+
+    semester = fields.Selection(
+        [('S1', 'Ene–Jun'), ('S2', 'Jul–Dic')],
+        compute='_compute_semester',
+        store=True, index=True
+    )
+    semester_year = fields.Integer(
+        compute='_compute_semester',
+        store=True, index=True
+    )
+    semester_label = fields.Char(  # útil para mostrar/ordenar: "2025-H1"
+        compute='_compute_semester',
+        store=True, index=True
+    )
+
+    @api.depends('invoice_date')
+    def _compute_semester(self):
+        for m in self:
+            if m.invoice_date:
+                m.semester_year = m.invoice_date.year
+                m.semester = 'S1' if m.invoice_date.month <= 6 else 'S2'
+                m.semester_label = f"{m.semester_year}-{m.semester}"
+            else:
+                m.semester_year = False
+                m.semester = False
+                m.semester_label = False
+
+    invoice_year = fields.Char(compute='_compute_periods', store=True, index=True)
+    invoice_semester = fields.Selection(
+        [('1', '1.º semestre'), ('2', '2.º semestre')],
+        compute='_compute_periods', store=True, index=True
+    )
+
+    invoice_month = fields.Char(compute='_compute_periods', store=True, index=True)
+
+    # Wrappers para SearchPanel (Selection)
+    invoice_year_sel = fields.Selection(
+        selection=lambda self: [(str(y), str(y)) for y in range(2018, 2040)],
+        compute='_compute_periods_sel', store=True, index=True, string='Año'
+    )
+    invoice_month_sel = fields.Selection(
+        selection=MONTHS, compute='_compute_periods_sel',
+        store=True, index=True, string='Mes'
+    )
+
+    @api.depends('invoice_date')
+    def _compute_periods(self):
+        for m in self:
+            if m.invoice_date:
+                # Año y mes en texto, semestre como '1' o '2'
+                m.invoice_year = str(m.invoice_date.year)
+                m.invoice_month = f'{m.invoice_date.month:02d}'
+                m.invoice_semester = '1' if m.invoice_date.month <= 6 else '2'
+            else:
+                m.invoice_year = False
+                m.invoice_month = False
+                m.invoice_semester = False
+
+    @api.depends('invoice_date')
+    def _compute_periods_sel(self):
+        for m in self:
+            if m.invoice_date:
+                m.invoice_year_sel = str(m.invoice_date.year)
+                m.invoice_month_sel = f'{m.invoice_date.month:02d}'
+            else:
+                m.invoice_year_sel = False
+                m.invoice_month_sel = False
+
+    def _apply_partner_defaults_if_needed(self):
+        """
+        Aplica valores por defecto desde el partner en documentos de venta y compra
+        con campos fiscales requeridos por Hacienda.
+        """
+        _logger.info("SIT: Campos fiscales requeridos por Hacienda")
+        for move in self:
+            if move.company_id and not move.company_id.sit_facturacion:
+                _logger.info("SIT No aplica facturación electrónica para la factura %s. Se omiten campos fiscales requeridos.", move.name)
+                continue
+
+            if not move.partner_id:
+                continue
+
+            # Aplica tanto a ventas como a compras
+            if not move.is_invoice(include_receipts=True):
+                continue
+
+            p = move.partner_id.with_company(move.company_id)
+
+            _logger.info("SIT: Campos fiscales requeridos por Hacienda. Partner: %s", p)
+            applied_fields = []
+
+            # Campos fiscales requeridos por Hacienda
+            if move.move_type not in (constants.IN_INVOICE, constants.IN_REFUND):
+                if not move.tipo_ingreso_id and p.tipo_ingreso_id_partner:
+                    move.tipo_ingreso_id = p.tipo_ingreso_id_partner
+                    applied_fields.append("tipo_ingreso_id")
+
+            if move.move_type not in (constants.OUT_INVOICE, constants.OUT_REFUND):
+                if not move.tipo_costo_gasto_id and p.tipo_costo_gasto_id_partner:
+                    move.tipo_costo_gasto_id = p.tipo_costo_gasto_id_partner
+                    applied_fields.append("tipo_costo_gasto_id")
+
+                if not move.clasificacion_facturacion and p.clasificacion_facturacion_partner:
+                    move.clasificacion_facturacion = p.clasificacion_facturacion_partner
+                    applied_fields.append("clasificacion_facturacion")
+
+                if not move.sector and p.sector_partner:
+                    move.sector = p.sector_partner
+                    applied_fields.append("sector")
+
+            if not move.tipo_operacion and p.tipo_operacion_partner:
+                move.tipo_operacion = p.tipo_operacion_partner
+                applied_fields.append("tipo_operacion")
+
+            if applied_fields:
+                _logger.info("SIT: Valores fiscales aplicados desde partner %s en movimiento %s (%s): %s",
+                    p.name, move.name or "nuevo", move.move_type, ", ".join(applied_fields) )
+
+    @api.depends('tipo_operacion')
+    def _compute_clasificacion_domain(self):
+        for move in self:
+            domain = []
+
+            tipo_operacion = move.tipo_operacion
+            codigo_operacion = (tipo_operacion.codigo if tipo_operacion and tipo_operacion.codigo is not None else None)
+
+            if codigo_operacion in (constants.TO_GRAVADO, constants.TO_NO_GRAV_EX, constants.TO_EXCLUIDO, constants.TO_MIXTA):
+                domain = [
+                    ('codigo', 'in', [constants.C_COSTO, constants.C_GASTO])
+                ]
+
+            move.clasificacion_domain = str(domain)
+
+    @api.depends('clasificacion_facturacion', 'tipo_operacion')
+    def _compute_sector_domain(self):
+        for move in self:
+            domain = []
+
+            clasificacion = move.clasificacion_facturacion
+            tipo_operacion = move.tipo_operacion
+
+            codigo_clasificacion = (clasificacion.codigo if clasificacion and clasificacion.codigo is not None else None)
+
+            codigo_operacion = (tipo_operacion.codigo if tipo_operacion and tipo_operacion.codigo is not None else None)
+
+            if (codigo_clasificacion in (constants.C_COSTO, constants.C_GASTO)
+                    and codigo_operacion in (constants.TO_GRAVADO, constants.TO_NO_GRAV_EX, constants.TO_EXCLUIDO, constants.TO_MIXTA)):
+                domain = [
+                    ('codigo', 'in', [
+                        constants.S_INDUSTRIA,
+                        constants.S_COMERCIO,
+                        constants.S_AGROP,
+                        constants.S_SERVICIOS,
+                    ])
+                ]
+
+            move.sector_domain = str(domain)
+
+    @api.depends('sector', 'clasificacion_facturacion', 'tipo_operacion')
+    def _compute_costo_gasto_domain(self):
+        for move in self:
+            domain = []
+
+            sector = move.sector
+            clasificacion = move.clasificacion_facturacion
+            tipo_operacion = move.tipo_operacion
+
+            codigo_sector = (sector.codigo if sector and sector.codigo is not None else None)
+            codigo_clasificacion = (clasificacion.codigo if clasificacion and clasificacion.codigo is not None else None)
+            codigo_operacion = (tipo_operacion.codigo if tipo_operacion and tipo_operacion.codigo is not None else None)
+
+            # Si la operación no es válida fiscalmente, no hay dominio
+            if codigo_operacion not in (constants.TO_GRAVADO, constants.TO_NO_GRAV_EX, constants.TO_EXCLUIDO, constants.TO_MIXTA):
+                move.tipo_costo_gasto_domain = str(domain)
+                continue
+
+            # INDUSTRIA | COSTOS
+            if (codigo_sector == constants.S_INDUSTRIA and codigo_clasificacion == constants.C_COSTO):
+                domain = [
+                    ('codigo', 'in', [
+                        constants.TCG_IMPORTACIONES,
+                        constants.TCG_COSTO_INTERNO,
+                        constants.TCG_COSTOS_FAB,
+                        constants.TCG_MANO_OBRA,
+                    ])
+                ]
+
+            # COMERCIO / AGROP / SERVICIOS | COSTOS
+            elif (codigo_sector in (constants.S_COMERCIO, constants.S_AGROP, constants.S_SERVICIOS)
+                  and codigo_clasificacion == constants.C_COSTO):
+                domain = [
+                    ('codigo', 'in', [
+                        constants.TCG_IMPORTACIONES,
+                        constants.TCG_COSTO_INTERNO,
+                    ])
+                ]
+
+            # TODOS LOS SECTORES | GASTOS
+            elif (codigo_sector in (constants.S_INDUSTRIA, constants.S_COMERCIO, constants.S_AGROP, constants.S_SERVICIOS)
+                  and codigo_clasificacion == constants.C_GASTO):
+                domain = [
+                    ('codigo', 'in', [
+                        constants.TCG_VENTA_SIN_DONACION,
+                        constants.TCG_GASTOS_ADMIN,
+                        constants.TCG_GASTOS_FIN,
+                    ])
+                ]
+
+            move.tipo_costo_gasto_domain = str(domain)

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+           <!-- Plantilla de correo para enviar boletas de pago (hr.payslip) -->
+        <record id="rrhh_email_template_payslip" model="mail.template">
+            <field name="name">Boleta de pago: Enviar</field> <!-- Nombre de la plantilla -->
+            <field name="model_id" ref="hr_payroll.model_hr_payslip"/> <!-- Modelo al que está ligada la plantilla: hr.payslip -->
+            <field name="email_from">${object.company_id.email_from_payslip}</field>  <!-- Remitente -->
+            <field name="email_to">{{object.employee_id.work_email}}</field><!-- Remitente -->
+            <field name="subject">Boleta de pago - {{object.employee_id.name}}</field>  <!-- Asunto del correo personalizado -->
+            <field name="body_html" type="html">
+                <div>
+                    <p style="margin: 0 0 16px 0;">
+                        Estimado/a
+                        <t t-if="object.employee_id.name">
+                            <t t-out="object.employee_id.name or ''"/>
+                        </t>
+                    </p>
+                    <p style="margin: 0 0 16px 0;">
+                        Adjunto encontrará su boleta de pago correspondiente al período de
+                        <t t-if="object.date_from">
+                            <t t-out="object.date_from or ''"/>
+                        </t>
+                        hasta
+                        <t t-if="object.date_to">
+                            <t t-out="object.date_to or ''"/>
+                        </t>
+                    </p>
+                    <p style="margin: 0 0 16px 0;">Saludos,<br/>RRHH
+                    </p>
+                </div>
+            </field>
+            <!--
+              auto_delete=True => elimina el mail.queue una vez enviado
+              (reduce basura en base de datos, pero no queda rastro del cuerpo del correo).
+            -->
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>

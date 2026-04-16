@@ -1,0 +1,28 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Tipo de entrada: Calculo -->
+        <record id="input_type_deduccion_fsv" model="hr.payslip.input.type">
+            <field name="name">Deducción FSV</field>
+            <field name="code">FSV</field>
+            <field name="active">true</field>
+            <field name="available_in_attachments">true</field>
+            <field name="is_quantity">true</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+        <!-- Crear regla salarial de deducción de renta -->
+        <record id="salary_rule_deduccion_fsv" model="hr.salary.rule">
+            <field name="name">Deducción de FSV</field>
+            <field name="code">FSV</field>
+            <field name="sequence">145</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="l10n_sv_hr_retenciones.structure_incoe"/>
+            <field name="condition_select">input</field>
+            <field name="condition_other_input_id" ref="input_type_deduccion_fsv"/>
+            <field name="amount_select">input</field>
+            <field name="input_type_id" ref="input_type_deduccion_fsv"/>
+            <field name="amount_other_input_id" ref="input_type_deduccion_fsv"/>
+            <field name="appears_on_payslip" eval="True"/>
+        </record>
+    </data>
+</odoo>

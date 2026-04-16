@@ -1,0 +1,127 @@
+import logging
+from odoo import models, api, fields, _
+from odoo.exceptions import ValidationError
+import logging
+
+_logger = logging.getLogger(__name__)
+
+try:
+    from odoo.addons.common_utils.utils import constants
+    _logger.info("SIT Modulo config_utils [hacienda ws-sale_order]")
+except ImportError as e:
+    _logger.error(f"Error al importar 'constants': {e}")
+    constants = None
+
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+
+    journal_id = fields.Many2one(
+        comodel_name="account.journal",
+        string="Diario",
+        domain=lambda self: self._get_allowed_journals_domain(),
+        help="Seleccione el diario permitido por la empresa"
+    )
+
+    def action_confirm(self):
+        for order in self:
+            _logger.info("Confirmando SO %s | state=%s | context=%s", order.id, order.state, self.env.context)
+
+            # SI VIENE DESDE SERVICIO EXTERNO / TAREA → NO VALIDAR
+            if self.env.context.get('active_model') == 'project.task':
+                _logger.info("Saltando validación: confirmación desde Servicio Externo")
+                continue
+
+            if self.env.context.get('fsm_task_id'):
+                _logger.info("Saltando validación: flujo FSM")
+                continue
+
+            _logger.info("=== Validando cotización ID %s ===", order.id)
+
+            if not (order.company_id and order.company_id.sit_facturacion):
+                _logger.info("SIT: La empresa %s no aplica a facturación electrónica, saltando validación de journal/partner.", order.company_id.name)
+                continue
+
+            _logger.info("Journal: %s", order.journal_id)
+            _logger.info("sit_tipo_documento: %s", order.journal_id.sit_tipo_documento)
+            _logger.info("sit_tipo_documento.codigo: %s", getattr(order.journal_id.sit_tipo_documento, 'codigo', None))
+            _logger.info("Partner: %s", order.partner_id)
+            _logger.info("l10n_latam_identification_type_id: %s", order.partner_id.l10n_latam_identification_type_id)
+            _logger.info("l10n_latam_identification_type_id.codigo: %s", getattr(order.partner_id.l10n_latam_identification_type_id, 'codigo', None))
+
+            if not order.journal_id:
+                raise ValidationError(_("Debe seleccionar un diario antes de confirmar la orden de venta."))
+
+            tipo_doc_journal = order.journal_id.sit_tipo_documento
+            tipo_doc_partner = order.partner_id.l10n_latam_identification_type_id
+
+            if tipo_doc_journal and tipo_doc_journal.codigo in (constants.COD_DTE_CCF, constants.COD_DTE_FEX, constants.COD_DTE_NC, constants.COD_DTE_ND):
+                if tipo_doc_partner and tipo_doc_partner.codigo == constants.COD_TIPO_DOCU_DUI:
+                    raise ValidationError(_(
+                        "El cliente tiene el tipo de documento '%s' que no es válido para el tipo de documento del diario."
+                    ) % (tipo_doc_partner.name or tipo_doc_partner.codigo))
+
+            # Validar recinto fiscal
+            if tipo_doc_journal and tipo_doc_journal.codigo == constants.COD_DTE_FEX:
+                if not order.recintoFiscal:
+                    raise ValidationError("Debe seleccionar un recinto fiscal.")
+        return super().action_confirm()
+
+    @api.onchange("partner_id")
+    def _onchange_partner_id_set_journal(self):
+        """Al seleccionar el cliente, sugerir el diario definido en el cliente."""
+        if self.partner_id and self.partner_id.journal_id:
+            old_journal = self.journal_id.id if self.journal_id else None
+            self.journal_id = self.partner_id.journal_id
+            _logger.info("[ONCHANGE PARTNER] partner_id=%s cambió journal de %s → %s", self.partner_id.id, old_journal, self.journal_id.id)
+        else:
+            _logger.info("[ONCHANGE PARTNER] partner_id=%s no tiene journal definido", self.partner_id.id if self.partner_id else None)
+
+    def _get_allowed_journals_domain(self):
+        # Tomar configuración de la compañía actual
+        config = self.env['res.configuration'].sudo().search([('company_id', '=', self.env.company.id)], limit=1)
+        if config and config.journal_ids:
+            return [('id', 'in', config.journal_ids.ids)]
+        return []
+
+    def _create_invoices(self, grouped=False, final=False, **kwargs):
+        for order in self:
+            _logger.info("Creando factura desde SO %s | journal=%s | context=%s", order.id, order.journal_id, self.env.context)
+
+            # Si la empresa no aplica facturación electrónica, no validar
+            if not (order.company_id and order.company_id.sit_facturacion):
+                continue
+
+            if not order.journal_id:
+                raise ValidationError(_(
+                    "No puede crear la factura porque la orden de venta no tiene un diario asignado.\n"
+                    "Por favor seleccione un diario en la orden de venta antes de facturar."
+                ))
+
+            tipo_doc_journal = order.journal_id.sit_tipo_documento
+            tipo_doc_partner = order.partner_id.l10n_latam_identification_type_id
+
+            if tipo_doc_journal and tipo_doc_journal.codigo in (constants.COD_DTE_CCF, constants.COD_DTE_FEX, constants.COD_DTE_NC, constants.COD_DTE_ND):
+                if tipo_doc_partner and tipo_doc_partner.codigo == constants.COD_TIPO_DOCU_DUI:
+                    raise ValidationError(_(
+                        "El cliente tiene el tipo de documento '%s' que no es válido para el tipo de documento del diario."
+                    ) % (tipo_doc_partner.name or tipo_doc_partner.codigo))
+
+            # Validar recinto fiscal
+            if tipo_doc_journal and tipo_doc_journal.codigo == constants.COD_DTE_FEX:
+                if not order.recintoFiscal:
+                    raise ValidationError("Debe seleccionar un recinto fiscal.")
+
+        moves = super()._create_invoices(
+            grouped=grouped,
+            final=final,
+            **kwargs
+        )
+
+        # Asignar fecha de documento inmediatamente
+        today = fields.Date.context_today(self)
+
+        for move in moves:
+            if move.move_type == constants.OUT_INVOICE and not move.invoice_date:
+                move.invoice_date = today
+
+        return moves

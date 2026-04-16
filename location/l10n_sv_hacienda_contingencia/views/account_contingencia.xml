@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_facturas_contingencia_tree" model="ir.ui.view">
+            <field name="name">view_facturas_contingencia.tree</field>
+            <field name="model">account.contingencia1</field>
+            <field name="type">list</field>
+            <field name="arch" type="xml">
+                <list string="Facturas de contingencia"
+                      js_class="account_tree"
+                      decoration-info="state == 'draft'"
+                      decoration-muted="state == 'cancel'"
+                      expand="context.get('expand', False)"
+                      sample="1">
+                    <field name="state" widget="badge" decoration-success="state == 'posted'" decoration-info="state == 'draft'" optional="show"/>
+                        <field name="id"/>
+                        <field name="name" readonly="state != 'draft'" placeholder="Factura de Contingencia"/>
+                        <field name="invoice_user_id" invisible="0"/>
+                        <field name="company_id" invisible="0"/>
+                        <field name="fechaHoraTransmision" invisible="0"/>
+                        <field name="sit_fInicio_hInicio" invisible="0"/>
+                        <field name="sit_fFin_hFin" invisible="0"/>
+                  </list>
+            </field>
+        </record>
+        <record id="view_contingencia_form" model="ir.ui.view">
+            <field name="name">view_contingencia.form</field>
+            <field name="model">account.contingencia1</field>
+            <field name="arch" type="xml">
+                <form string="Account Entry" js_class="account_move_form">
+                    <header>
+                        <!-- Post -->
+                        <button name="action_post_contingencia" string="Validar Contingencia" class="oe_highlight"
+                                type="object" groups="account.group_account_invoice" data-hotkey="v"
+                                context="{'validate_analytic': True}" invisible="not boton_contingencia"/>
+                        <button name="action_lote_generate" string="Generar DTE de Lote" class="oe_highlight"
+                                type="object" groups="account.group_account_invoice" data-hotkey="v"
+                                context="{'validate_analytic': True}"
+                                invisible="not boton_lote or not sit_usar_lotes"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,posted,posted_lote"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="state != 'draft'" placeholder="Factura de Contingencia"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group id="header_left_group">
+                                <field name="invoice_user_id" invisible="0"/>
+                                <field name="company_id" invisible="0"/>
+                                <field name="fechaHoraTransmision" invisible="0"/>
+                                <field name="sit_fInicio_hInicio" invisible="0"/>
+                                <field name="sit_fFin_hFin" widget="datetime" options="{'timepicker': {'step': 1}}" invisible="0"/>
+                            </group>
+                            <group id="header_right_group">
+                                <field name="sit_tipo_contingencia" invisible="0"/>
+                                <field name="sit_tipo_contingencia_otro" invisible="0"/>
+                            </group>
+                        </group>     
+                        <notebook>
+                            <page id="lotes_contingencia" string="Lotes Relacionados" invisible="not sit_usar_lotes">
+                                <field name="lote_ids">
+                                    <list>
+                                        <field name="name" string="Identificación"/>
+                                        <field name="hacienda_estado_lote"/>
+                                        <field name="hacienda_codigoLote_lote"/>
+                                        <field name="hacienda_descripcionMsg_lote"/>
+                                        <field name="hacienda_fhProcesamiento_lote"/>
+                                        <button name="action_ver_facturas"
+                                                type="object"
+                                                string="Ver Facturas"
+                                                icon="fa-list"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page id="facturas_relacionadas" string="Facturas Relacionadas" name="facturas_relacionadas" invisible="not sit_bloque">
+                                <field name="bloque_ids">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="cantidad"/>
+                                        <button name="action_ver_facturas_bloque"
+                                                type="object"
+                                                string="Ver Facturas"
+                                                icon="fa-list"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page id="respuesta_hacienda" string="Respuesta Hacienda" name="respuesta_hacienda">
+                                <group id="other_tab_group">
+<!--                                    <group string="Estado Hacienda" name="sale_info_group">-->
+                                        <!-- Campos cortos (2 columnas) -->
+                                        <field name="sit_estado"/>
+                                        <field name="sit_fechaHora"/>
+                                        <field name="hacienda_estado"/>
+                                        <field name="sit_selloRecibido"/>
+                                        <!-- Campos largos: ocupar toda la fila -->
+                                        <field name="sit_mensaje" colspan="2"/>
+                                        <field name="sit_observaciones" colspan="2"/>
+                                    </group>
+                                    <group name="accounting_info_group"/>
+<!--                                </group>-->
+                            </page>
+                            <page id="sit_lote_haciendda" string="Certificado Lote Hacienda" name="certificado_lote_hacienda"  invisible="sit_selloRecibido == False">
+                                <group id="lote_group">
+                                    <group name="lote_group_left">
+                                        <field name='hacienda_estado_lote'/>
+                                        <field name='hacienda_idEnvio_lote'/>
+                                        <field name='hacienda_fhProcesamiento_lote'/>
+                                        <field name='hacienda_codigoLote_lote'/>
+                                        <field name='hacienda_codigoMsg_lote'/>
+                                        <field name='hacienda_descripcionMsg_lote'/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_account_move_lote_list" model="ir.ui.view">
+            <field name="name">account.move.lote.list</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <list string="Facturas del Lote">
+                    <header>
+                        <button name="action_reenviar_facturas_lote"
+                                type="object"
+                                string="Reenviar Facturas del Lote"
+                                display="always"
+                                class="oe_highlight"
+                                icon="fa-refresh"/>
+                    </header>
+                    <field name="name" string="Número de Control"/>
+                    <field name="hacienda_codigoGeneracion_identificacion" string="Código Generación"/>
+                    <field name="hacienda_selloRecibido" string="Sello Recibido"/>
+                    <field name="invoice_partner_display_name" string="Cliente"/>
+                    <field name="invoice_date" string="Fecha"/>
+                    <field name="amount_untaxed_in_currency_signed" widget="monetary"/>
+                    <field name="status_in_payment" string="Estado de Pago"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Vista para reenviar el bloque -->
+        <record id="view_account_move_bloque_list" model="ir.ui.view">
+            <field name="name">account.move.continencia.bloque.list</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <list string="Facturas">
+                    <header>
+                        <button name="action_reenviar_facturas_lote"
+                                type="object"
+                                string="Reenviar Facturas del Lote"
+                                display="always"
+                                class="oe_highlight"
+                                icon="fa-refresh"/>
+                    </header>
+                    <field name="name" string="Número de Control"/>
+                    <field name="hacienda_codigoGeneracion_identificacion" string="Código Generación"/>
+                    <field name="hacienda_selloRecibido" string="Sello Recibido"/>
+                    <field name="invoice_partner_display_name" string="Cliente"/>
+                    <field name="invoice_date" string="Fecha"/>
+                    <field name="amount_untaxed_in_currency_signed" widget="monetary"/>
+                    <field name="status_in_payment" string="Estado de Pago"/>
+                </list>
+            </field>
+        </record>
+
+</odoo>

@@ -1,0 +1,86 @@
+<odoo>
+
+    <record id="view_report_cuentas_por_cobrar_list" model="ir.ui.view">
+        <field name="name">report.cuentas.por.cobrar.list</field>
+        <field name="model">report.cuentas.por.cobrar</field>
+        <field name="arch" type="xml">
+            <list string="Cuentas por Cobrar" create="false" edit="false" delete="false"
+                  decoration-danger="days_overdue &gt; 90"
+                  decoration-warning="days_overdue &gt; 30 and days_overdue &lt;= 90"
+                  decoration-info="days_overdue &gt; 0 and days_overdue &lt;= 30">
+                <field name="partner_id"/>
+                <field name="invoice_user_id"/>
+                <field name="name"/>
+                <field name="invoice_date"/>
+                <field name="invoice_date_due"/>
+                <field name="days_overdue"/>
+                <field name="range_due" widget="badge"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="amount_residual" sum="Pendiente"/>
+                <field name="payment_state" widget="badge"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_report_cuentas_por_cobrar_pivot" model="ir.ui.view">
+        <field name="name">report.cuentas.por.cobrar.pivot</field>
+        <field name="model">report.cuentas.por.cobrar</field>
+        <field name="arch" type="xml">
+            <pivot string="Cuentas por Cobrar">
+                <field name="partner_id" type="row"/>
+                <field name="range_due" type="col"/>
+                <field name="amount_residual" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_report_cuentas_por_cobrar_graph" model="ir.ui.view">
+        <field name="name">report.cuentas.por.cobrar.graph</field>
+        <field name="model">report.cuentas.por.cobrar</field>
+        <field name="arch" type="xml">
+            <graph string="Cuentas por Cobrar" type="bar">
+                <field name="range_due"/>
+                <field name="amount_residual" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_report_cuentas_por_cobrar_search" model="ir.ui.view">
+        <field name="name">report.cuentas.por.cobrar.search</field>
+        <field name="model">report.cuentas.por.cobrar</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Cuentas por Cobrar">
+                <field name="partner_id" string="Cliente"/>
+                <field name="invoice_user_id" string="Vendedor"/>
+                <field name="name" string="Número"/>
+
+                <separator/>
+                <filter name="filter_vigente" string="Vigentes" domain="[('range_due','=','vigente')]"/>
+                <filter name="filter_1_30" string="1-30 días" domain="[('range_due','=','1_30')]"/>
+                <filter name="filter_31_60" string="31-60 días" domain="[('range_due','=','31_60')]"/>
+                <filter name="filter_61_90" string="61-90 días" domain="[('range_due','=','61_90')]"/>
+                <filter name="filter_90_plus" string="Más de 90 días" domain="[('range_due','=','90_plus')]"/>
+
+                <separator/>
+                <filter name="filter_overdue" string="Solo vencidas" domain="[('days_overdue','&gt;', 0)]"/>
+
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_partner" string="Cliente" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_by_salesperson" string="Vendedor" context="{'group_by': 'invoice_user_id'}"/>
+                    <filter name="group_by_range" string="Rango antigüedad" context="{'group_by': 'range_due'}"/>
+                    <filter name="group_by_payment_state" string="Estado de pago" context="{'group_by': 'payment_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_report_cuentas_por_cobrar" model="ir.actions.act_window">
+        <field name="name">Cuentas por Cobrar</field>
+        <field name="res_model">report.cuentas.por.cobrar</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="search_view_id" ref="view_report_cuentas_por_cobrar_search"/>
+        <field name="context">{'search_default_filter_overdue': 1}</field>
+    </record>
+
+</odoo>

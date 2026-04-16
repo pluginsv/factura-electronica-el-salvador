@@ -1,0 +1,38 @@
+<odoo>
+
+    <menuitem id="menu_reportes_ventas_root"
+              name="Reportes de Ventas"
+              parent="sale.sale_menu_root"
+              sequence="90"/>
+
+    <menuitem id="menu_report_ventas_periodo"
+              name="Ventas por Periodo"
+              parent="menu_reportes_ventas_root"
+              action="action_report_ventas_periodo"
+              sequence="10"/>
+
+    <menuitem id="menu_report_cobros"
+              name="Cobros recibidos"
+              parent="menu_reportes_ventas_root"
+              action="action_report_cobros"
+              sequence="20"/>
+
+    <menuitem id="menu_report_cuentas_por_cobrar"
+              name="Cuentas por Cobrar"
+              parent="menu_reportes_ventas_root"
+              action="action_report_cuentas_por_cobrar"
+              sequence="30"/>
+
+    <menuitem id="menu_report_resumen_vendedor"
+              name="Resumen por Vendedor"
+              parent="menu_reportes_ventas_root"
+              action="action_report_resumen_vendedor"
+              sequence="40"/>
+
+    <menuitem id="menu_report_productos_vendidos"
+              name="Productos más Vendidos"
+              parent="menu_reportes_ventas_root"
+              action="action_report_productos_vendidos"
+              sequence="50"/>
+
+</odoo>

@@ -1,0 +1,183 @@
+<odoo>
+    <record id="dispatch_route_form" model="ir.ui.view">
+        <field name="name">dispatch.route.form</field>
+        <field name="model">dispatch.route</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" type="object" string="Confirmar" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_load" type="object" string="Cargar" class="btn-primary"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_start_transit" type="object" string="Enviar a tránsito" class="btn-primary"
+                            invisible="state != 'loading'"/>
+                    <button name="action_download_report_cargar_ruta" type="object" string="Reporte de carga"
+                            class="btn-primary"/>
+                    <button name="action_create_reception" type="object" string="Recepción (CxC)" class="btn-primary"
+                            invisible="state != 'in_transit'"/>
+                    <button name="action_cancel" type="object" string="Cancelar" class="btn-secondary"
+                            invisible="state in ('cancel','received') or (state in ('in_transit') and recibido_recepcion == True)"/>
+                    <button name="action_set_draft" type="object" string="Establecer a borrador" class="btn-secondary"
+                            invisible="state != ('cancel')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,loading,in_transit,received,cancel"/>
+                </header>
+
+                <sheet>
+                    <field name="zone_municipality_ids" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="code_route" readonly="True"/>
+                            <field name="name" readonly="True"/>
+                            <field name="route_manager_id" readonly="state != 'draft'"/>
+                            <field name="route_supervisor_id" readonly="state != 'draft'"/>
+                            <field name="vehicle_id" readonly="state != 'draft'"/>
+                            <label for="total_weight" string="Capacidad de Carga"/>
+                            <div class="o_row" name="weight_container">
+                                <field name="total_weight" nolabel="1" string="capacidad"/>
+                                <span>/</span>
+                                <field name="vehicle_capacity" nolabel="1"/>
+                                <span>kg</span>
+                            </div>
+                            <field name="route_driver_id" readonly="state != 'draft'"/>
+                            <field name="assistant_ids" widget="many2many_tags" readonly="state != 'draft'"/>
+                        </group>
+
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company" readonly="state != 'draft'"/>
+                            <field name="zone_id" readonly="state != 'draft'"/>
+                            <field name="route_date" readonly="state != 'draft'"/>
+                            <field name="departure_datetime" widget="datetime"
+                                   readonly="state not in('draft','in_transit')"/>
+                            <field name="arrival_datetime" widget="datetime"
+                                   readonly="state not in('draft','in_transit')"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Órdenes de Factura">
+                            <!-- Mensaje cuando no hay zona -->
+                            <div class="alert alert-warning" role="alert" invisible="zone_id">
+                                <i class="fa fa-exclamation-triangle me-1"/>
+                                Seleccione una zona para poder elegir órdenes de venta.
+                            </div>
+                            <field name="sale_order_ids"
+                                   invisible="not zone_id"
+                                   readonly="state != 'draft' or not zone_id"
+                                   domain="[('dispatch_route_id', '=', False), ('partner_id.munic_id', 'in', zone_municipality_ids)]"
+                                   context="{
+                                     'tree_view_ref': 'l10n_sv_despacho.sale_order_tree_dispatch_route_picker',
+                                     'search_view_ref': 'sale.view_sales_order_filter',
+                                     'dispatch_route_filter': True,
+                                     'dispatch_route_id': id
+                                   }">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="date_order"/>
+                                    <field name="partner_state_id"/>
+                                    <field name="partner_munic_id"/>
+                                    <field name="partner_address" string="Dirección"/>
+                                    <field name="user_id"/>
+                                    <field name="amount_total"/>
+                                </list>
+
+
+                            </field>
+                        </page>
+
+                        <page string="Órdenes fuera de ruta">
+                            <div class="alert alert-info" role="alert">
+                                <i class="fa fa-info-circle me-1"/>
+                                Órdenes que no pertenecen a la zona seleccionada pero se agregarán a esta ruta.
+                            </div>
+                            <field name="outside_route_sales_order_ids"
+                                   readonly="state != 'draft'"
+                                   domain="[
+                                       ('dispatch_route_id', '=', False),
+                                        ('partner_id.munic_id', 'not in', zone_municipality_ids)
+
+                                   ]"
+                                   context="{
+                                       'tree_view_ref': 'l10n_sv_despacho.sale_order_tree_dispatch_route_picker',
+                                       'dispatch_route_id': id
+                                   }">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="date_order"/>
+                                    <field name="partner_state_id"/>
+                                    <field name="partner_munic_id"/>
+                                    <field name="partner_address" string="Dirección"/>
+                                    <field name="user_id"/>
+                                    <field name="amount_total"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Facturas (si ya existen)">
+                            <group string="Facturas de ruta">
+                                <field name="invoice_ids"
+                                       domain="[('partner_id', 'in', sale_order_ids.mapped('partner_id').ids)]"
+                                       nolabel="1">
+                                    <list create="false" delete="false" edit="false">
+                                        <field name="name"/>
+                                        <field name="partner_id"/>
+                                        <field name="invoice_date"/>
+                                        <field name="state"/>
+                                        <field name="payment_state"/>
+                                        <field name="amount_total"/>
+                                    </list>
+                                </field>
+                            </group>
+
+                            <group string="Facturas fuera de ruta">
+                                <field name="outside_route_invoice_ids" nolabel="1">
+                                    <list create="false" delete="false" edit="false">
+                                        <field name="name"/>
+                                        <field name="partner_id"/>
+                                        <field name="invoice_date"/>
+                                        <field name="state"/>
+                                        <field name="payment_state"/>
+                                        <field name="amount_total"/>
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+
+                        <page string="Recepción (resumen)" invisible="state != 'received'">
+                            <group>
+                                <field name="received_by_id"/>
+                                <field name="received_date"/>
+                            </group>
+                            <group>
+                                <field name="expected_cash_total"/>
+                                <field name="cash_received"/>
+                                <field name="cash_difference"/>
+                            </group>
+
+                            <group>
+                                <field name="last_reception_id" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Filtro de facturas-->
+    <record id="view_account_move_filter_inherit" model="ir.ui.view">
+        <field name="name">account.move.search.inherit.dte</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_move_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter name="dte_x_zona"
+                        string="DTEs de la zona"
+                        domain="[('dte_x_zona', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

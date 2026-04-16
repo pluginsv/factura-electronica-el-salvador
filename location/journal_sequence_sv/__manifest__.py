@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+
+{
+    'name': 'Secuencias en Diarios SV',
+    'version': '17.0',
+    'category': 'Accounting',
+    'summary': 'Secuencias en Diarios SV',
+    'description': 'Secuencias en Diarios SV',
+    'sequence': '1',
+    'author': 'Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores',
+    'website': 'https://contaspro.net',
+    "images": ['static/description/banner.png',
+               'static/description/icon.png',
+               'static/description/thumbnail.png'],
+    'price': 15,
+    'currency': 'USD',
+    'license': 'GPL-3',
+    'support': 'developersodoo@gmail.com',
+    'depends': ['account'],
+    'demo': [],
+    'data': [
+        'data/account_data.xml',
+        'views/account_journal.xml',
+        'views/account_move.xml',
+    ],
+    'qweb': [],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

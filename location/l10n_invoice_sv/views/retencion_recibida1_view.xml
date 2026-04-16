@@ -1,0 +1,42 @@
+<odoo>
+
+        <record id="view_retencion_recibida1_form" model="ir.ui.view">
+            <field name="name">retencion.recibida1.form</field>
+            <field name="model">sv.dte.retencion.recibida1</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="factura_relacionada_id"
+                                   domain="[('move_type','=','in_invoice')]"
+                                   options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="proveedor_id" />
+                            <field name="numero_control"/>
+                            <field name="codigo_generacion"/>
+                            <field name="sello_recepcion"/>
+                            <field name="fecha_documento"/>
+                            <field name="fecha_recibido"/>
+                            <field name="total_monto_sujeto"/>
+                            <field name="total_iva_retenido"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_retencion_recibida1_list" model="ir.ui.view">
+            <field name="name">retencion.recibida1.form</field>
+            <field name="model">sv.dte.retencion.recibida1</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="numero_control"/>
+                    <field name="codigo_generacion"/>
+                    <field name="sello_recepcion"/>
+                    <field name="fecha_documento"/>
+                    <field name="fecha_recibido"/>
+                    <field name="factura_relacionada_id"/>
+                </list>
+            </field>
+        </record>
+
+</odoo>

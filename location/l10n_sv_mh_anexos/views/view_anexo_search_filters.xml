@@ -1,0 +1,272 @@
+<odoo>
+
+    <!-- ============================================================ -->
+    <!--   SEARCH: Consumidor Final Agrupado                          -->
+    <!-- ============================================================ -->
+    <record id="view_consumidor_final_agrupado_search" model="ir.ui.view">
+        <field name="name">report.account.move.consumidor.final.agrupado.search</field>
+        <field name="model">report.account.move.consumidor.final.agrupado</field>
+        <field name="arch" type="xml">
+            <search string="Buscar - Consumidor Final">
+                <!-- Filtros de periodo -->
+                <separator/>
+                <filter name="filter_current_period" string="Periodo en curso"
+                        domain="[('invoice_date','&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_month" string="Mes pasado"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(months=1, day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_previous_period" string="Periodo anterior"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(months=2, day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_15_days" string="Últimos 15 días"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(days=15)).strftime('%Y-%m-%d'))]"/>
+
+                <!-- Filtros de monto -->
+                <separator/>
+                <filter name="filter_highest_amounts" string="Montos más altos"
+                        domain="[('monto_total_operacion','&gt;', 0)]"/>
+
+                <!-- Agrupaciones -->
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_year" string="Año" context="{'group_by': 'invoice_year_agrupado'}"/>
+                    <filter name="group_by_semester" string="Semestre" context="{'group_by': 'invoice_semester_agrupado'}"/>
+                    <filter name="group_by_month" string="Mes" context="{'group_by': 'invoice_month_agrupado'}"/>
+                    <filter name="group_by_tipo_documento" string="Tipo de documento" context="{'group_by': 'codigo_tipo_documento_codigo'}"/>
+                    <filter name="group_by_clase_documento" string="Clase de documento" context="{'group_by': 'clase_documento_codigo'}"/>
+                </group>
+
+                <searchpanel>
+                    <field name="invoice_year_sel" select="one" enable_counters="1"/>
+                    <field name="invoice_month_sel" select="one" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!--   SEARCH: Contribuyentes (account.move)                      -->
+    <!-- ============================================================ -->
+    <record id="view_anexo_contribuyentes_search" model="ir.ui.view">
+        <field name="name">account.move.anexo.contribuyentes.search</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <search string="Buscar - Anexo Contribuyentes">
+                <field name="partner_id" string="Cliente"/>
+                <field name="invoice_user_id" string="Vendedor"/>
+                <field name="nit_cliente" string="NIT"/>
+                <field name="name" string="Número"/>
+
+                <!-- Filtros de periodo -->
+                <separator/>
+                <filter name="filter_current_period" string="Periodo en curso"
+                        domain="[('invoice_date','&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_month" string="Mes pasado"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(months=1, day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_previous_period" string="Periodo anterior"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(months=2, day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_15_days" string="Últimos 15 días"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(days=15)).strftime('%Y-%m-%d'))]"/>
+
+                <!-- Filtros de monto -->
+                <separator/>
+                <filter name="filter_highest_amounts" string="Montos más altos"
+                        domain="[('amount_total','&gt;', 0)]"/>
+
+                <!-- Agrupaciones -->
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_year" string="Año" context="{'group_by': 'invoice_year'}"/>
+                    <filter name="group_by_semester" string="Semestre" context="{'group_by': 'invoice_semester'}"/>
+                    <filter name="group_by_month" string="Mes" context="{'group_by': 'invoice_month'}"/>
+                    <filter name="group_by_partner" string="Cliente" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_by_salesperson" string="Vendedor" context="{'group_by': 'invoice_user_id'}"/>
+                    <filter name="group_by_tipo_documento" string="Tipo de documento" context="{'group_by': 'codigo_tipo_documento'}"/>
+                </group>
+
+                <searchpanel>
+                    <field name="invoice_year_sel" select="one" enable_counters="1"/>
+                    <field name="invoice_semester" select="one" enable_counters="1"/>
+                    <field name="invoice_month_sel" select="one" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!--   SEARCH: Compras (account.move)                             -->
+    <!-- ============================================================ -->
+    <record id="view_anexo_compras_search" model="ir.ui.view">
+        <field name="name">account.move.anexo.compras.search</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <search string="Buscar - Anexo Compras">
+                <field name="partner_id" string="Proveedor"/>
+                <field name="nit_cliente" string="NIT"/>
+                <field name="name" string="Número"/>
+
+                <!-- Filtros de periodo -->
+                <separator/>
+                <filter name="filter_current_period" string="Periodo en curso"
+                        domain="[('invoice_date','&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_month" string="Mes pasado"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(months=1, day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_previous_period" string="Periodo anterior"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(months=2, day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_15_days" string="Últimos 15 días"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(days=15)).strftime('%Y-%m-%d'))]"/>
+
+                <!-- Filtros de monto -->
+                <separator/>
+                <filter name="filter_highest_amounts" string="Montos más altos"
+                        domain="[('amount_total','&gt;', 0)]"/>
+
+                <!-- Agrupaciones -->
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_year" string="Año" context="{'group_by': 'invoice_year'}"/>
+                    <filter name="group_by_semester" string="Semestre" context="{'group_by': 'invoice_semester'}"/>
+                    <filter name="group_by_month" string="Mes" context="{'group_by': 'invoice_month'}"/>
+                    <filter name="group_by_partner" string="Proveedor" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_by_tipo_documento" string="Tipo de documento" context="{'group_by': 'sit_tipo_documento_id'}"/>
+                    <filter name="group_by_tipo_operacion" string="Tipo de operación" context="{'group_by': 'tipo_operacion'}"/>
+                    <filter name="group_by_clasificacion" string="Clasificación" context="{'group_by': 'clasificacion_facturacion'}"/>
+                </group>
+
+                <searchpanel>
+                    <field name="invoice_year_sel" select="one" enable_counters="1"/>
+                    <field name="invoice_semester" select="one" enable_counters="1"/>
+                    <field name="invoice_month_sel" select="one" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!--   SEARCH: Sujeto Excluido (account.move)                     -->
+    <!-- ============================================================ -->
+    <record id="view_anexo_sujeto_excluido_search" model="ir.ui.view">
+        <field name="name">account.move.anexo.sujeto.excluido.search</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <search string="Buscar - Sujeto Excluido">
+                <field name="partner_id" string="Cliente"/>
+                <field name="invoice_user_id" string="Vendedor"/>
+                <field name="name" string="Número"/>
+
+                <!-- Filtros de periodo -->
+                <separator/>
+                <filter name="filter_current_period" string="Periodo en curso"
+                        domain="[('invoice_date','&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_month" string="Mes pasado"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(months=1, day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_previous_period" string="Periodo anterior"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(months=2, day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_15_days" string="Últimos 15 días"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(days=15)).strftime('%Y-%m-%d'))]"/>
+
+                <!-- Filtros de monto -->
+                <separator/>
+                <filter name="filter_highest_amounts" string="Montos más altos"
+                        domain="[('amount_total','&gt;', 0)]"/>
+
+                <!-- Agrupaciones -->
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_year" string="Año" context="{'group_by': 'invoice_year'}"/>
+                    <filter name="group_by_semester" string="Semestre" context="{'group_by': 'invoice_semester'}"/>
+                    <filter name="group_by_month" string="Mes" context="{'group_by': 'invoice_month'}"/>
+                    <filter name="group_by_partner" string="Cliente" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_by_salesperson" string="Vendedor" context="{'group_by': 'invoice_user_id'}"/>
+                    <filter name="group_by_tipo_operacion" string="Tipo de operación" context="{'group_by': 'tipo_operacion'}"/>
+                </group>
+
+                <searchpanel>
+                    <field name="invoice_year_sel" select="one" enable_counters="1"/>
+                    <field name="invoice_semester" select="one" enable_counters="1"/>
+                    <field name="invoice_month_sel" select="one" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!--   SEARCH: Casilla 162 (sv.dte.retencion.recibida1)           -->
+    <!-- ============================================================ -->
+    <record id="view_anexo_casilla162_search" model="ir.ui.view">
+        <field name="name">sv.dte.retencion.recibida1.anexo.search</field>
+        <field name="model">sv.dte.retencion.recibida1</field>
+        <field name="arch" type="xml">
+            <search string="Buscar - Casilla 162">
+                <field name="nit_cliente" string="NIT"/>
+
+                <!-- Filtros de periodo -->
+                <separator/>
+                <filter name="filter_current_period" string="Periodo en curso"
+                        domain="[('fecha_documento','&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                 ('fecha_documento','&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_month" string="Mes pasado"
+                        domain="[('fecha_documento','&gt;=', (context_today() - relativedelta(months=1, day=1)).strftime('%Y-%m-%d')),
+                                 ('fecha_documento','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_previous_period" string="Periodo anterior"
+                        domain="[('fecha_documento','&gt;=', (context_today() - relativedelta(months=2, day=1)).strftime('%Y-%m-%d')),
+                                 ('fecha_documento','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_15_days" string="Últimos 15 días"
+                        domain="[('fecha_documento','&gt;=', (context_today() - relativedelta(days=15)).strftime('%Y-%m-%d'))]"/>
+
+                <!-- Agrupaciones -->
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_fecha" string="Fecha" context="{'group_by': 'fecha_documento'}"/>
+                    <filter name="group_by_fecha_month" string="Mes" context="{'group_by': 'fecha_documento:month'}"/>
+                    <filter name="group_by_fecha_year" string="Año" context="{'group_by': 'fecha_documento:year'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!--   SEARCH: Anulados y Extraviados (account.move)              -->
+    <!-- ============================================================ -->
+    <record id="view_anexo_anulados_search" model="ir.ui.view">
+        <field name="name">account.move.anexo.anulados.search</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <search string="Buscar - Documentos Anulados y Extraviados">
+                <field name="name" string="Número"/>
+
+                <!-- Filtros de periodo -->
+                <separator/>
+                <filter name="filter_current_period" string="Periodo en curso"
+                        domain="[('invoice_date','&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_month" string="Mes pasado"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(months=1, day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_previous_period" string="Periodo anterior"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(months=2, day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_15_days" string="Últimos 15 días"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(days=15)).strftime('%Y-%m-%d'))]"/>
+
+                <!-- Agrupaciones -->
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_year" string="Año" context="{'group_by': 'invoice_year'}"/>
+                    <filter name="group_by_month" string="Mes" context="{'group_by': 'invoice_month'}"/>
+                    <filter name="group_by_codigo_tipo_documento" string="Tipo de documento" context="{'group_by': 'codigo_tipo_documento'}"/>
+                </group>
+
+                <searchpanel>
+                    <field name="invoice_year_sel" select="one" enable_counters="1"/>
+                    <field name="invoice_month_sel" select="one" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+</odoo>

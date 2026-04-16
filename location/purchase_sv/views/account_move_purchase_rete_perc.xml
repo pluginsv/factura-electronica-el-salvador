@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_purchase_order_retenciones_form" model="ir.ui.view">
+        <field name="name">purchase.order.retenciones</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='notes']" position="after">
+
+                <group string="Retenciones" col="2" invisible="not journal_id">
+                    <field name="apply_retencion_renta_po" invisible="not journal_id"/>
+                    <field name="apply_renta_20_po" invisible="not journal_id or not tipo_dte_purchase"/>
+                    <field name="retencion_renta_amount_po"
+                           readonly="1"
+                           widget="monetary"
+                           options="{'currency_field': 'currency_id'}"
+                           invisible="not journal_id"/>
+
+                    <field name="apply_retencion_iva_po" invisible="not journal_id"/>
+                    <field name="retencion_iva_amount_po"
+                           readonly="1"
+                           widget="monetary"
+                           options="{'currency_field': 'currency_id'}"
+                           invisible="not journal_id"/>
+
+                    <field name="apply_iva_percibido_po" invisible="not journal_id or amount_untaxed &lt; 100"/>
+                    <field name="iva_percibido_amount_po"
+                           readonly="1"
+                           widget="monetary"
+                           options="{'currency_field': 'currency_id'}"
+                           invisible="not journal_id or amount_untaxed &lt; 100"/>
+                </group>
+
+                <group string="Retenciones Aplicadas"
+                       invisible="not journal_id or (not apply_retencion_renta_po and not apply_renta_20_po and not apply_retencion_iva_po and not apply_iva_percibido_po)">
+                    <div class="fw-bold" style="color:#714B67; font-size:16px;">
+                        <label for="amount_total_retenciones_purchase"/>
+                        <field name="amount_total_retenciones_purchase"
+                               readonly="1"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+                    </div>
+                </group>
+
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_purchase_order_gran_contribuyente_warning" model="ir.ui.view">
+        <field name="name">purchase.order.gran.contribuyente.warning</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-warning"
+                     role="alert"
+                     invisible="not advertencia_gran_contribuyente_purchase">
+                    <field name="advertencia_gran_contribuyente_purchase"
+                           widget="html"
+                           nolabel="1"/>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

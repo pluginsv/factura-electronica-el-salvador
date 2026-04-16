@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+{
+    'name': "l10n_sv Factura Sujeto Excluido",
+    'summary': """
+        Factura Sujeto Excluido
+        """,
+    'description': """
+        Factura Sujeto Excluido
+    """,
+    "author": "Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores",
+    "website": "https://contaspro.net",
+    "images": ['static/description/banner.png',
+               'static/description/icon.png',
+               'static/description/thumbnail.png'],
+    "price": 35,
+    "currency": "USD",
+    "license": "GPL-3",
+    'category': 'Accounting',
+    "version": "17.0.1",
+    'depends': ['base',
+        "l10n_sv_hacienda",   # webservice de Hacienda
+        "base_sv",
+        # "l10n_invoice_sv",
+        # "account_debit_note",
+        "l10n_sv_haciendaws_fe",                ],
+    # always loaded
+    'data': [
+    #     "views/account_move_views.xml",
+    ],
+    "demo": [],
+    'installable': True,
+    "auto_install": False,
+    "application": False,
+}

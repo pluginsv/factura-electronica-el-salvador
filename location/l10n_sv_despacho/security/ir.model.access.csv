@@ -1,0 +1,20 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dispatch_route_user,dispatch.route user,model_dispatch_route,base.group_user,1,1,1,1
+access_dispatch_route_reception_user,dispatch.route.reception user,model_dispatch_route_reception,base.group_user,1,1,1,1
+access_dispatch_route_reception_line_user,dispatch.route.reception.line user,model_dispatch_route_reception_line,base.group_user,1,1,1,1
+
+access_dispatch_zones_user,dispatch.zones user,model_dispatch_zones,base.group_user,1,1,1,1
+access_dispatch_zone_line_user,dispatch.zone.line user,model_dispatch_zone_line,base.group_user,1,1,1,1
+
+access_dispatch_route_return_user,dispatch.route.return user,model_dispatch_route_return,base.group_user,1,1,1,1
+access_dispatch_route_return_line_user,dispatch.route.return.line user,model_dispatch_route_return_line,base.group_user,1,1,1,1
+
+access_dispatch_return_user,access_dispatch_return_user,model_dispatch_route_invoice_return,base.group_user,1,1,1,0
+access_dispatch_return_line_user,access_dispatch_return_line_user,model_dispatch_route_invoice_return_line,base.group_user,1,1,1,0
+
+access_dispatch_route_invoice_return_user,dispatch.route.invoice.return user,model_dispatch_route_invoice_return,base.group_user,1,1,1,1
+access_dispatch_route_invoice_return_line_user,dispatch.route.invoice.return.line user,model_dispatch_route_invoice_return_line,base.group_user,1,1,1,1
+
+access_dispatch_delivery_analysis_user,dispatch.delivery.analysis user,l10n_sv_despacho.model_dispatch_delivery_analysis,base.group_user,1,1,1,1
+
+access_previous_municipality_user,res.previous.municipality user,model_res_previous_municipality,base.group_user,1,0,0,0

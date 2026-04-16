@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_report_ventas_periodo,report.ventas.periodo,model_report_ventas_periodo,account.group_account_user,1,0,0,0
+access_report_cobros,report.cobros,model_report_cobros,account.group_account_user,1,0,0,0
+access_report_cuentas_por_cobrar,report.cuentas.por.cobrar,model_report_cuentas_por_cobrar,account.group_account_user,1,0,0,0
+access_report_resumen_vendedor,report.resumen.vendedor,model_report_resumen_vendedor,account.group_account_user,1,0,0,0
+access_report_productos_vendidos,report.productos.vendidos,model_report_productos_vendidos,account.group_account_user,1,0,0,0
+access_report_ventas_periodo_sale,report.ventas.periodo.sale,model_report_ventas_periodo,sales_team.group_sale_salesman,1,0,0,0
+access_report_cobros_sale,report.cobros.sale,model_report_cobros,sales_team.group_sale_salesman,1,0,0,0
+access_report_cuentas_por_cobrar_sale,report.cuentas.por.cobrar.sale,model_report_cuentas_por_cobrar,sales_team.group_sale_salesman,1,0,0,0
+access_report_resumen_vendedor_sale,report.resumen.vendedor.sale,model_report_resumen_vendedor,sales_team.group_sale_salesman,1,0,0,0
+access_report_productos_vendidos_sale,report.productos.vendidos.sale,model_report_productos_vendidos,sales_team.group_sale_salesman,1,0,0,0

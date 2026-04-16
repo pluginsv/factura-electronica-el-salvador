@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_invoice_form_sv" model="ir.ui.view">
+            <field name="name">Invoice Sv</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@class='oe_highlight' and @name='action_invoice_sent']" position="replace">
+                    <!-- <button name="sit_enviar_correo_dte" type="object" string="Probar PDF" class="oe_highlight"
+                            groups="base.group_system"/> -->
+                    <!-- Se utilizara sit_enviar_correo_dte
+                    <button name="sit_action_send_mail" type="object"
+                            options="{'invisible': [('state', '!=', 'posted') ]}" string="Enviar Email"
+                            class="oe_highlight" groups="account.group_account_invoice"/> -->
+                    <!-- <button name="action_invoice_sent" type="object" options="{'invisible': [('state', '!=', 'posted') ]}" string="Enviar Factura por Email" class="oe_highlight" groups="account.group_account_invoice"/> -->
+
+                    <button name="action_invoice_sent" invisible="1" type="object" string="Send &amp; Print"
+                            options="{'invisible':['|', '|', ('state', '!=', 'posted'), ('is_move_sent', '=', True), ('move_type', 'not in', ('out_invoice', 'out_refund'))]}"
+                            class="oe_highlight"/>
+                    <!-- <button name="action_invoice_print" type="object" string="Imprimir" options="{'invisible':['|', '|', ('state', '!=', 'posted'), ('is_move_sent', '=', True), ('move_type', 'not in', ('out_invoice', 'out_refund'))]}" class="oe_highlight"/> -->
+                </xpath>
+                <xpath expr="//button[@name='action_invoice_sent'][2]" position="replace">
+                    options="{'invisible':['|', '|', ('state', '!=', 'posted'), ('is_move_sent', '=', False), ('move_type', 'not in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund'))]}"/
+                    <button name="action_invoice_print" type="object" string="Imprimir"
+                            invisible="state != 'posted' or is_move_sent == False or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')"/>
+                    <button name="action_invoice_sent" invisible="1" type="object" string="Send &amp; Print"
+                            options="{'invisible':['|', '|', ('state', '!=', 'posted'), ('is_move_sent', '=', False), ('move_type', 'not in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund'))]}"/>
+                </xpath>
+                <xpath expr="//field[@name='narration']" position="before">
+                     <field class="oe_left" name="amount_text" placeholder="amount to text"/>
+                    <field name="codigo_tipo_documento" invisible="1"/>
+
+                    <group name="group_totales_venta" string="Totales por tipo de operación" col="2" invisible="(move_type != 'out_invoice' and not codigo_tipo_documento) or not sit_facturacion">
+                         <!-- invisible="1" modifiers="{'invisible': [['hide_no_sujeto_exento','=',True]]}" -->
+<!--                        <field name="total_no_sujeto" widget="monetary" modifiers='{"invisible": [["codigo_dte", "=", "14"]]}' invisible="codigo_tipo_documento in ('11', 14)"/>&lt;!&ndash; invisible="1" modifiers="{'invisible': [['hide_no_sujeto_exento','=',True]]}" &ndash;&gt;-->
+                        <field name="total_no_sujeto" widget="monetary" invisible="codigo_tipo_documento in ('11', '14')"/><!-- invisible="1" modifiers="{'invisible': [['hide_no_sujeto_exento','=',True]]}" -->
+                        <field name="total_exento" widget="monetary" readonly="1" invisible="codigo_tipo_documento in ('11', '14')"/><!-- invisible="1" modifiers="{'invisible': [['hide_no_sujeto_exento','=',True]]}" -->
+                        <field name="total_gravado" widget="monetary" readonly="1"/>
+<!--                        <field name="sub_total_ventas" widget="monetary" readonly="1" invisible="codigo_tipo_documento == '11'"/>&lt;!&ndash; invisible="1" modifiers="{'invisible': [['hide_no_sujeto_exento','=',True]]}" &ndash;&gt;-->
+                        <field name="sub_total_ventas" widget="monetary" readonly="1" string="Sumatoria" invisible="move_type != 'in_invoice' and (not codigo_tipo_documento or codigo_tipo_documento !='14')"/>
+                        <field name="sub_total_ventas" widget="monetary" readonly="1" string="Sumatoria de ventas" invisible="codigo_tipo_documento == '11' or not move_type in('out_invoice', 'out_refund')"/>
+                    </group>
+
+                    <group string="Descuentos Por Tipo de Operación" col="2" invisible="(move_type != 'out_invoice' and not codigo_tipo_documento) or not sit_facturacion">
+                        <field name="descuento_no_sujeto_pct" invisible="codigo_tipo_documento in ('11', '14')"/><!-- invisible="1" modifiers="{'invisible': [['hide_no_sujeto_exento','=',True]]}" -->
+                        <field name="descuento_exento_pct" invisible="codigo_tipo_documento in ('11', '14')"/><!-- invisible="1" modifiers="{'invisible': [['hide_no_sujeto_exento','=',True]]}" -->
+                        <field name="descuento_gravado_pct"/>
+                        <field name="descuento_global_monto" invisible="not show_global_discount or codigo_tipo_documento in ('05', '06', '14')"/>
+                    </group>
+
+                    <group name="group_retenciones"  string="Retenciones" col="2" invisible="move_type in ('entry', 'out_receipt', 'in_receipt', 'outgoing', 'incoming', 'in_invoice', 'in_refund') or codigo_tipo_documento == '11' or not sit_facturacion">
+                        <field name="apply_retencion_renta" readonly="state == 'posted'" invisible="not codigo_tipo_documento in ('01', '03', '14')"/>
+                        <field name="apply_renta_20" readonly="state == 'posted'" invisible="not codigo_tipo_documento in ('14')"/>
+                        <field name="retencion_renta_amount" readonly="1" widget="monetary"
+                               options="{'currency_field': 'currency_id'}" invisible="not codigo_tipo_documento in ('01', '03', '14')"/>
+
+                        <field name="apply_retencion_iva" readonly="state == 'posted'"/>
+                        <field name="retencion_iva_amount" readonly="1" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+
+                        <field name="apply_iva_percibido" readonly="state == 'posted'" invisible="not codigo_tipo_documento in ('03', '05', '06')"/>
+                        <field name="iva_percibido_amount" invisible="not codigo_tipo_documento in ('03', '05', '06')" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+
+                    </group>
+
+                    <group name="group_totales" string="Totales" col="2" invisible="move_type in ('in_invoice', 'in_refund') or not codigo_tipo_documento or not sit_facturacion">
+                        <field name="total_descuento" widget="percent" readonly="1" invisible="codigo_tipo_documento == '14'"/>
+                        <field name="descuento_global" widget="percent" readonly="1" invisible="not show_global_discount or codigo_tipo_documento in ('05', '06', '14')"/>
+                        <field name="seguro" widget="monetary" invisible="not codigo_tipo_documento or codigo_tipo_documento != '11'"/>
+                        <field name="flete" widget="monetary" invisible="not codigo_tipo_documento or codigo_tipo_documento != '11'"/>
+                        <field name="sub_total" widget="monetary" readonly="1" invisible="codigo_tipo_documento in('11', '14')"/>
+                        <field name="total_operacion" widget="monetary" readonly="1" invisible="codigo_tipo_documento == '14'"/>
+                        <field name="total_pagar" widget="monetary" readonly="1" invisible="codigo_tipo_documento in ('05', '06', '14')"/>
+                    </group>
+                    <field name="total_pagar_text" string="Total en letras" placeholder="Total en letras" invisible="not codigo_tipo_documento or not sit_facturacion"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_reference']" position="before">
+                    <field name="inv_refund_id"
+                           string="Factura Rectificativa"
+                           options="{'invisible': ['|', ('move_type', '!=', 'out_invoice'),('payment_state', '!=', 'reversed')]}"
+                           readonly="True"/>
+
+                </xpath>
+                <xpath expr="//field[@name='state']" position="replace">
+<!--                    options="{'invisible':[('state_refund','=','refund')]}"-->
+                    <field name="state" invisible="state_refund == 'refund'" widget="statusbar"
+                           statusbar_visible="draft,posted"/>
+<!--                    options="{'invisible':[('state_refund','!=','refund')]}"-->
+                    <field name="state_refund" invisible="state_refund != 'refund'"
+                           statusbar_visible="refund" widget="statusbar" nolabel="1"/>
+                </xpath>
+                <!-- <xpath expr="//h1/field[@name='name']" position="after">
+                    <field name="attachment_ids" invisible="0"/>
+                </xpath>
+-->
+            </field>
+        </record>
+        <record id="view_invoice_sv_tree" model="ir.ui.view">
+            <field name="name">Invoice Refund</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_invoice_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//list" position="inside">
+                    <field name="state_refund" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

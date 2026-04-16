@@ -1,0 +1,25 @@
+{
+    'name': 'Gestión de Quedanes (El Salvador)',
+    'version': '1.0',
+    'summary': 'Permite registrar y controlar quedanes de proveedores',
+    'author': 'Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores',
+    'website': 'https://contaspro.net',
+    "images": ['static/description/banner.png',
+               'static/description/icon.png',
+               'static/description/thumbnail.png'],
+    'price': 25,
+    'currency': 'USD',
+    'license': 'GPL-3',
+    'category': 'Accounting',
+    'depends': ['account'],
+    'data': [
+        'security/ir.model.access.csv',
+        'report/report_quedan_documento.xml',
+        'data/account_quedan_sequence.xml',
+        'data/mail_template_quedan.xml',
+        'views/account_quedan_views.xml',
+    ],
+
+    'installable': True,
+    'application': False,
+}

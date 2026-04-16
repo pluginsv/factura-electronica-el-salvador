@@ -1,0 +1,53 @@
+<odoo>
+    <record id="dispatch_zones_tree" model="ir.ui.view">
+        <field name="name">dispatch.zones.list</field>
+        <field name="model">dispatch.zones</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dispatch_zones_form" model="ir.ui.view">
+        <field name="model">dispatch.zones</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" placeholder="Ej. Zona Occidental"/>
+                    </group>
+                    <notebook>
+                        <page string="Cobertura por Departamento">
+                            <field name="zone_line_ids">
+                                <list editable="bottom">
+                                    <field name="dpto_id" options="{'no_create': True}"/>
+
+                                    <field name="munic_ids"
+                                           widget="many2many_tags"
+                                           string="Municipios actuales"
+                                           options="{'no_create': True}"
+                                           domain="[('dpto_id', '=', dpto_id)]"/>
+
+                                    <field name="previous_munic_ids"
+                                           widget="many2many_tags"
+                                           string="Municipios anteriores"
+                                           options="{'no_create': True}"
+                                           domain="[('dpto_id', '=', dpto_id)]"/>
+                                </list>
+                            </field>
+                        </page>
+
+
+                        <page string="Mapa Dinámico">
+                            <field name="selected_districts_json" invisible="1"/>
+
+                            <field name="map_view" widget="map_districts_widget" nolabel="1"/>
+                        </page>
+
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

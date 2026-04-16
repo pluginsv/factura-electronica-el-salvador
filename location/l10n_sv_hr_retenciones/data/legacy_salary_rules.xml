@@ -1,0 +1,162 @@
+<odoo>
+    <data noupdate="1">
+        <!--
+            Compatibilidad de actualización:
+            Preserva xmlids legados (sufijos _aedepaz / _innuffe) para que Odoo
+            no intente borrar reglas salariales históricas todavía referenciadas
+            por hr.payslip.line.
+
+            Reglas:
+              - forcecreate="False"  →  no crea el registro si no existe
+              - noupdate="1"         →  no modifica los campos si ya existe
+              - Tener el <record> en el XML "toca" el xmlid durante el load,
+                evitando que Odoo lo marque como huérfano y trate de borrarlo.
+        -->
+
+        <!-- ============================================================ -->
+        <!--   LEGADO _aedepaz                                            -->
+        <!-- ============================================================ -->
+
+        <record id="hr_salary_rule_descuento_septimo_falta_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Desc. Séptimo por Falta Injustificada (aedepaz)</field>
+        </record>
+
+        <record id="salary_rule_deduccion_fsv_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Deducción FSV (aedepaz)</field>
+        </record>
+
+        <record id="afp_regla_employee_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: AFP Empleado (aedepaz)</field>
+        </record>
+
+        <record id="afp_empleador_regla_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: AFP Empleador (aedepaz)</field>
+        </record>
+
+        <record id="afp_conf_regla_employee_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: AFP Confianza Empleado (aedepaz)</field>
+        </record>
+
+        <record id="afp_conf_empleador_regla_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: AFP Confianza Empleador (aedepaz)</field>
+        </record>
+
+        <!-- Nota: este xmlid tiene doble underscore en la BD, se preserva tal cual -->
+        <record id="incaf_empleador_regla__aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: INCAF Empleador (aedepaz)</field>
+        </record>
+
+        <record id="ipsfa_regla_employee_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: IPSFA Empleado (aedepaz)</field>
+        </record>
+
+        <record id="ipsfa_empleador_regla_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: IPSFA Empleador (aedepaz)</field>
+        </record>
+
+        <record id="isss_regla_employee_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: ISSS Empleado (aedepaz)</field>
+        </record>
+
+        <record id="isss_empleador_regla_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: ISSS Empleador (aedepaz)</field>
+        </record>
+
+        <record id="salary_rule_bancos_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Deducción Banco (aedepaz)</field>
+        </record>
+
+        <record id="salary_rule_deduccion_renta_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Deducción Renta (aedepaz)</field>
+        </record>
+
+        <record id="salary_rule_fondo_pensiones_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Fondo Pensiones (aedepaz)</field>
+        </record>
+
+        <record id="salary_rule_otros_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Otras Deducciones (aedepaz)</field>
+        </record>
+
+        <record id="salary_rule_prestamos_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Préstamos (aedepaz)</field>
+        </record>
+
+        <record id="salary_rule_venta_empleados_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Venta a Empleados (aedepaz)</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!--   LEGADO _innuffe                                            -->
+        <!-- ============================================================ -->
+
+        <record id="hr_salary_rule_descuento_septimo_falta_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Desc. Séptimo por Falta Injustificada (innuffe)</field>
+        </record>
+
+        <record id="salary_rule_deduccion_fsv_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Deducción FSV (innuffe)</field>
+        </record>
+
+        <record id="afp_regla_employee_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: AFP Empleado (innuffe)</field>
+        </record>
+
+        <record id="afp_empleador_regla_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: AFP Empleador (innuffe)</field>
+        </record>
+
+        <record id="afp_conf_regla_employee_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: AFP Confianza Empleado (innuffe)</field>
+        </record>
+
+        <record id="afp_conf_empleador_regla_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: AFP Confianza Empleador (innuffe)</field>
+        </record>
+
+        <record id="incaf_empleador_regla_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: INCAF Empleador (innuffe)</field>
+        </record>
+
+        <record id="ipsfa_regla_employee_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: IPSFA Empleado (innuffe)</field>
+        </record>
+
+        <record id="ipsfa_empleador_regla_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: IPSFA Empleador (innuffe)</field>
+        </record>
+
+        <record id="isss_regla_employee_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: ISSS Empleado (innuffe)</field>
+        </record>
+
+        <record id="isss_empleador_regla_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: ISSS Empleador (innuffe)</field>
+        </record>
+
+        <record id="salary_rule_bancos_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Deducción Banco (innuffe)</field>
+        </record>
+
+        <record id="salary_rule_deduccion_renta_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Deducción Renta (innuffe)</field>
+        </record>
+
+        <record id="salary_rule_fondo_pensiones_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Fondo Pensiones (innuffe)</field>
+        </record>
+
+        <record id="salary_rule_otros_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Otras Deducciones (innuffe)</field>
+        </record>
+
+        <record id="salary_rule_prestamos_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Préstamos (innuffe)</field>
+        </record>
+
+        <record id="salary_rule_venta_empleados_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Venta a Empleados (innuffe)</field>
+        </record>
+
+    </data>
+</odoo>

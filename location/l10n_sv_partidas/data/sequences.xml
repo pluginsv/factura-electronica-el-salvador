@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="seq_partida_ventas" model="ir.sequence">
+            <field name="name">Partida Ventas</field>
+            <field name="code">sv.partida.sale</field>
+            <field name="prefix">V-</field>
+            <field name="suffix">-%(month)s-%(year)s</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="use_date_range" eval="True"/>
+        </record>
+
+        <record id="seq_partida_compras" model="ir.sequence">
+            <field name="name">Partida Compras</field>
+            <field name="code">sv.partida.purchase</field>
+            <field name="prefix">C-</field>
+            <field name="suffix">-%(month)s-%(year)s</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="use_date_range" eval="True"/>
+        </record>
+
+        <record id="seq_partida_banco" model="ir.sequence">
+            <field name="name">Partida Banco</field>
+            <field name="code">sv.partida.bank</field>
+            <field name="prefix">B-</field>
+            <field name="suffix">-%(month)s-%(year)s</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="use_date_range" eval="True"/>
+        </record>
+
+        <record id="seq_partida_efectivo" model="ir.sequence">
+            <field name="name">Partida Efectivo</field>
+            <field name="code">sv.partida.cash</field>
+            <field name="prefix">E-</field>
+            <field name="suffix">-%(month)s-%(year)s</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="use_date_range" eval="True"/>
+        </record>
+
+        <record id="seq_partida_diario" model="ir.sequence">
+            <field name="name">Partida Diario General</field>
+            <field name="code">sv.partida.general</field>
+            <field name="prefix">D-</field>
+            <field name="suffix">-%(month)s-%(year)s</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="use_date_range" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

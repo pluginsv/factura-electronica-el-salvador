@@ -1,0 +1,21 @@
+{
+    "name": "SV DTE Import (JSON a facturas)",
+    "version": "18.0.1.0.1",
+    "category": "Accounting/Localizations",
+    "author": "Ing. Brenda Chacon, Ing. Karen Burgos, Ing. Francisco Flores",
+    "website": "https://contaspro.net",
+    "images": ['static/description/banner.png',
+               'static/description/icon.png',
+               'static/description/thumbnail.png'],
+    "price": 30,
+    "currency": "USD",
+    "license": "GPL-3",
+    "depends": ["accountant", "product", "contacts", "uom"],
+    "data": [
+        "security/ir.model.access.csv",
+        "data/dte_import_sequence.xml",
+        "views/menu.xml",
+        "views/dte_import_wizard_views.xml",
+    ],
+    "installable": True,
+}

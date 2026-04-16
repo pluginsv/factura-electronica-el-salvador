@@ -1,0 +1,95 @@
+<odoo>
+
+    <record id="view_report_ventas_periodo_list" model="ir.ui.view">
+        <field name="name">report.ventas.periodo.list</field>
+        <field name="model">report.ventas.periodo</field>
+        <field name="arch" type="xml">
+            <list string="Ventas por Periodo" create="false" edit="false" delete="false">
+                <field name="invoice_date"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="invoice_user_id"/>
+                <field name="codigo_tipo_documento"/>
+                <field name="amount_untaxed" sum="Subtotal"/>
+                <field name="amount_tax" sum="IVA"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="amount_paid" sum="Cobrado"/>
+                <field name="amount_residual" sum="Pendiente"/>
+                <field name="payment_state" widget="badge"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_report_ventas_periodo_pivot" model="ir.ui.view">
+        <field name="name">report.ventas.periodo.pivot</field>
+        <field name="model">report.ventas.periodo</field>
+        <field name="arch" type="xml">
+            <pivot string="Ventas por Periodo">
+                <field name="invoice_date" type="row" interval="month"/>
+                <field name="invoice_user_id" type="row"/>
+                <field name="amount_total" type="measure"/>
+                <field name="amount_paid" type="measure"/>
+                <field name="amount_residual" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_report_ventas_periodo_graph" model="ir.ui.view">
+        <field name="name">report.ventas.periodo.graph</field>
+        <field name="model">report.ventas.periodo</field>
+        <field name="arch" type="xml">
+            <graph string="Ventas por Periodo" type="bar">
+                <field name="invoice_date" interval="month"/>
+                <field name="amount_total" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_report_ventas_periodo_search" model="ir.ui.view">
+        <field name="name">report.ventas.periodo.search</field>
+        <field name="model">report.ventas.periodo</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Ventas">
+                <field name="partner_id" string="Cliente"/>
+                <field name="invoice_user_id" string="Vendedor"/>
+                <field name="name" string="Número"/>
+
+                <separator/>
+                <filter name="filter_current_period" string="Periodo en curso"
+                        domain="[('invoice_date','&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_month" string="Mes pasado"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(months=1, day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_previous_period" string="Periodo anterior"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(months=2, day=1)).strftime('%Y-%m-%d')),
+                                 ('invoice_date','&lt;=', (context_today() - relativedelta(months=1, day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_15_days" string="Últimos 15 días"
+                        domain="[('invoice_date','&gt;=', (context_today() - relativedelta(days=15)).strftime('%Y-%m-%d'))]"/>
+
+                <separator/>
+                <filter name="filter_paid" string="Pagadas" domain="[('payment_state','=','paid')]"/>
+                <filter name="filter_partial" string="Parciales" domain="[('payment_state','=','partial')]"/>
+                <filter name="filter_not_paid" string="No pagadas" domain="[('payment_state','=','not_paid')]"/>
+
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_year" string="Año" context="{'group_by': 'invoice_year'}"/>
+                    <filter name="group_by_month" string="Mes" context="{'group_by': 'invoice_month'}"/>
+                    <filter name="group_by_partner" string="Cliente" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_by_salesperson" string="Vendedor" context="{'group_by': 'invoice_user_id'}"/>
+                    <filter name="group_by_team" string="Equipo de ventas" context="{'group_by': 'team_id'}"/>
+                    <filter name="group_by_payment_state" string="Estado de pago" context="{'group_by': 'payment_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_report_ventas_periodo" model="ir.actions.act_window">
+        <field name="name">Ventas por Periodo</field>
+        <field name="res_model">report.ventas.periodo</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="search_view_id" ref="view_report_ventas_periodo_search"/>
+    </record>
+
+</odoo>

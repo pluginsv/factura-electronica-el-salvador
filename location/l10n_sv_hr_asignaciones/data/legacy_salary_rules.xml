@@ -1,0 +1,57 @@
+<odoo>
+    <data noupdate="1">
+        <!--
+            Compatibilidad de actualización:
+            Preserva xmlids legados (sufijos _aedepaz / _innuffe) para que Odoo
+            no intente borrar reglas salariales históricas todavía referenciadas
+            por hr.payslip.line.
+
+            Reglas:
+              - forcecreate="False"  →  no crea el registro si no existe
+              - noupdate="1"         →  no modifica los campos si ya existe
+              - Tener el <record> en el XML "toca" el xmlid durante el load,
+                evitando que Odoo lo marque como huérfano y trate de borrarlo.
+        -->
+
+        <!-- ============================================================ -->
+        <!--   LEGADO _aedepaz                                            -->
+        <!-- ============================================================ -->
+
+        <record id="hr_rule_dev_renta_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Devolución Renta (aedepaz)</field>
+        </record>
+
+        <record id="salary_rule_bonus_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Bonus (aedepaz)</field>
+        </record>
+
+        <record id="salary_rule_comision_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Comisión (aedepaz)</field>
+        </record>
+
+        <record id="salary_rule_viaticos_aedepaz" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Viáticos (aedepaz)</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!--   LEGADO _innuffe                                            -->
+        <!-- ============================================================ -->
+
+        <record id="hr_rule_dev_renta_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Devolución Renta (innuffe)</field>
+        </record>
+
+        <record id="salary_rule_bonus_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Bonus (innuffe)</field>
+        </record>
+
+        <record id="salary_rule_comision_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Comisión (innuffe)</field>
+        </record>
+
+        <record id="salary_rule_viaticos_innuffe" model="hr.salary.rule" forcecreate="False">
+            <field name="name">Legacy: Viáticos (innuffe)</field>
+        </record>
+
+    </data>
+</odoo>
