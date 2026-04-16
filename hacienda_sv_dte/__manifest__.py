@@ -10,7 +10,7 @@
                'static/description/thumbnail.png'],
     "price": 20,
     "currency": "USD",
-    "license": "LGPL-3",
+    "license": "OPL-1",
     "summary": "",
     "depends": [
         "base_sv_dte",

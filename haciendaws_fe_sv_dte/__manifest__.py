@@ -10,7 +10,7 @@
                'static/description/thumbnail.png'],
     "price": 30,
     "currency": "USD",
-    "license": "LGPL-3",
+    "license": "OPL-1",
     "summary": "",
     "depends": [
         "hacienda_sv_dte",   # webservice de Hacienda

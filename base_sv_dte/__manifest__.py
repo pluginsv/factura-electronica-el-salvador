@@ -13,7 +13,7 @@
                'static/description/thumbnail.png'],
     'price': 15,
     'currency': 'USD',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'category': 'Localization',
     'version': '17.0.1.0.0',
     'depends': ['base'],
