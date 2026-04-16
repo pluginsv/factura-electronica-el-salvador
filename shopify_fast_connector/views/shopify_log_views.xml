@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_shopify_log_tree" model="ir.ui.view">
+        <field name="name">shopify.log.tree</field>
+        <field name="model">shopify.log</field>
+        <field name="arch" type="xml">
+            <tree string="Logs Shopify" decoration-danger="log_type == 'error'"
+                  decoration-warning="log_type == 'warning'"
+                  create="false" edit="false">
+                <field name="create_date"/>
+                <field name="instance_id"/>
+                <field name="log_type" widget="badge"
+                       decoration-danger="log_type == 'error'"
+                       decoration-warning="log_type == 'warning'"
+                       decoration-success="log_type == 'info'"/>
+                <field name="operation"/>
+                <field name="message"/>
+                <field name="shopify_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_shopify_log" model="ir.actions.act_window">
+        <field name="name">Logs</field>
+        <field name="res_model">shopify.log</field>
+        <field name="view_mode">tree</field>
+    </record>
+</odoo>
