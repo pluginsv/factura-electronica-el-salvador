@@ -38,7 +38,7 @@
 
                         <!-- Condiciones de Pago -->
                         <div class="o_td_label" invisible="(move_type != 'out_invoice' and not codigo_tipo_documento) or not sit_facturacion">
-                            <label for="condiciones_pago" String="Condición de la Operación" class="o_form_label fw-bold"/>
+                            <label for="condiciones_pago" string="Condición de la Operación" class="o_form_label fw-bold"/>
                         </div>
                         <div class="o_td_field" invisible="(move_type != 'out_invoice' and not codigo_tipo_documento) or not sit_facturacion">
                             <field name="condiciones_pago" options="{'no_open': True, 'no_create': True}"/>
